@@ -229,7 +229,7 @@
   </div>
 </header>
 
-<!-- Mobile Minimal Header (From Stitch bosh_sahifa_mobile_yangilangan) -->
+<!-- Mobile Minimal Header -->
 <header class="md:hidden w-full bg-surface/90 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-outline-variant px-margin-mobile py-3 flex justify-between items-center">
   <div class="flex items-center gap-2">
     <div class="w-9 h-9 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm">
@@ -282,7 +282,6 @@
   <!-- Quick Actions Grid -->
   <section class="w-full px-margin-mobile md:px-0">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-stack-sm">
-      <!-- Donation CTA -->
       <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#charity">
         <div class="w-12 h-12 rounded-full bg-emerald-deep text-on-primary flex items-center justify-center shadow-sm">
           <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
@@ -292,7 +291,6 @@
           <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="charity_general">Ehson qilish</p>
         </div>
       </a>
-      <!-- Dua Request -->
       <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#dua">
         <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm">
           <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">prayer_times</span>
@@ -302,7 +300,6 @@
           <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="dua_title">Jamoatdan duo</p>
         </div>
       </a>
-      <!-- Gallery -->
       <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#gallery">
         <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
           <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">photo_library</span>
@@ -312,7 +309,6 @@
           <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="gallery_title">Rasmlar</p>
         </div>
       </a>
-      <!-- About -->
       <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#about">
         <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
           <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">info</span>
@@ -325,7 +321,7 @@
     </div>
   </section>
 
-  <!-- Prayer Times Widget — EXACT STITCH 2 DESIGN -->
+  <!-- Prayer Times Widget -->
   <section id="prayers" class="w-full px-margin-mobile md:px-0">
     <div class="flex justify-between items-end mb-4">
       <div>
@@ -464,13 +460,18 @@
     </div>
   </section>
 
-  <!-- Masjid Jamoasi Section (Horizontal snap scroll on mobile, grid on desktop) -->
+  <!-- Masjid Jamoasi Section -->
   <section id="team" class="w-full overflow-hidden">
     <div class="px-margin-mobile md:px-0 flex justify-between items-end mb-3">
-      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="team_title">Masjid Jamoasi</h2>
+      <div>
+        <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="team_title">Masjid Jamoasi</h2>
+        <p class="text-xs text-on-surface-variant">Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)</p>
+      </div>
     </div>
-    <div id="team-grid" class="flex gap-3 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-4 snap-x">
-      <!-- Loaded dynamically via Firebase -->
+    
+    <!-- All 5+ team members displayed in clean responsive cards -->
+    <div id="team-grid" class="flex gap-3.5 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-3 lg:grid-cols-5 snap-x pb-2">
+      <!-- Loaded dynamically via Firebase (All 5 users) -->
     </div>
   </section>
 
@@ -484,23 +485,23 @@
     </div>
   </section>
 
-  <!-- News Feed (Horizontal snap scroll on mobile, grid on desktop) -->
+  <!-- News Feed -->
   <section id="news" class="w-full overflow-hidden">
     <div class="px-margin-mobile md:px-0 flex justify-between items-end mb-3">
       <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="news_title">Yangiliklar</h2>
     </div>
-    <div id="news-grid" class="flex gap-4 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-3 snap-x">
+    <div id="news-grid" class="flex gap-4 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-3 snap-x pb-2">
       <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
-  <!-- Charity & Utilities Section -->
+  <!-- Charity & Utilities Section (Domo inside Utilities) -->
   <section id="charity" class="w-full px-margin-mobile md:px-0">
     <div class="mb-3">
       <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="charity_title">Xayriya va ehson</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="charity-grid">
-      <!-- Loaded dynamically via Firebase -->
+      <!-- Loaded dynamically via Firebase: Umumiy ehson on left, Kommunal to'lovlar + Domo on right -->
     </div>
   </section>
 
@@ -567,66 +568,69 @@
 
 <!-- Bottom Navigation Bar (Mobile: EXACT STITCH bosh_sahifa_mobile_yangilangan) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 pb-safe bg-surface shadow-lg shadow-[0_-4px_12px_rgba(180,83,9,0.05)] rounded-t-2xl border-t border-surface-container" id="bottom-nav">
-  <!-- Active Tab: Home -->
   <a class="bottom-nav-item flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 min-w-[60px] active:scale-90 transition-transform duration-150 group" href="#home" data-section="home">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
     <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_home">Home</span>
   </a>
-  <!-- Prayers -->
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#prayers" data-section="prayers">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">schedule</span>
     <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_about">Prayers</span>
   </a>
-  <!-- Charity -->
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#charity" data-section="charity">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">volunteer_activism</span>
     <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_charity">Charity</span>
   </a>
-  <!-- Gallery -->
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#gallery" data-section="gallery">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">photo_library</span>
     <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_gallery">Gallery</span>
   </a>
-  <!-- Dua / Contact -->
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#dua" data-section="dua">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">prayer_times</span>
     <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_dua">Dua</span>
   </a>
 </nav>
 
-<!-- Modals -->
-<!-- Team & Sponsor Detail Modal -->
-<div id="team-modal" class="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-  <div class="bg-surface-container-lowest rounded-2xl max-w-md w-full p-6 relative border border-surface-container-high shadow-2xl">
-    <button onclick="closeTeamModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface text-xl font-bold">✕</button>
+<!-- Large Profile & Markdown Support Modal for Team Members -->
+<div id="team-modal" class="fixed inset-0 z-[2000] bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 md:p-8 relative border border-surface-container-high shadow-2xl">
+    <button onclick="closeTeamModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface text-lg font-bold transition-colors">✕</button>
+    
     <div class="flex flex-col items-center text-center">
-      <div id="modal-avatar" class="w-24 h-24 rounded-full overflow-hidden bg-surface-container mb-4 border-2 border-emerald-deep flex items-center justify-center text-3xl text-primary">
-        <span class="material-symbols-outlined text-[40px]">person</span>
+      <!-- Large User Photo -->
+      <div id="modal-avatar" class="w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden bg-surface-container mb-4 border-2 border-emerald-deep flex items-center justify-center text-5xl text-primary shadow-lg flex-shrink-0">
+        <span class="material-symbols-outlined text-[56px]">person</span>
       </div>
-      <h3 id="modal-name" class="font-headline-md text-xl font-bold text-primary"></h3>
-      <p id="modal-role" class="font-label-caps text-xs text-gold-metallic font-semibold mt-0.5"></p>
-      <p id="modal-desc" class="text-sm text-on-surface-variant mt-4 leading-relaxed"></p>
       
-      <div class="flex items-center gap-3 mt-5">
-        <a id="modal-phone" href="#" class="hidden bg-emerald-deep/10 text-emerald-deep text-xs font-semibold px-4 py-2 rounded-xl border border-emerald-deep/20 hover:bg-emerald-deep hover:text-white transition-colors"></a>
-        <a id="modal-tg" href="#" target="_blank" class="hidden bg-blue-500/10 text-blue-600 text-xs font-semibold px-4 py-2 rounded-xl border border-blue-500/20 hover:bg-blue-500 hover:text-white transition-colors"></a>
+      <h3 id="modal-name" class="font-headline-md text-2xl font-bold text-primary"></h3>
+      <p id="modal-role" class="font-label-caps text-xs text-gold-metallic font-bold mt-1 tracking-wider uppercase"></p>
+      
+      <!-- Contact action buttons -->
+      <div class="flex items-center gap-3 mt-4 mb-2 flex-wrap justify-center">
+        <a id="modal-phone" href="#" class="hidden bg-emerald-deep/10 text-emerald-deep text-xs font-bold px-4 py-2 rounded-xl border border-emerald-deep/20 hover:bg-emerald-deep hover:text-white transition-colors flex items-center gap-1.5 shadow-sm"></a>
+        <a id="modal-tg" href="#" target="_blank" class="hidden bg-blue-500/10 text-blue-600 text-xs font-bold px-4 py-2 rounded-xl border border-blue-500/20 hover:bg-blue-500 hover:text-white transition-colors flex items-center gap-1.5 shadow-sm"></a>
       </div>
+
+      <!-- Markdown-rendered description -->
+      <div id="modal-desc" class="w-full text-sm text-on-surface-variant mt-3 text-left leading-relaxed bg-surface-container-low p-4 rounded-xl border border-surface-variant max-h-[40vh] overflow-y-auto"></div>
     </div>
   </div>
 </div>
 
-<!-- News Detail Modal -->
-<div id="news-modal" class="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-  <div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative border border-surface-container-high shadow-2xl">
-    <button onclick="closeNewsModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface text-xl font-bold">✕</button>
-    <div id="news-modal-img" class="w-full h-48 rounded-xl overflow-hidden mb-4 bg-surface-container hidden">
+<!-- News Detail Modal with Markdown support -->
+<div id="news-modal" class="fixed inset-0 z-[2000] bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 relative border border-surface-container-high shadow-2xl">
+    <button onclick="closeNewsModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface text-lg font-bold transition-colors">✕</button>
+    
+    <div id="news-modal-img" class="w-full h-52 rounded-xl overflow-hidden mb-4 bg-surface-container hidden shadow-sm">
       <img src="" alt="" class="w-full h-full object-cover"/>
     </div>
+    
     <div class="flex items-center gap-2 mb-2">
       <span class="font-label-caps text-[10px] text-gold-metallic font-bold" id="news-modal-date"></span>
     </div>
+    
     <h3 id="news-modal-title" class="font-headline-md text-xl font-bold text-primary mb-3"></h3>
-    <p id="news-modal-desc" class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-line"></p>
+    <div id="news-modal-desc" class="text-sm text-on-surface-variant leading-relaxed"></div>
   </div>
 </div>
 

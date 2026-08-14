@@ -1,9 +1,37 @@
 /* ============================================================
    G'oyib Yoronlar Jome Masjidi — v2
    Multi-language, Font Scaling, Firebase & Stitch Theme
+   Markdown Support & Enhanced Profiles
    ============================================================ */
 
 'use strict';
+
+// ============ MARKDOWN PARSER ============
+function parseMarkdown(text) {
+  if (!text) return '';
+  let html = text
+    // Escape HTML first
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    // Headers
+    .replace(/^### (.*$)/gim, '<h4 class="text-sm font-bold text-primary dark:text-emerald-light mt-3 mb-1">$1</h4>')
+    .replace(/^## (.*$)/gim, '<h3 class="text-base font-bold text-primary dark:text-emerald-light mt-3 mb-1">$1</h3>')
+    .replace(/^# (.*$)/gim, '<h2 class="text-lg font-bold text-primary dark:text-emerald-light mt-4 mb-2">$1</h2>')
+    // Bold (**text**)
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-primary dark:text-emerald-light">$1</strong>')
+    // Italic (*text*)
+    .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+    // Links [text](url)
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="text-emerald-deep dark:text-emerald-light underline font-medium hover:opacity-80">$1</a>')
+    // Bullet lists (- item or * item)
+    .replace(/^\s*[-*]\s+(.*$)/gim, '<div class="flex items-start gap-2 my-1"><span class="text-gold-shimmer text-xs mt-1">•</span><span>$1</span></div>')
+    // Paragraphs / newlines
+    .replace(/\n\n/g, '<div class="my-2.5"></div>')
+    .replace(/\n/g, '<br/>');
+
+  return html;
+}
 
 // ============ TRANSLATIONS ============
 const translations = {
@@ -48,6 +76,7 @@ const translations = {
     charity_title: "Xayriya va ehson",
     charity_general: "Umumiy ehson",
     charity_utility: "Kommunal to'lovlar",
+    domo_btn: "domo.uz orqali kommunal to'lash",
     read_more: "O'qish",
     no_news: "Hozircha yangiliklar yo'q...",
     no_sponsors: "Hozircha ma'lumot kiritilmagan.",
@@ -95,6 +124,7 @@ const translations = {
     charity_title: "Хайрия ва эҳсон",
     charity_general: "Умумий эҳсон",
     charity_utility: "Коммунал тўловлар",
+    domo_btn: "domo.uz орқали коммунал тўлаш",
     read_more: "Ўқиш",
     no_news: "Ҳозирча янгиликлар йўқ...",
     no_sponsors: "Ҳозирча маълумот киритилмаган.",
@@ -142,6 +172,7 @@ const translations = {
     charity_title: "Благотворительность",
     charity_general: "Общее пожертвование",
     charity_utility: "Коммунальные платежи",
+    domo_btn: "Оплата коммунальных через domo.uz",
     read_more: "Читать",
     no_news: "Новостей пока нет...",
     no_sponsors: "Данных пока нет.",
@@ -189,6 +220,7 @@ const translations = {
     charity_title: "Charity & donation",
     charity_general: "General donation",
     charity_utility: "Utility payments",
+    domo_btn: "Pay utilities via domo.uz",
     read_more: "Read",
     no_news: "No news available...",
     no_sponsors: "No information yet.",
@@ -235,9 +267,7 @@ function setFontSize(size) {
 }
 
 document.querySelectorAll('.font-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    setFontSize(btn.dataset.size);
-  });
+  btn.addEventListener('click', () => setFontSize(btn.dataset.size));
 });
 
 const savedFontSize = localStorage.getItem('selected_font_size') || 'norm';
@@ -302,7 +332,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ============ BOTTOM NAV & SCROLL SPY (EXACT STITCH LOOK) ============
+// ============ BOTTOM NAV & SCROLL SPY ============
 function initNavSync() {
   const bottomItems = document.querySelectorAll('.bottom-nav-item[data-section]');
   const desktopLinks = document.querySelectorAll('.nav-link');
@@ -337,9 +367,7 @@ function initNavSync() {
   sections.forEach(s => observer.observe(s));
 
   bottomItems.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setActiveTab(btn.dataset.section);
-    });
+    btn.addEventListener('click', () => setActiveTab(btn.dataset.section));
   });
 }
 initNavSync();
@@ -414,7 +442,6 @@ function loadFirebasePrayerTimes() {
     return;
   }
 
-  // Cached read for instant display
   try {
     const cached = localStorage.getItem('cached_prayer_times');
     if (cached) renderMasjidTimes(JSON.parse(cached));
@@ -458,7 +485,6 @@ async function loadAladhanApiTimes() {
         if (el && apiTimes[p]) el.textContent = apiTimes[p];
       });
 
-      // Quyosh vaqti API dan olinadi
       const quyoshEl = document.getElementById('time-quyosh');
       if (quyoshEl && (!prayerTimes.quyosh || prayerTimes.quyosh === '--:--')) {
         quyoshEl.textContent = t.Sunrise;
@@ -473,7 +499,7 @@ async function loadAladhanApiTimes() {
   }
 }
 
-// ============ ACTIVE PRAYER HIGHLIGHT (EXACT STITCH LOOK) ============
+// ============ ACTIVE PRAYER HIGHLIGHT ============
 function highlightActivePrayer() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -498,7 +524,6 @@ function highlightActivePrayer() {
     }
   }
 
-  // Agar barcha vaqtlardan oldin bo'lsa (yarim tundagi vaqt), Xufton active
   if (!active) active = 'xufton';
 
   prayers.forEach(p => {
@@ -514,7 +539,6 @@ function highlightActivePrayer() {
     const apiTimeEl = cell.querySelector('.prayer-api');
 
     if (isCur) {
-      // Active styling — Rich Emerald Deep with Gold shimmer
       cell.className = 'prayer-cell bg-emerald-deep p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all shadow-md relative overflow-hidden';
       if (nameEl) nameEl.className = 'font-label-caps text-[11px] font-bold text-gold-shimmer mb-1 prayer-name relative z-10';
       if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded p-1.5 mb-1.5 prayer-pill relative z-10';
@@ -523,7 +547,6 @@ function highlightActivePrayer() {
       if (azonLabel) azonLabel.className = 'text-[9px] font-bold uppercase tracking-wider text-white/70 prayer-azon-label';
       if (apiTimeEl) apiTimeEl.className = 'text-[12px] font-bold tabular-nums text-white/90 prayer-api';
     } else {
-      // Normal styling — Clean surface
       cell.className = 'prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all';
       if (nameEl) nameEl.className = 'font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name';
       if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill';
@@ -587,17 +610,22 @@ function renderNews() {
   container.innerHTML = '';
 
   if (allNews.length === 0) {
-    container.innerHTML = `<p class="text-on-surface-variant text-sm col-span-full py-4 text-center">${translations[currentLang]?.no_news || "Hozircha yangiliklar yo'q..."}</p>`;
+    container.innerHTML = `
+      <div class="min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl p-6 text-center border border-surface-container-high col-span-full">
+        <span class="material-symbols-outlined text-[36px] text-gold-shimmer mb-2">newspaper</span>
+        <p class="text-on-surface-variant text-sm">${translations[currentLang]?.no_news || "Hozircha yangiliklar yo'q..."}</p>
+      </div>
+    `;
     return;
   }
 
   allNews.slice(0, 6).forEach((item) => {
     const card = document.createElement('div');
-    card.className = 'min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex flex-col flex-shrink-0 cursor-pointer group';
+    card.className = 'min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex flex-col flex-shrink-0 cursor-pointer group hover:shadow-md transition-all';
     card.onclick = () => openNewsModal(item.title, item.desc || item.content, item.imgUrl, item.date);
 
     card.innerHTML = `
-      <div class="h-32 bg-surface-variant relative overflow-hidden">
+      <div class="h-36 bg-surface-variant relative overflow-hidden">
         ${item.imgUrl ? `<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.imgUrl}" alt="${item.title || ''}" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px] opacity-40">article</span></div>`}
         <div class="absolute top-2 left-2 bg-white/90 dark:bg-black/80 backdrop-blur px-2 py-0.5 rounded-full font-label-caps text-[10px] text-primary shadow-sm">
           ${item.date ? item.date.split(' ')[0] : 'Yangi'}
@@ -633,7 +661,7 @@ function loadNews() {
 window.openNewsModal = function(title, desc, imgUrl, date) {
   document.getElementById('news-modal-title').textContent = title || '';
   document.getElementById('news-modal-date').textContent = date || '';
-  document.getElementById('news-modal-desc').textContent = desc || '';
+  document.getElementById('news-modal-desc').innerHTML = parseMarkdown(desc || '');
   const imgBox = document.getElementById('news-modal-img');
   if (imgUrl) {
     imgBox.classList.remove('hidden');
@@ -654,7 +682,7 @@ window.closeNewsModal = function() {
   document.body.style.overflow = '';
 };
 
-// ============ TEAM (EXACT STITCH MOBILE CAROUSEL & DESKTOP GRID) ============
+// ============ TEAM (ALL USERS LOADED DYNAMICALLY) ============
 let allTeam = [];
 
 function renderTeam() {
@@ -669,15 +697,20 @@ function renderTeam() {
 
   allTeam.forEach(member => {
     const card = document.createElement('div');
-    card.className = 'min-w-[140px] w-[140px] md:w-auto bg-surface-container-lowest rounded-xl p-4 flex flex-col items-center shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex-shrink-0 cursor-pointer group hover:shadow-md transition-all';
+    card.className = 'min-w-[155px] w-[155px] md:w-auto bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center text-center shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex-shrink-0 cursor-pointer group hover:shadow-md hover:border-gold-shimmer/60 transition-all';
     card.onclick = () => openTeamModal(member);
 
     card.innerHTML = `
-      <div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container-high mb-3 border border-surface-variant group-hover:border-gold-shimmer transition-colors">
-        ${member.imgUrl ? `<img class="w-full h-full object-cover" src="${member.imgUrl}" alt="${member.name || ''}"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[32px]">person</span></div>`}
+      <div class="w-20 h-20 rounded-full overflow-hidden bg-surface-container-high mb-3 border-2 border-surface-variant group-hover:border-gold-shimmer transition-colors shadow-sm flex items-center justify-center flex-shrink-0">
+        ${member.imgUrl ? `<img class="w-full h-full object-cover" src="${member.imgUrl}" alt="${member.name || ''}" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px]">person</span></div>`}
       </div>
-      <h3 class="font-body-md text-[14px] font-bold text-primary text-center leading-tight mb-1">${member.name || ''}</h3>
-      <p class="font-label-caps text-[10px] text-on-surface-variant text-center">${member.role || ''}</p>
+      <h3 class="font-body-md text-[14px] font-bold text-primary group-hover:text-gold-metallic transition-colors leading-snug mb-1 line-clamp-2">${member.name || ''}</h3>
+      <p class="font-label-caps text-[10px] text-on-surface-variant font-semibold tracking-wider">${member.role || ''}</p>
+      
+      <div class="mt-2.5 flex items-center gap-1 text-[11px] text-emerald-deep dark:text-emerald-light font-semibold opacity-80 group-hover:opacity-100">
+        <span>Profil</span>
+        <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+      </div>
     `;
     container.appendChild(card);
   });
@@ -688,37 +721,48 @@ function loadTeam() {
   db.ref('team').on('value', snap => {
     allTeam = [];
     if (snap.exists()) {
-      snap.forEach(child => allTeam.push({ id: child.key, ...child.val() }));
+      snap.forEach(child => {
+        allTeam.push({ id: child.key, ...child.val() });
+      });
     }
     renderTeam();
   });
 }
 
+// Open large profile modal with markdown support
 window.openTeamModal = function(member) {
   document.getElementById('modal-name').textContent = member.name || '';
   document.getElementById('modal-role').textContent = member.role || '';
-  document.getElementById('modal-desc').textContent = member.desc || '';
-
-  const avatar = document.getElementById('modal-avatar');
-  if (member.imgUrl) {
-    avatar.innerHTML = `<img src="${member.imgUrl}" alt="" class="w-full h-full object-cover"/>`;
-  } else {
-    avatar.innerHTML = `<span class="material-symbols-outlined text-[40px]">person</span>`;
+  
+  // Render markdown in description
+  const descEl = document.getElementById('modal-desc');
+  if (descEl) {
+    descEl.innerHTML = parseMarkdown(member.desc || "Ma'lumot kiritilmagan.");
   }
 
+  // Big User Photo
+  const avatar = document.getElementById('modal-avatar');
+  if (member.imgUrl) {
+    avatar.innerHTML = `<img src="${member.imgUrl}" alt="${member.name || ''}" class="w-full h-full object-cover"/>`;
+  } else {
+    avatar.innerHTML = `<span class="material-symbols-outlined text-[64px] text-on-surface-variant">person</span>`;
+  }
+
+  // Phone button
   const phoneEl = document.getElementById('modal-phone');
-  if (member.phone) {
-    phoneEl.textContent = `📞 ${member.phone}`;
+  if (member.phone && member.phone.trim()) {
+    phoneEl.innerHTML = `<span class="material-symbols-outlined text-[16px]">call</span><span>${member.phone}</span>`;
     phoneEl.href = `tel:${member.phone.replace(/[^0-9+]/g, '')}`;
     phoneEl.classList.remove('hidden');
   } else {
     phoneEl.classList.add('hidden');
   }
 
+  // Telegram button
   const tgEl = document.getElementById('modal-tg');
-  if (member.tg) {
+  if (member.tg && member.tg.trim()) {
     const cleanTg = member.tg.replace('@', '');
-    tgEl.textContent = `✈️ @${cleanTg}`;
+    tgEl.innerHTML = `<span class="material-symbols-outlined text-[16px]">send</span><span>@${cleanTg}</span>`;
     tgEl.href = `https://t.me/${cleanTg}`;
     tgEl.classList.remove('hidden');
   } else {
@@ -758,11 +802,11 @@ function renderSponsors() {
 
     card.innerHTML = `
       <div class="w-14 h-14 rounded-full overflow-hidden bg-surface-container flex-shrink-0 border border-surface-container-high">
-        ${sponsor.imgUrl ? `<img src="${sponsor.imgUrl}" alt="${sponsor.name || ''}" class="w-full h-full object-cover"/>` : `<div class="w-full h-full flex items-center justify-center text-gold-metallic"><span class="material-symbols-outlined text-[26px]">star</span></div>`}
+        ${sponsor.imgUrl ? `<img src="${sponsor.imgUrl}" alt="${sponsor.name || ''}" class="w-full h-full object-cover" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-gold-metallic"><span class="material-symbols-outlined text-[26px]">star</span></div>`}
       </div>
       <div>
         <h3 class="font-body-md text-[15px] font-bold text-primary">${sponsor.name || ''}</h3>
-        <p class="text-xs text-on-surface-variant mt-0.5 line-clamp-2">${sponsor.desc || ''}</p>
+        <p class="text-xs text-on-surface-variant mt-0.5 line-clamp-2 leading-relaxed">${sponsor.desc || ''}</p>
       </div>
     `;
     container.appendChild(card);
@@ -790,90 +834,116 @@ window.openSponsorModal = function(sponsor) {
   });
 };
 
-// ============ CHARITY & UTILITIES (EXACT STITCH DESIGN) ============
+// ============ CHARITY & UTILITIES (DOMO UNDER UTILITIES) ============
 function renderCharity(data) {
   const container = document.getElementById('charity-grid');
   if (!container) return;
 
   const cardNum = data.general_card || '8600 0000 0000 0000';
-  const cardOwner = data.general_owner || 'G\'oyib Yoronlar Masjidi';
+  const cardOwner = data.general_owner || 'G\'oyib Yoronlar Jome Masjidi';
 
   container.innerHTML = `
-    <!-- Umumiy ehson kartasi -->
-    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-xl shadow-sm border-x border-b border-surface-container-high p-4 flex flex-col justify-between">
+    <!-- Umumiy ehson kartasi (Faqat to'g'ridan-to'g'ri bank kartasi) -->
+    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
-        <h3 class="font-headline-md text-[18px] font-bold text-primary mb-3 flex items-center gap-2">
-          <span class="material-symbols-outlined text-emerald-deep text-[20px]">account_balance</span>
+        <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-deep text-[22px]">account_balance</span>
           <span data-i18n="charity_general">Umumiy ehson</span>
         </h3>
-        <div class="bg-surface-container-low p-3 rounded-lg mb-4 border border-surface-variant flex justify-between items-center group">
+        <p class="text-xs text-on-surface-variant mb-4 leading-relaxed">Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.</p>
+        
+        <div class="bg-surface-container-low p-4 rounded-xl mb-4 border border-surface-variant flex justify-between items-center group">
           <div>
-            <div class="font-label-caps text-[10px] text-on-surface-variant mb-1">Uzcard/Humo</div>
-            <div class="font-body-lg text-[16px] text-primary font-bold tracking-widest tabular-nums font-mono">${cardNum}</div>
-            <div class="text-[11px] text-on-surface-variant mt-0.5">${cardOwner}</div>
+            <div class="font-label-caps text-[10px] text-on-surface-variant mb-1 font-bold">Uzcard / Humo</div>
+            <div class="font-body-lg text-[17px] md:text-[18px] text-primary font-bold tracking-widest tabular-nums font-mono">${cardNum}</div>
+            <div class="text-[12px] text-on-surface-variant mt-1 font-medium">${cardOwner}</div>
           </div>
-          <button class="w-8 h-8 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep active:scale-90 transition-all copy-btn" data-copy="${cardNum}" title="Nusxa olish">
-            <span class="material-symbols-outlined text-[16px]">content_copy</span>
+          <button class="w-10 h-10 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep active:scale-90 transition-all copy-btn shadow-sm" data-copy="${cardNum}" title="Nusxa olish">
+            <span class="material-symbols-outlined text-[18px]">content_copy</span>
           </button>
         </div>
       </div>
 
-      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
-        <span class="material-symbols-outlined text-[18px]">payment</span>
-        <span>domo.uz orqali ehson</span>
-      </a>
+      <div class="p-3 bg-gold-shimmer/10 border border-gold-shimmer/30 rounded-xl text-xs text-gold-metallic dark:text-gold-shimmer font-medium flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">info</span>
+        <span>Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.</span>
+      </div>
     </div>
 
-    <!-- Kommunal to'lovlar -->
-    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-xl shadow-sm border-x border-b border-surface-container-high p-4">
-      <h3 class="font-headline-md text-[18px] font-bold text-primary mb-3 flex items-center gap-2">
-        <span class="material-symbols-outlined text-emerald-deep text-[20px]">receipt_long</span>
-        <span data-i18n="charity_utility">Kommunal to'lovlar</span>
-      </h3>
-      <div class="space-y-2">
-        ${data.util_elec ? `
-          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-gold-metallic">
-                <span class="material-symbols-outlined text-[16px]">bolt</span>
-              </div>
+    <!-- Kommunal to'lovlar (Domo to'lovi shu yerda joylashgan) -->
+    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
+      <div>
+        <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-deep text-[22px]">receipt_long</span>
+          <span data-i18n="charity_utility">Kommunal to'lovlar</span>
+        </h3>
+        <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.</p>
+
+        <div class="space-y-2.5 mb-4">
+          <!-- Elektr -->
+          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm shadow-sm">⚡</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant">Elektr</div>
-                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_elec}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Elektr (yuridik)</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_elec || '470761'}</div>
               </div>
             </div>
-            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_elec}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
+            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep copy-btn" data-copy="${data.util_elec || '470761'}" title="Nusxa olish">
+              <span class="material-symbols-outlined text-[13px]">content_copy</span>
+            </button>
           </div>
-        ` : ''}
-        ${data.util_water ? `
-          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-blue-500">
-                <span class="material-symbols-outlined text-[16px]">water_drop</span>
-              </div>
+
+          <!-- Suv -->
+          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-sm shadow-sm">💧</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant">Suv</div>
-                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_water}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Suv</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_water || '160500025'}</div>
               </div>
             </div>
-            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_water}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
+            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep copy-btn" data-copy="${data.util_water || '160500025'}" title="Nusxa olish">
+              <span class="material-symbols-outlined text-[13px]">content_copy</span>
+            </button>
           </div>
-        ` : ''}
-        ${data.util_gas ? `
-          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-orange-500">
-                <span class="material-symbols-outlined text-[16px]">local_fire_department</span>
-              </div>
+
+          <!-- Wi-Fi -->
+          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold text-sm shadow-sm">📶</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant">Gaz</div>
-                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_gas}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Wi-Fi (Internet)</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_wifi || '1946506390'}</div>
               </div>
             </div>
-            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_gas}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
+            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep copy-btn" data-copy="${data.util_wifi || '1946506390'}" title="Nusxa olish">
+              <span class="material-symbols-outlined text-[13px]">content_copy</span>
+            </button>
           </div>
-        ` : ''}
+
+          ${data.util_gas ? `
+            <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center font-bold text-sm shadow-sm">🔥</div>
+                <div>
+                  <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Gaz</div>
+                  <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_gas}</div>
+                </div>
+              </div>
+              <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep copy-btn" data-copy="${data.util_gas}" title="Nusxa olish">
+                <span class="material-symbols-outlined text-[13px]">content_copy</span>
+              </button>
+            </div>
+          ` : ''}
+        </div>
       </div>
+
+      <!-- Domo button under utilities -->
+      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold mt-2" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
+        <span class="material-symbols-outlined text-[18px]">payment</span>
+        <span data-i18n="domo_btn">domo.uz orqali kommunal to'lash</span>
+      </a>
     </div>
   `;
 
