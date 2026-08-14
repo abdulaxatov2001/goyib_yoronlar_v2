@@ -23,9 +23,9 @@ const translations = {
     nav_dua: "Duo olish",
     nav_contact: "Aloqa",
     nav_donate: "Xayriya",
-    hero_title: "G'OYIB YORONLAR JOME MASJIDI",
+    hero_title: "Xush kelibsiz",
     hero_title_inline: "G'OYIB YORONLAR",
-    hero_subtitle: "Namangan viloyati Pop tumani To'da qishlog'i",
+    hero_subtitle: "Namangan viloyati, Pop tumani, To'da qishlog'i",
     dua_title: "Jamoatdan duo olish",
     news_title: "Yangiliklar",
     text_size: "Matn:",
@@ -35,19 +35,20 @@ const translations = {
     dua_msg_ph: "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
     dua_submit: "Yuborish",
     dua_success: "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
-    masjid_time_label: "MASJIDDA O'QILISH VAQTI",
-    api_time_label: "AZON",
+    masjid_time_label: "Masjidda o'qilish vaqti",
+    api_time_label: "Azon",
     loading: "Yuklanmoqda...",
     next_prayer_in: "Keyingi namozga:",
     about_title: "Biz haqimizda",
     about_text: "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
-    team_title: "Masjid jamoasi",
+    team_title: "Masjid Jamoasi",
     sponsors_title: "Faxriylar va homiylar",
     gallery_title: "Foto galereya",
     contact_title: "Biz bilan aloqa",
     charity_title: "Xayriya va ehson",
     charity_general: "Umumiy ehson",
     charity_utility: "Kommunal to'lovlar",
+    read_more: "O'qish",
     no_news: "Hozircha yangiliklar yo'q...",
     no_sponsors: "Hozircha ma'lumot kiritilmagan.",
     no_team: "Hozircha jamoa a'zolari kiritilmagan...",
@@ -69,9 +70,9 @@ const translations = {
     nav_dua: "Дуо олиш",
     nav_contact: "Алоқа",
     nav_donate: "Хайрия",
-    hero_title: "ҒОЙИБ ЁРОНЛАР ЖОМЕ МАСЖИДИ",
+    hero_title: "Хуш келибсиз",
     hero_title_inline: "ҒОЙИБ ЁРОНЛАР",
-    hero_subtitle: "Наманган вилояти Поп тумани Тўда қишлоғи",
+    hero_subtitle: "Наманган вилояти, Поп тумани, Тўда қишлоғи",
     dua_title: "Жамоатдан дуо олиш",
     news_title: "Янгиликлар",
     text_size: "Матн:",
@@ -81,19 +82,20 @@ const translations = {
     dua_msg_ph: "Дуо мазмуни (Масалан: Беморман, шифо сўраб дуо қилишларини сўрайман)",
     dua_submit: "Юбориш",
     dua_success: "Хабарингиз юборилди. Келаётган жума намозида етказилади!",
-    masjid_time_label: "МАСЖИДДА ЎҚИЛИШ ВАҚТИ",
-    api_time_label: "АЗОН",
+    masjid_time_label: "Масжидда ўқилиш вақти",
+    api_time_label: "Азон",
     loading: "Юкланмоқда...",
     next_prayer_in: "Кейинги намозга:",
     about_title: "Биз ҳақимизда",
     about_text: "Ғойиб Ёронlar жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
-    team_title: "Масжид жамоаси",
+    team_title: "Масжид Жамоаси",
     sponsors_title: "Фахрийлар ва ҳомийлар",
     gallery_title: "Фото галерея",
     contact_title: "Биз билан алоқа",
     charity_title: "Хайрия ва эҳсон",
     charity_general: "Умумий эҳсон",
     charity_utility: "Коммунал тўловлар",
+    read_more: "Ўқиш",
     no_news: "Ҳозирча янгиликлар йўқ...",
     no_sponsors: "Ҳозирча маълумот киритилмаган.",
     no_team: "Ҳозирча жамоа аъзолари киритилмаган...",
@@ -115,7 +117,7 @@ const translations = {
     nav_dua: "Молитва",
     nav_contact: "Контакты",
     nav_donate: "Пожертвование",
-    hero_title: "МЕЧЕТЬ «ГОЙИБ ЁРОНЛАР»",
+    hero_title: "Добро пожаловать",
     hero_title_inline: "ГОЙИБ ЁРОНЛАР",
     hero_subtitle: "Наманганская область, Папский район, село Туда",
     dua_title: "Получить молитву от джамаата",
@@ -127,8 +129,8 @@ const translations = {
     dua_msg_ph: "Содержание молитвы (Например: Прошу помолиться о моем исцелении)",
     dua_submit: "Отправить",
     dua_success: "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
-    masjid_time_label: "ВРЕМЯ В МЕЧЕТИ",
-    api_time_label: "АЗАН",
+    masjid_time_label: "Время в мечети",
+    api_time_label: "Азан",
     loading: "Загрузка...",
     next_prayer_in: "До следующего намаза:",
     about_title: "О нас",
@@ -140,6 +142,7 @@ const translations = {
     charity_title: "Благотворительность",
     charity_general: "Общее пожертвование",
     charity_utility: "Коммунальные платежи",
+    read_more: "Читать",
     no_news: "Новостей пока нет...",
     no_sponsors: "Данных пока нет.",
     no_team: "Данных пока нет...",
@@ -161,7 +164,7 @@ const translations = {
     nav_dua: "Prayer request",
     nav_contact: "Contact",
     nav_donate: "Donate",
-    hero_title: "G'OYIB YORONLAR MOSQUE",
+    hero_title: "Welcome",
     hero_title_inline: "G'OYIB YORONLAR",
     hero_subtitle: "Tuda village, Pop district, Namangan region",
     dua_title: "Prayer request",
@@ -173,19 +176,20 @@ const translations = {
     dua_msg_ph: "Prayer details (E.g. Please pray for my health and recovery)",
     dua_submit: "Submit",
     dua_success: "Your message has been sent successfully!",
-    masjid_time_label: "MOSQUE PRAYER TIME",
-    api_time_label: "ADHAN",
+    masjid_time_label: "Mosque prayer time",
+    api_time_label: "Adhan",
     loading: "Loading...",
     next_prayer_in: "Next prayer in:",
     about_title: "About Us",
     about_text: "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region.",
-    team_title: "Mosque team",
+    team_title: "Mosque Team",
     sponsors_title: "Honorable sponsors",
     gallery_title: "Photo gallery",
     contact_title: "Contact Us",
     charity_title: "Charity & donation",
     charity_general: "General donation",
     charity_utility: "Utility payments",
+    read_more: "Read",
     no_news: "No news available...",
     no_sponsors: "No information yet.",
     no_team: "No team members yet...",
@@ -202,6 +206,8 @@ function setLanguage(lang) {
 
   const langSelect = document.getElementById('lang-select');
   if (langSelect) langSelect.value = lang;
+  const langSelectMob = document.getElementById('lang-select-mobile');
+  if (langSelectMob) langSelectMob.value = lang;
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -217,9 +223,8 @@ function setLanguage(lang) {
   if (textInput && translations[lang].dua_msg_ph) textInput.placeholder = translations[lang].dua_msg_ph;
 }
 
-document.getElementById('lang-select')?.addEventListener('change', (e) => {
-  setLanguage(e.target.value);
-});
+document.getElementById('lang-select')?.addEventListener('change', (e) => setLanguage(e.target.value));
+document.getElementById('lang-select-mobile')?.addEventListener('change', (e) => setLanguage(e.target.value));
 
 // ============ FONT SIZE SCALING ============
 function setFontSize(size) {
@@ -297,27 +302,45 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ============ BOTTOM NAV & SCROLL SPY ============
+// ============ BOTTOM NAV & SCROLL SPY (EXACT STITCH LOOK) ============
 function initNavSync() {
   const bottomItems = document.querySelectorAll('.bottom-nav-item[data-section]');
   const desktopLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section[id]');
 
+  function setActiveTab(sectionId) {
+    bottomItems.forEach(item => {
+      const isCur = item.dataset.section === sectionId;
+      const icon = item.querySelector('.material-symbols-outlined');
+      if (isCur) {
+        item.className = 'bottom-nav-item flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 min-w-[60px] active:scale-90 transition-transform duration-150 group';
+        if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        item.className = 'bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90';
+        if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    });
+
+    desktopLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+    });
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.id;
-        bottomItems.forEach(item => {
-          item.classList.toggle('active', item.dataset.section === id);
-        });
-        desktopLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-        });
+        setActiveTab(entry.target.id);
       }
     });
   }, { rootMargin: '-25% 0px -65% 0px', threshold: 0 });
 
   sections.forEach(s => observer.observe(s));
+
+  bottomItems.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setActiveTab(btn.dataset.section);
+    });
+  });
 }
 initNavSync();
 
@@ -492,22 +515,22 @@ function highlightActivePrayer() {
 
     if (isCur) {
       // Active styling — Rich Emerald Deep with Gold shimmer
-      cell.className = 'prayer-cell bg-emerald-deep p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all shadow-md';
-      if (nameEl) nameEl.className = 'font-caps font-bold text-[12px] text-white tracking-wider mb-2 prayer-name';
-      if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded-xl py-2 px-1 mb-2.5 prayer-pill';
-      if (pillLabel) pillLabel.className = 'text-[10px] text-white/80 uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
-      if (masjidTimeEl) masjidTimeEl.className = 'text-[26px] md:text-[28px] font-bold text-white tabular-nums leading-tight prayer-masjid';
-      if (azonLabel) azonLabel.className = 'font-bold uppercase tracking-wider text-[11px] text-white/80 prayer-azon-label';
-      if (apiTimeEl) apiTimeEl.className = 'font-bold tabular-nums text-[13px] text-white prayer-api';
+      cell.className = 'prayer-cell bg-emerald-deep p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all shadow-md relative overflow-hidden';
+      if (nameEl) nameEl.className = 'font-label-caps text-[11px] font-bold text-gold-shimmer mb-1 prayer-name relative z-10';
+      if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded p-1.5 mb-1.5 prayer-pill relative z-10';
+      if (pillLabel) pillLabel.className = 'text-[9px] text-white/80 uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
+      if (masjidTimeEl) masjidTimeEl.className = 'font-prayer-time-display text-[22px] md:text-[24px] font-bold text-white tabular-nums leading-none prayer-masjid';
+      if (azonLabel) azonLabel.className = 'text-[9px] font-bold uppercase tracking-wider text-white/70 prayer-azon-label';
+      if (apiTimeEl) apiTimeEl.className = 'text-[12px] font-bold tabular-nums text-white/90 prayer-api';
     } else {
-      // Normal styling — Clean surface with primary emerald accents
-      cell.className = 'prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all';
-      if (nameEl) nameEl.className = 'font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name';
-      if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill';
-      if (pillLabel) pillLabel.className = 'text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
-      if (masjidTimeEl) masjidTimeEl.className = 'text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid';
-      if (azonLabel) azonLabel.className = 'font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label';
-      if (apiTimeEl) apiTimeEl.className = 'font-bold tabular-nums text-[13px] text-on-surface prayer-api';
+      // Normal styling — Clean surface
+      cell.className = 'prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all';
+      if (nameEl) nameEl.className = 'font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name';
+      if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill';
+      if (pillLabel) pillLabel.className = 'text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
+      if (masjidTimeEl) masjidTimeEl.className = 'font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid';
+      if (azonLabel) azonLabel.className = 'text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label';
+      if (apiTimeEl) apiTimeEl.className = 'text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api';
     }
   });
 }
@@ -570,22 +593,24 @@ function renderNews() {
 
   allNews.slice(0, 6).forEach((item) => {
     const card = document.createElement('div');
-    card.className = 'bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-high shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col group';
+    card.className = 'min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex flex-col flex-shrink-0 cursor-pointer group';
     card.onclick = () => openNewsModal(item.title, item.desc || item.content, item.imgUrl, item.date);
 
     card.innerHTML = `
-      <div class="h-44 bg-surface-container relative overflow-hidden">
-        ${item.imgUrl ? `<img src="${item.imgUrl}" alt="${item.title || ''}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[48px] opacity-40">article</span></div>`}
-        <div class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-white font-caps text-[10px] px-2.5 py-0.5 rounded-full">${item.date ? item.date.split(' ')[0] : ''}</div>
+      <div class="h-32 bg-surface-variant relative overflow-hidden">
+        ${item.imgUrl ? `<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.imgUrl}" alt="${item.title || ''}" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px] opacity-40">article</span></div>`}
+        <div class="absolute top-2 left-2 bg-white/90 dark:bg-black/80 backdrop-blur px-2 py-0.5 rounded-full font-label-caps text-[10px] text-primary shadow-sm">
+          ${item.date ? item.date.split(' ')[0] : 'Yangi'}
+        </div>
       </div>
       <div class="p-4 flex flex-col flex-grow justify-between">
         <div>
-          <h3 class="font-headline text-[16px] font-bold text-primary group-hover:text-gold-metallic transition-colors line-clamp-2 mb-1.5">${item.title || ''}</h3>
-          <p class="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">${item.desc || item.content || ''}</p>
+          <h3 class="font-body-md text-[15px] font-bold text-primary mb-2 line-clamp-2">${item.title || ''}</h3>
+          <p class="text-[12px] text-on-surface-variant line-clamp-2 mb-4 leading-relaxed">${item.desc || item.content || ''}</p>
         </div>
-        <div class="mt-3 flex items-center gap-1 text-xs text-primary font-bold">
-          <span>Batafsil</span>
-          <span class="material-symbols-outlined text-[15px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        <div class="mt-auto text-primary text-[12px] font-semibold flex items-center gap-1">
+          <span>${translations[currentLang]?.read_more || "O'qish"}</span>
+          <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
         </div>
       </div>
     `;
@@ -629,7 +654,7 @@ window.closeNewsModal = function() {
   document.body.style.overflow = '';
 };
 
-// ============ TEAM ============
+// ============ TEAM (EXACT STITCH MOBILE CAROUSEL & DESKTOP GRID) ============
 let allTeam = [];
 
 function renderTeam() {
@@ -644,15 +669,15 @@ function renderTeam() {
 
   allTeam.forEach(member => {
     const card = document.createElement('div');
-    card.className = 'bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center text-center border border-surface-container-high shadow-sm hover:shadow-md transition-all cursor-pointer group';
+    card.className = 'min-w-[140px] w-[140px] md:w-auto bg-surface-container-lowest rounded-xl p-4 flex flex-col items-center shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex-shrink-0 cursor-pointer group hover:shadow-md transition-all';
     card.onclick = () => openTeamModal(member);
 
     card.innerHTML = `
-      <div class="w-20 h-20 rounded-full overflow-hidden bg-surface-container mb-3 border-2 border-surface-container-high group-hover:border-gold-shimmer transition-colors">
-        ${member.imgUrl ? `<img src="${member.imgUrl}" alt="${member.name || ''}" class="w-full h-full object-cover"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px]">person</span></div>`}
+      <div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container-high mb-3 border border-surface-variant group-hover:border-gold-shimmer transition-colors">
+        ${member.imgUrl ? `<img class="w-full h-full object-cover" src="${member.imgUrl}" alt="${member.name || ''}"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[32px]">person</span></div>`}
       </div>
-      <h3 class="font-headline text-[15px] font-bold text-primary mb-0.5 group-hover:text-gold-metallic transition-colors">${member.name || ''}</h3>
-      <p class="font-caps text-[10px] text-on-surface-variant">${member.role || ''}</p>
+      <h3 class="font-body-md text-[14px] font-bold text-primary text-center leading-tight mb-1">${member.name || ''}</h3>
+      <p class="font-label-caps text-[10px] text-on-surface-variant text-center">${member.role || ''}</p>
     `;
     container.appendChild(card);
   });
@@ -728,7 +753,7 @@ function renderSponsors() {
 
   allSponsors.forEach(sponsor => {
     const card = document.createElement('div');
-    card.className = 'bg-surface-container-lowest rounded-2xl p-4 border-t-4 border-gold-metallic border-x border-b border-surface-container-high shadow-sm flex items-center gap-3.5 hover:shadow-md transition-all cursor-pointer';
+    card.className = 'bg-surface-container-lowest rounded-xl p-4 border-t-4 border-gold-metallic border-x border-b border-surface-container-high shadow-sm flex items-center gap-3.5 hover:shadow-md transition-all cursor-pointer';
     card.onclick = () => openSponsorModal(sponsor);
 
     card.innerHTML = `
@@ -736,7 +761,7 @@ function renderSponsors() {
         ${sponsor.imgUrl ? `<img src="${sponsor.imgUrl}" alt="${sponsor.name || ''}" class="w-full h-full object-cover"/>` : `<div class="w-full h-full flex items-center justify-center text-gold-metallic"><span class="material-symbols-outlined text-[26px]">star</span></div>`}
       </div>
       <div>
-        <h3 class="font-headline text-[15px] font-bold text-primary">${sponsor.name || ''}</h3>
+        <h3 class="font-body-md text-[15px] font-bold text-primary">${sponsor.name || ''}</h3>
         <p class="text-xs text-on-surface-variant mt-0.5 line-clamp-2">${sponsor.desc || ''}</p>
       </div>
     `;
@@ -765,7 +790,7 @@ window.openSponsorModal = function(sponsor) {
   });
 };
 
-// ============ CHARITY ============
+// ============ CHARITY & UTILITIES (EXACT STITCH DESIGN) ============
 function renderCharity(data) {
   const container = document.getElementById('charity-grid');
   if (!container) return;
@@ -775,75 +800,77 @@ function renderCharity(data) {
 
   container.innerHTML = `
     <!-- Umumiy ehson kartasi -->
-    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
+    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-xl shadow-sm border-x border-b border-surface-container-high p-4 flex flex-col justify-between">
       <div>
-        <div class="flex items-center gap-2 mb-3">
-          <span class="material-symbols-outlined text-emerald-deep text-[24px]">account_balance</span>
-          <h3 class="font-headline text-lg font-bold text-primary" data-i18n="charity_general">Umumiy ehson</h3>
-        </div>
-        <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.</p>
-        
-        <div class="bg-surface-container-low p-3.5 rounded-xl mb-3 border border-surface-variant flex justify-between items-center">
+        <h3 class="font-headline-md text-[18px] font-bold text-primary mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-deep text-[20px]">account_balance</span>
+          <span data-i18n="charity_general">Umumiy ehson</span>
+        </h3>
+        <div class="bg-surface-container-low p-3 rounded-lg mb-4 border border-surface-variant flex justify-between items-center group">
           <div>
-            <div class="font-caps text-[9px] text-on-surface-variant">Uzcard / Humo</div>
-            <div class="text-[17px] font-bold text-primary tracking-widest tabular-nums font-mono">${cardNum}</div>
-            <div class="text-xs text-on-surface-variant mt-0.5">${cardOwner}</div>
+            <div class="font-label-caps text-[10px] text-on-surface-variant mb-1">Uzcard/Humo</div>
+            <div class="font-body-lg text-[16px] text-primary font-bold tracking-widest tabular-nums font-mono">${cardNum}</div>
+            <div class="text-[11px] text-on-surface-variant mt-0.5">${cardOwner}</div>
           </div>
-          <button class="w-9 h-9 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep active:scale-90 transition-all copy-btn" data-copy="${cardNum}" title="Nusxa olish">
-            <span class="material-symbols-outlined text-[18px]">content_copy</span>
+          <button class="w-8 h-8 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep active:scale-90 transition-all copy-btn" data-copy="${cardNum}" title="Nusxa olish">
+            <span class="material-symbols-outlined text-[16px]">content_copy</span>
           </button>
         </div>
       </div>
 
-      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-caps text-xs py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm mt-2" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
+      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
         <span class="material-symbols-outlined text-[18px]">payment</span>
         <span>domo.uz orqali ehson</span>
       </a>
     </div>
 
     <!-- Kommunal to'lovlar -->
-    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5">
-      <div class="flex items-center gap-2 mb-3">
-        <span class="material-symbols-outlined text-emerald-deep text-[24px]">receipt_long</span>
-        <h3 class="font-headline text-lg font-bold text-primary" data-i18n="charity_utility">Kommunal to'lovlar</h3>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.</p>
-
+    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-xl shadow-sm border-x border-b border-surface-container-high p-4">
+      <h3 class="font-headline-md text-[18px] font-bold text-primary mb-3 flex items-center gap-2">
+        <span class="material-symbols-outlined text-emerald-deep text-[20px]">receipt_long</span>
+        <span data-i18n="charity_utility">Kommunal to'lovlar</span>
+      </h3>
       <div class="space-y-2">
         ${data.util_elec ? `
-          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm">⚡</div>
+          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-gold-metallic">
+                <span class="material-symbols-outlined text-[16px]">bolt</span>
+              </div>
               <div>
-                <div class="font-caps text-[9px] text-on-surface-variant">Elektr (yuridik)</div>
-                <div class="text-[13px] font-bold text-primary tabular-nums font-mono">${data.util_elec}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant">Elektr</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_elec}</div>
               </div>
             </div>
-            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_elec}"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_elec}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
           </div>
         ` : ''}
         ${data.util_water ? `
-          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-sm">💧</div>
+          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-blue-500">
+                <span class="material-symbols-outlined text-[16px]">water_drop</span>
+              </div>
               <div>
-                <div class="font-caps text-[9px] text-on-surface-variant">Suv</div>
-                <div class="text-[13px] font-bold text-primary tabular-nums font-mono">${data.util_water}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant">Suv</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_water}</div>
               </div>
             </div>
-            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_water}"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_water}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
           </div>
         ` : ''}
         ${data.util_gas ? `
-          <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center font-bold text-sm">🔥</div>
+          <div class="bg-surface-container-low p-2 rounded-lg border border-surface-variant flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-white dark:bg-surface-container flex items-center justify-center shadow-sm text-orange-500">
+                <span class="material-symbols-outlined text-[16px]">local_fire_department</span>
+              </div>
               <div>
-                <div class="font-caps text-[9px] text-on-surface-variant">Gaz</div>
-                <div class="text-[13px] font-bold text-primary tabular-nums font-mono">${data.util_gas}</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant">Gaz</div>
+                <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_gas}</div>
               </div>
             </div>
-            <button class="w-7 h-7 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_gas}"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+            <button class="w-6 h-6 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant copy-btn" data-copy="${data.util_gas}"><span class="material-symbols-outlined text-[12px]">content_copy</span></button>
           </div>
         ` : ''}
       </div>

@@ -29,36 +29,84 @@
     theme: {
       extend: {
         colors: {
-          "surface": "#faf9f5",
-          "surface-container-lowest": "#ffffff",
-          "surface-container-low": "#f4f4f0",
-          "surface-container": "#efeeea",
-          "surface-container-high": "#e9e8e4",
-          "surface-container-highest": "#e3e2df",
-          "surface-dim": "#dbdad6",
-          "on-surface": "#1b1c1a",
-          "on-surface-variant": "#404944",
-          "outline": "#707974",
+          "on-tertiary-fixed": "#2f1500",
           "outline-variant": "#bfc9c3",
-          "primary": "#003527",
+          "secondary-fixed-dim": "#ffb68e",
           "on-primary": "#ffffff",
-          "primary-container": "#064e3b",
-          "on-primary-container": "#80bea6",
-          "inverse-primary": "#95d3ba",
-          "secondary": "#9b4500",
-          "secondary-container": "#fd8a42",
-          "on-secondary-container": "#682c00",
-          "emerald-deep": "#064E3B",
-          "emerald-light": "#065F46",
-          "gold-metallic": "#B45309",
-          "gold-shimmer": "#F59E0B",
+          "slate-gray": "#334155",
+          "on-surface": "#1b1c1a",
           "sand-cream": "#FDFCF8",
-          "slate-gray": "#334155"
+          "primary-fixed-dim": "#95d3ba",
+          "surface-container-lowest": "#ffffff",
+          "secondary-container": "#fd8a42",
+          "surface-container-high": "#e9e8e4",
+          "tertiary-fixed-dim": "#ffb77d",
+          "secondary": "#9b4500",
+          "tertiary-fixed": "#ffdcc3",
+          "on-tertiary-fixed-variant": "#6e3900",
+          "surface-dim": "#dbdad6",
+          "on-error": "#ffffff",
+          "on-secondary-fixed": "#331200",
+          "emerald-light": "#065F46",
+          "on-error-container": "#93000a",
+          "tertiary-container": "#6a3700",
+          "surface-container-low": "#f4f4f0",
+          "on-tertiary-container": "#ff9939",
+          "on-secondary": "#ffffff",
+          "on-tertiary": "#ffffff",
+          "surface-tint": "#2b6954",
+          "primary": "#003527",
+          "surface-variant": "#e3e2df",
+          "on-primary-fixed-variant": "#0b513d",
+          "surface-bright": "#faf9f5",
+          "primary-fixed": "#b0f0d6",
+          "outline": "#707974",
+          "error": "#ba1a1a",
+          "gold-metallic": "#B45309",
+          "background": "#faf9f5",
+          "on-primary-container": "#80bea6",
+          "on-secondary-container": "#682c00",
+          "surface": "#faf9f5",
+          "emerald-deep": "#064E3B",
+          "surface-container-highest": "#e3e2df",
+          "on-secondary-fixed-variant": "#763300",
+          "error-container": "#ffdad6",
+          "tertiary": "#4a2400",
+          "on-primary-fixed": "#002117",
+          "secondary-fixed": "#ffdbca",
+          "inverse-primary": "#95d3ba",
+          "primary-container": "#064e3b",
+          "gold-shimmer": "#F59E0B",
+          "on-surface-variant": "#404944",
+          "inverse-on-surface": "#f2f1ed",
+          "inverse-surface": "#2f312e",
+          "on-background": "#1b1c1a",
+          "surface-container": "#efeeea"
+        },
+        borderRadius: {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        spacing: {
+          "prayer-row-padding": "12px 20px",
+          "margin-desktop": "48px",
+          "stack-sm": "8px",
+          "gutter": "24px",
+          "container-max": "1280px",
+          "stack-md": "16px",
+          "stack-lg": "32px",
+          "margin-mobile": "16px"
         },
         fontFamily: {
-          "headline": ["Libre Caslon Text", "serif"],
-          "body": ["Inter", "sans-serif"],
-          "caps": ["Hanken Grotesk", "sans-serif"]
+          "headline-lg-mobile": ["Libre Caslon Text", "serif"],
+          "headline-lg": ["Libre Caslon Text", "serif"],
+          "prayer-time-display": ["Inter", "sans-serif"],
+          "body-lg": ["Inter", "sans-serif"],
+          "body-md": ["Inter", "sans-serif"],
+          "label-caps": ["Hanken Grotesk", "sans-serif"],
+          "headline-md": ["Libre Caslon Text", "serif"]
         }
       }
     }
@@ -69,14 +117,27 @@
   html.font-scale-lg { font-size: 18px; }
   html.font-scale-xl { font-size: 20px; }
 
-  .font-headline { font-family: 'Libre Caslon Text', serif; }
-  .font-body { font-family: 'Inter', sans-serif; }
-  .font-caps { font-family: 'Hanken Grotesk', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  body {
+    background-color: #faf9f5;
+    color: #1b1c1a;
+    padding-bottom: 84px;
+  }
 
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  @media (min-width: 768px) {
+    body {
+      padding-bottom: 32px;
+    }
+  }
 
-  /* Dark mode */
+  .font-headline-md { font-family: 'Libre Caslon Text', serif; }
+  .font-body-md { font-family: 'Inter', sans-serif; }
+  .font-label-caps { font-family: 'Hanken Grotesk', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .font-prayer-time-display { font-family: 'Inter', sans-serif; }
+
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Dark mode overrides */
   .dark body { background-color: #121413; color: #e5e3dc; }
   .dark .bg-surface { background-color: #121413 !important; }
   .dark .bg-surface-container-lowest { background-color: #1d201e !important; }
@@ -89,22 +150,16 @@
   .dark .border-surface-container-high { border-color: #2d312e !important; }
   .dark .border-surface-variant { border-color: #2d312e !important; }
 
-  .bottom-nav-item { color: #404944; }
-  .bottom-nav-item.active { color: #064E3B; background-color: #efeeea; }
-  .dark .bottom-nav-item { color: #a4aca6; }
-  .dark .bottom-nav-item.active { color: #95d3ba; background-color: #1d201e; }
-
   .nav-link.active { color: #003527; background-color: #efeeea; font-weight: 700; }
   .dark .nav-link.active { color: #95d3ba; background-color: #1d201e; }
 </style>
 </head>
-<body class="bg-surface text-on-surface min-h-screen font-body transition-colors duration-200">
+<body class="antialiased min-h-screen relative flex flex-col items-center w-full selection:bg-gold-shimmer selection:text-white transition-colors duration-200">
 
-<!-- Top Utility Bar (Desktop & Mobile) -->
-<div class="bg-emerald-deep text-white text-xs border-b border-emerald-light/40">
-  <div class="max-w-[1280px] mx-auto px-4 md:px-12 py-1.5 flex justify-between items-center flex-wrap gap-2">
-    <!-- Left: Language & Font switcher -->
-    <div class="flex items-center gap-2 md:gap-4 flex-wrap">
+<!-- Top Utility Bar (Desktop only) -->
+<div class="hidden md:block w-full bg-emerald-deep text-white text-xs border-b border-emerald-light/40">
+  <div class="max-w-container-max mx-auto px-margin-desktop py-1.5 flex justify-between items-center">
+    <div class="flex items-center gap-4">
       <!-- Language -->
       <div class="flex items-center gap-1 bg-black/20 rounded px-2 py-0.5">
         <span class="material-symbols-outlined text-[15px] opacity-80">translate</span>
@@ -119,56 +174,54 @@
       <!-- Font size -->
       <div class="flex items-center gap-1 bg-black/20 rounded px-2 py-0.5">
         <span class="text-[11px] opacity-80" data-i18n="text_size">Matn:</span>
-        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="norm" title="Normal">A</button>
-        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="lg" title="Katta">A+</button>
-        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="xl" title="Juda katta">A++</button>
+        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="norm">A</button>
+        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="lg">A+</button>
+        <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="xl">A++</button>
       </div>
     </div>
 
-    <!-- Right: Clock & Social -->
     <div class="flex items-center gap-3">
-      <div class="font-caps text-[11px] tracking-wider tabular-nums font-bold flex items-center gap-1.5 text-gold-shimmer">
+      <div class="font-label-caps text-[11px] tracking-wider tabular-nums font-bold flex items-center gap-1.5 text-gold-shimmer">
         <span class="material-symbols-outlined text-[14px]">schedule</span>
         <span id="current-time">00:00:00</span>
       </div>
-      <a href="https://t.me/goyibyoronlar" target="_blank" class="hover:text-gold-shimmer transition-colors flex items-center gap-1" title="Telegram">
-        <span class="text-[11px] font-medium hidden sm:inline">@goyibyoronlar</span>
+      <a href="https://t.me/goyibyoronlar" target="_blank" class="hover:text-gold-shimmer transition-colors flex items-center gap-1">
+        <span class="text-[11px] font-medium">@goyibyoronlar</span>
       </a>
     </div>
   </div>
 </div>
 
-<!-- Main Sticky Header (Desktop) -->
-<header class="hidden md:flex sticky top-0 z-40 w-full bg-surface/95 backdrop-blur-md border-b border-surface-container-high shadow-sm">
-  <div class="max-w-[1280px] mx-auto w-full flex items-center justify-between px-12 py-3">
+<!-- Desktop Sticky Header -->
+<header class="hidden md:flex sticky top-0 z-40 w-full bg-surface/90 backdrop-blur-md border-b border-outline-variant shadow-sm px-margin-desktop py-3">
+  <div class="max-w-container-max mx-auto w-full flex items-center justify-between">
     <a href="#" class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full bg-emerald-deep flex items-center justify-center shadow-sm">
-        <span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings:'FILL' 1">mosque</span>
+      <div class="w-10 h-10 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mosque</span>
       </div>
       <div>
-        <div class="font-caps text-primary text-[10px] tracking-wider" data-i18n="hero_title_inline">G'OYIB YORONLAR</div>
-        <div class="font-headline text-[17px] text-on-surface font-bold leading-tight" data-i18n="hero_title">Jome Masjidi</div>
+        <div class="font-label-caps text-primary text-[10px] tracking-wider" data-i18n="hero_title_inline">G'OYIB YORONLAR</div>
+        <div class="font-headline-md text-lg text-on-surface font-bold leading-tight" data-i18n="hero_title">Jome Masjidi</div>
       </div>
     </a>
 
     <nav class="flex items-center gap-1">
-      <a href="#home" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_home">Bosh sahifa</a>
-      <a href="#prayers" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_about">Namoz</a>
-      <a href="#news" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_news">Yangiliklar</a>
-      <a href="#team" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_team">Jamoa</a>
-      <a href="#sponsors" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_sponsors">Faxriylar</a>
-      <a href="#charity" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_charity">Xayriya</a>
-      <a href="#gallery" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_gallery">Galereya</a>
-      <a href="#dua" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_dua">Duo</a>
-      <a href="#contact" class="nav-link px-3 py-1.5 rounded-lg font-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_contact">Aloqa</a>
+      <a href="#home" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_home">Bosh sahifa</a>
+      <a href="#prayers" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_about">Namoz</a>
+      <a href="#news" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_news">Yangiliklar</a>
+      <a href="#team" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_team">Jamoa</a>
+      <a href="#sponsors" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_sponsors">Faxriylar</a>
+      <a href="#charity" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_charity">Xayriya</a>
+      <a href="#gallery" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_gallery">Galereya</a>
+      <a href="#dua" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_dua">Duo</a>
+      <a href="#contact" class="nav-link px-3 py-1.5 rounded-lg font-label-caps text-[11px] text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" data-i18n="nav_contact">Aloqa</a>
     </nav>
 
     <div class="flex items-center gap-3">
-      <!-- Dark mode toggle -->
       <button id="theme-toggle-desktop" class="w-10 h-10 rounded-full border-2 border-gold-metallic/70 flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors shadow-sm" title="Tungi / Kunduzgi rejim">
         <span class="material-symbols-outlined text-[20px] text-gold-shimmer" id="theme-icon-desktop">light_mode</span>
       </button>
-      <a href="#charity" class="bg-emerald-deep hover:bg-emerald-light text-white font-caps text-[11px] px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm font-bold" data-i18n="nav_donate">
+      <a href="#charity" class="bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm font-bold" data-i18n="nav_donate">
         <span class="material-symbols-outlined text-[16px]">volunteer_activism</span>
         <span>Ehson</span>
       </a>
@@ -176,41 +229,50 @@
   </div>
 </header>
 
-<!-- Mobile Sticky Header -->
-<header class="md:hidden sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-surface/95 backdrop-blur-md border-b border-surface-container-high shadow-sm">
-  <a href="#" class="flex items-center gap-2.5">
-    <div class="w-10 h-10 rounded-full bg-emerald-deep flex items-center justify-center shadow-sm">
-      <span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings:'FILL' 1">mosque</span>
-    </div>
-    <div class="font-headline text-[18px] font-bold text-on-surface leading-tight">G'oyib Yoronlar</div>
-  </a>
+<!-- Mobile Minimal Header (From Stitch bosh_sahifa_mobile_yangilangan) -->
+<header class="md:hidden w-full bg-surface/90 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-outline-variant px-margin-mobile py-3 flex justify-between items-center">
   <div class="flex items-center gap-2">
-    <button id="theme-toggle" class="w-10 h-10 rounded-full border-2 border-gold-metallic/70 flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors shadow-sm" title="Tungi / Kunduzgi rejim">
-      <span class="material-symbols-outlined text-[20px] text-gold-shimmer" id="theme-icon">light_mode</span>
+    <div class="w-9 h-9 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm">
+      <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mosque</span>
+    </div>
+    <h1 class="font-headline-md text-lg font-bold text-primary">G'oyib Yoronlar</h1>
+  </div>
+  
+  <div class="flex items-center gap-2">
+    <!-- Language select for mobile -->
+    <select id="lang-select-mobile" class="bg-surface-container border border-surface-variant text-xs rounded-lg px-2 py-1 text-on-surface focus:ring-0">
+      <option value="uz_lt">🇺🇿 O'z</option>
+      <option value="uz_cy">🇺🇿 Ўз</option>
+      <option value="ru">🇷🇺 Ру</option>
+      <option value="en">🇺🇸 En</option>
+    </select>
+    
+    <!-- Theme toggle for mobile -->
+    <button id="theme-toggle" class="w-9 h-9 rounded-full border-2 border-gold-metallic/70 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" title="Tungi / Kunduzgi rejim">
+      <span class="material-symbols-outlined text-[18px] text-gold-shimmer" id="theme-icon">light_mode</span>
     </button>
   </div>
 </header>
 
-<!-- Main Container -->
-<main class="max-w-[1280px] mx-auto w-full space-y-7 py-4 pb-28 md:pb-12 px-4 md:px-12">
+<!-- Main Content -->
+<main class="w-full max-w-container-max flex-grow flex flex-col gap-stack-lg pb-stack-lg px-0 md:px-margin-desktop">
 
   <!-- Hero Section -->
-  <section id="home" class="w-full">
-    <div class="relative w-full h-56 md:h-80 rounded-2xl overflow-hidden group shadow-md">
-      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent z-10"></div>
+  <section id="home" class="w-full relative px-margin-mobile md:px-0 pt-stack-md">
+    <div class="relative w-full h-64 md:h-80 rounded-xl overflow-hidden shadow-lg border border-surface-container-high group">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent z-10"></div>
       <img alt="G'oyib Yoronlar Masjidi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="public/assets/masjid-yangi.png" onerror="this.src='https://images.unsplash.com/photo-1579404243938-f8d202ff6f36?q=85&fm=jpg&w=1200'"/>
-      
       <div class="absolute bottom-4 left-4 right-4 z-20 text-white">
-        <span class="bg-emerald-deep/90 backdrop-blur-sm text-white font-caps text-[10px] px-2.5 py-0.5 rounded-full mb-1.5 inline-block">Jome Masjidi</span>
-        <h1 class="font-headline text-2xl md:text-4xl font-bold drop-shadow" data-i18n="hero_title">G'OYIB YORONLAR JOME MASJIDI</h1>
-        <p class="font-body text-xs md:text-sm text-surface-container-low mt-1" data-i18n="hero_subtitle">Namangan viloyati Pop tumani To'da qishlog'i</p>
+        <span class="bg-primary/80 backdrop-blur-sm text-on-primary font-label-caps text-[10px] px-2 py-1 rounded mb-2 inline-block">Jome Masjidi</span>
+        <h2 class="font-headline-lg-mobile text-2xl md:text-3xl text-white drop-shadow-md font-bold" data-i18n="hero_title">Xush kelibsiz</h2>
+        <p class="font-body-md text-xs md:text-sm text-surface-container-low mt-1" data-i18n="hero_subtitle">Namangan viloyati, Pop tumani, To'da qishlog'i</p>
         
-        <!-- Countdown to next prayer -->
-        <div class="mt-3 flex items-center gap-2 flex-wrap bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-xl inline-flex border border-white/10">
-          <span class="material-symbols-outlined text-gold-shimmer text-[18px]">alarm</span>
-          <span class="font-caps text-[10px] text-white/90" data-i18n="next_prayer_in">Keyingi namozga:</span>
-          <span id="countdown-timer" class="text-[15px] text-gold-shimmer font-bold tabular-nums tracking-wider font-caps">--:--:--</span>
-          <span id="next-prayer-name" class="font-caps text-[11px] text-white/80 font-bold"></span>
+        <!-- Countdown -->
+        <div class="mt-2.5 flex items-center gap-2 flex-wrap bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg inline-flex border border-white/10">
+          <span class="material-symbols-outlined text-gold-shimmer text-[16px]">alarm</span>
+          <span class="font-label-caps text-[10px] text-white/90" data-i18n="next_prayer_in">Keyingi namozga:</span>
+          <span id="countdown-timer" class="font-prayer-time-display text-[15px] text-gold-shimmer font-bold tabular-nums">--:--:--</span>
+          <span id="next-prayer-name" class="font-label-caps text-[11px] text-white/80 font-bold"></span>
         </div>
         <div class="mt-1 text-[11px] text-white/70" id="current-date"></div>
       </div>
@@ -218,159 +280,163 @@
   </section>
 
   <!-- Quick Actions Grid -->
-  <section class="w-full">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <a class="bg-surface-container rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-sm hover:shadow-md transition-all active:scale-[0.98]" href="#charity">
-        <div class="w-12 h-12 rounded-full bg-emerald-deep flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-white text-[22px]" style="font-variation-settings:'FILL' 1">volunteer_activism</span>
+  <section class="w-full px-margin-mobile md:px-0">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-stack-sm">
+      <!-- Donation CTA -->
+      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#charity">
+        <div class="w-12 h-12 rounded-full bg-emerald-deep text-on-primary flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
         </div>
         <div>
-          <h3 class="font-body text-[14px] font-semibold text-on-surface" data-i18n="nav_charity">Xayriya</h3>
-          <p class="text-[11px] text-on-surface-variant mt-0.5" data-i18n="charity_general">Ehson qilish</p>
+          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_charity">Xayriya</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="charity_general">Ehson qilish</p>
         </div>
       </a>
-      <a class="bg-surface-container rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-sm hover:shadow-md transition-all active:scale-[0.98]" href="#dua">
-        <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-on-secondary-container text-[22px]" style="font-variation-settings:'FILL' 1">prayer_times</span>
+      <!-- Dua Request -->
+      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#dua">
+        <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">prayer_times</span>
         </div>
         <div>
-          <h3 class="font-body text-[14px] font-semibold text-on-surface" data-i18n="nav_dua">Duo olish</h3>
-          <p class="text-[11px] text-on-surface-variant mt-0.5" data-i18n="dua_title">Jamoatdan duo</p>
+          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_dua">Duo olish</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="dua_title">Jamoatdan duo</p>
         </div>
       </a>
-      <a class="bg-surface-container rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-sm hover:shadow-md transition-all active:scale-[0.98]" href="#gallery">
-        <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-on-surface text-[22px]" style="font-variation-settings:'FILL' 1">photo_library</span>
+      <!-- Gallery -->
+      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#gallery">
+        <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">photo_library</span>
         </div>
         <div>
-          <h3 class="font-body text-[14px] font-semibold text-on-surface" data-i18n="nav_gallery">Galereya</h3>
-          <p class="text-[11px] text-on-surface-variant mt-0.5" data-i18n="gallery_title">Rasmlar</p>
+          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_gallery">Galereya</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="gallery_title">Rasmlar</p>
         </div>
       </a>
-      <a class="bg-surface-container rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-sm hover:shadow-md transition-all active:scale-[0.98]" href="#about">
-        <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-on-surface text-[22px]" style="font-variation-settings:'FILL' 1">info</span>
+      <!-- About -->
+      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#about">
+        <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">info</span>
         </div>
         <div>
-          <h3 class="font-body text-[14px] font-semibold text-on-surface" data-i18n="nav_about">Biz haqimizda</h3>
-          <p class="text-[11px] text-on-surface-variant mt-0.5">Masjid tarixi</p>
+          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_about">Biz haqimizda</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">Masjid tarixi</p>
         </div>
       </a>
     </div>
   </section>
 
-  <!-- Prayer Times Widget — EXACT STITCH DESIGN -->
-  <section id="prayers" class="w-full">
-    <div class="flex justify-between items-end mb-3">
+  <!-- Prayer Times Widget — EXACT STITCH 2 DESIGN -->
+  <section id="prayers" class="w-full px-margin-mobile md:px-0">
+    <div class="flex justify-between items-end mb-4">
       <div>
-        <h2 class="font-headline text-2xl text-primary font-bold">Namoz Vaqtlari</h2>
+        <h2 class="font-headline-md text-headline-md text-primary font-bold">Namoz Vaqtlari</h2>
         <span class="text-xs text-on-surface-variant font-medium" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</span>
       </div>
       <div class="flex flex-col items-end">
-        <span id="hijri-date" class="font-caps text-[11px] text-gold-metallic font-bold"></span>
-        <span class="font-caps text-[10px] text-on-surface-variant flex items-center gap-1">
-          <span class="material-symbols-outlined text-[13px]">location_on</span> To'da
+        <span id="hijri-date" class="font-label-caps text-[11px] text-gold-metallic font-bold"></span>
+        <span class="font-label-caps text-[10px] text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">location_on</span> To'da
         </span>
       </div>
     </div>
 
-    <!-- Outer container box with rounded-2xl border -->
-    <div class="bg-surface-container rounded-2xl overflow-hidden shadow-sm border border-surface-container-high">
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-surface-container-high" id="prayer-grid-container">
+    <!-- Outer container box with rounded-xl border and shadow -->
+    <div class="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(180,83,9,0.05)] border border-surface-container-high">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-px bg-surface-container-high" id="prayer-grid-container">
 
         <!-- BOMDOD -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="bomdod" id="cell-bomdod">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">wb_twilight</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="bomdod">BOMDOD</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="bomdod" id="cell-bomdod">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">wb_twilight</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="bomdod">BOMDOD</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">MASJIDDA O'QILISH VAQTI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-bomdod">04:10</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-bomdod">04:10</div>
           </div>
           
           <div class="w-full flex justify-between items-center px-1 text-[11px] prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label" data-i18n="api_time_label">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] text-on-surface prayer-api" id="api-bomdod">03:40</span>
+            <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label" data-i18n="api_time_label">Azon</span>
+            <span class="text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api" id="api-bomdod">03:40</span>
           </div>
         </div>
 
         <!-- QUYOSH -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="quyosh" id="cell-quyosh">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">light_mode</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="quyosh">QUYOSH</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="quyosh" id="cell-quyosh">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">light_mode</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="quyosh">QUYOSH</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label">CHIQISHI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-quyosh">05:17</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label">Chiqishi</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-quyosh">05:17</div>
           </div>
           
-          <div class="w-full flex justify-between items-center px-1 text-[11px] opacity-0 prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px]">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] prayer-api" id="api-quyosh">00:00</span>
+          <div class="w-full flex justify-between items-center px-1 opacity-0 prayer-azon-row">
+            <span class="text-[9px] uppercase">Azon</span>
+            <span class="text-[12px] font-bold tabular-nums prayer-api" id="api-quyosh">00:00</span>
           </div>
         </div>
 
         <!-- PESHIN -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="peshin" id="cell-peshin">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">partly_cloudy_day</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="peshin">PESHIN</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="peshin" id="cell-peshin">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">partly_cloudy_day</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="peshin">PESHIN</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">MASJIDDA O'QILISH VAQTI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-peshin">13:00</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-peshin">13:00</div>
           </div>
           
           <div class="w-full flex justify-between items-center px-1 text-[11px] prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label" data-i18n="api_time_label">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] text-on-surface prayer-api" id="api-peshin">12:21</span>
+            <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label" data-i18n="api_time_label">Azon</span>
+            <span class="text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api" id="api-peshin">12:21</span>
           </div>
         </div>
 
         <!-- ASR -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="asr" id="cell-asr">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">wb_sunny</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="asr">ASR</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="asr" id="cell-asr">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">wb_sunny</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="asr">ASR</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">MASJIDDA O'QILISH VAQTI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-asr">17:30</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-asr">17:30</div>
           </div>
           
           <div class="w-full flex justify-between items-center px-1 text-[11px] prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label" data-i18n="api_time_label">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] text-on-surface prayer-api" id="api-asr">17:15</span>
+            <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label" data-i18n="api_time_label">Azon</span>
+            <span class="text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api" id="api-asr">17:15</span>
           </div>
         </div>
 
         <!-- SHOM -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="shom" id="cell-shom">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">nights_stay</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="shom">SHOM</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="shom" id="cell-shom">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">nights_stay</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="shom">SHOM</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">MASJIDDA O'QILISH VAQTI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-shom">19:30</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-shom">19:30</div>
           </div>
           
           <div class="w-full flex justify-between items-center px-1 text-[11px] prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label" data-i18n="api_time_label">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] text-on-surface prayer-api" id="api-shom">19:16</span>
+            <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label" data-i18n="api_time_label">Azon</span>
+            <span class="text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api" id="api-shom">19:16</span>
           </div>
         </div>
 
         <!-- XUFTON -->
-        <div class="prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all" data-prayer="xufton" id="cell-xufton">
-          <span class="material-symbols-outlined text-gold-shimmer text-[26px] mb-1.5">dark_mode</span>
-          <div class="font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name" data-i18n="xufton">XUFTON</div>
+        <div class="prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all" data-prayer="xufton" id="cell-xufton">
+          <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">dark_mode</span>
+          <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="xufton">XUFTON</div>
           
-          <div class="w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill">
-            <div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">MASJIDDA O'QILISH VAQTI</div>
-            <div class="text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid" id="time-xufton">21:10</div>
+          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+            <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
+            <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-xufton">21:10</div>
           </div>
           
           <div class="w-full flex justify-between items-center px-1 text-[11px] prayer-azon-row">
-            <span class="font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label" data-i18n="api_time_label">AZON</span>
-            <span class="font-bold tabular-nums text-[13px] text-on-surface prayer-api" id="api-xufton">20:54</span>
+            <span class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label" data-i18n="api_time_label">Azon</span>
+            <span class="text-[12px] font-bold text-on-surface-variant tabular-nums prayer-api" id="api-xufton">20:54</span>
           </div>
         </div>
 
@@ -378,70 +444,60 @@
     </div>
     
     <!-- Updated at label -->
-    <div class="mt-2.5 flex items-center justify-end px-2">
-      <span id="last-updated" class="font-caps font-bold text-[10px] text-emerald-deep dark:text-emerald-light tracking-wider uppercase">YANGILANDI: 2026-08-07 08:14</span>
+    <div class="mt-2.5 flex items-center justify-end px-1">
+      <span id="last-updated" class="font-label-caps font-bold text-[10px] text-emerald-deep dark:text-emerald-light tracking-wider uppercase">YANGILANDI: 2026-08-07 08:14</span>
     </div>
   </section>
 
   <!-- About Section -->
-  <section id="about" class="w-full">
-    <h2 class="font-headline text-2xl text-primary font-bold mb-3" data-i18n="about_title">Biz haqimizda</h2>
-    <div class="bg-surface-container-lowest rounded-2xl p-5 md:p-6 border border-surface-container-high shadow-sm flex items-start gap-4">
-      <div class="w-12 h-12 rounded-2xl bg-emerald-deep text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+  <section id="about" class="w-full px-margin-mobile md:px-0">
+    <h2 class="font-headline-md text-headline-md text-primary font-bold mb-3" data-i18n="about_title">Biz haqimizda</h2>
+    <div class="bg-surface-container-lowest rounded-xl p-5 md:p-6 border border-surface-container-high shadow-sm flex items-start gap-4">
+      <div class="w-12 h-12 rounded-xl bg-emerald-deep text-white flex items-center justify-center flex-shrink-0 shadow-sm">
         <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1">mosque</span>
       </div>
       <div>
-        <p class="text-sm md:text-base text-on-surface-variant leading-relaxed" data-i18n="about_text">
+        <p class="font-body-md text-[14px] md:text-[15px] text-on-surface-variant leading-relaxed" data-i18n="about_text">
           G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- News Section -->
-  <section id="news" class="w-full">
-    <div class="flex justify-between items-end mb-3">
-      <div>
-        <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="news_title">Yangiliklar</h2>
-        <p class="text-xs text-on-surface-variant">Masjid hayoti va ma'naviy xabarlar</p>
-      </div>
+  <!-- Masjid Jamoasi Section (Horizontal snap scroll on mobile, grid on desktop) -->
+  <section id="team" class="w-full overflow-hidden">
+    <div class="px-margin-mobile md:px-0 flex justify-between items-end mb-3">
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="team_title">Masjid Jamoasi</h2>
     </div>
-    <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div id="team-grid" class="flex gap-3 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-4 snap-x">
       <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
-  <!-- Team Section -->
-  <section id="team" class="w-full">
+  <!-- Faxriylar va homiylar Section -->
+  <section id="sponsors" class="w-full px-margin-mobile md:px-0">
     <div class="flex justify-between items-end mb-3">
-      <div>
-        <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="team_title">Masjid Jamoasi</h2>
-        <p class="text-xs text-on-surface-variant">Masjid xodimlari va imom-xatiblar</p>
-      </div>
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="sponsors_title">Faxriylar va homiylar</h2>
     </div>
-    <div id="team-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div id="sponsors-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
       <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
-  <!-- Sponsors / Faxriylar Section -->
-  <section id="sponsors" class="w-full">
-    <div class="flex justify-between items-end mb-3">
-      <div>
-        <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="sponsors_title">Faxriylar va homiylar</h2>
-        <p class="text-xs text-on-surface-variant">Masjidimiz taraqqiyotiga hissa qo'shgan zotlar</p>
-      </div>
+  <!-- News Feed (Horizontal snap scroll on mobile, grid on desktop) -->
+  <section id="news" class="w-full overflow-hidden">
+    <div class="px-margin-mobile md:px-0 flex justify-between items-end mb-3">
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="news_title">Yangiliklar</h2>
     </div>
-    <div id="sponsors-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div id="news-grid" class="flex gap-4 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-3 snap-x">
       <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
-  <!-- Charity Section -->
-  <section id="charity" class="w-full">
+  <!-- Charity & Utilities Section -->
+  <section id="charity" class="w-full px-margin-mobile md:px-0">
     <div class="mb-3">
-      <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="charity_title">Xayriya va ehson</h2>
-      <p class="text-xs text-on-surface-variant">Masjid ehtiyojlari va kommunal to'lovlar uchun ehson qiling</p>
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="charity_title">Xayriya va ehson</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="charity-grid">
       <!-- Loaded dynamically via Firebase -->
@@ -449,58 +505,57 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="gallery" class="w-full">
+  <section id="gallery" class="w-full px-margin-mobile md:px-0">
     <div class="mb-3">
-      <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="gallery_title">Foto galereya</h2>
-      <p class="text-xs text-on-surface-variant">Masjidimiz ko'rinishlari</p>
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="gallery_title">Foto galereya</h2>
     </div>
-    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
       <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
-  <!-- Dua Section -->
-  <section id="dua" class="w-full">
+  <!-- Dua Request Section -->
+  <section id="dua" class="w-full px-margin-mobile md:px-0">
     <div class="mb-3">
-      <h2 class="font-headline text-2xl text-primary font-bold" data-i18n="dua_title">Jamoatdan duo olish</h2>
-      <p class="text-xs text-on-surface-variant" data-i18n="dua_warning_note">Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish to'xtatiladi.</p>
+      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="dua_title">Jamoatdan duo olish</h2>
+      <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="dua_warning_note">Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish to'xtatiladi.</p>
     </div>
-    <div class="bg-surface-container-lowest rounded-2xl p-5 md:p-6 border border-surface-container-high shadow-sm">
+    <div class="bg-surface-container-lowest rounded-xl p-5 md:p-6 border border-surface-container-high shadow-sm">
       <form id="dua-form" class="space-y-3">
-        <input type="text" id="dua-name" placeholder="Ismingiz (ixtiyoriy)" class="w-full bg-surface-container-low border border-surface-variant rounded-xl px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors"/>
-        <textarea id="dua-text" rows="3" placeholder="Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)" required class="w-full bg-surface-container-low border border-surface-variant rounded-xl px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors resize-none"></textarea>
-        <button type="submit" class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-caps text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold" data-i18n="dua_submit">
+        <input type="text" id="dua-name" placeholder="Ismingiz (ixtiyoriy)" class="w-full bg-surface-container-low border border-surface-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors"/>
+        <textarea id="dua-text" rows="3" placeholder="Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)" required class="w-full bg-surface-container-low border border-surface-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors resize-none"></textarea>
+        <button type="submit" class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-xs py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm font-bold" data-i18n="dua_submit">
           <span class="material-symbols-outlined text-[18px]">send</span>
           <span>Yuborish</span>
         </button>
       </form>
-      <div id="dua-success" class="hidden mt-3 p-3.5 bg-emerald-deep/10 border border-emerald-deep/30 rounded-xl">
+      <div id="dua-success" class="hidden mt-3 p-3.5 bg-emerald-deep/10 border border-emerald-deep/30 rounded-lg">
         <p class="text-xs text-emerald-deep font-medium text-center" data-i18n="dua_success">Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!</p>
       </div>
-      <div id="dua-blocked" class="hidden mt-3 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl">
+      <div id="dua-blocked" class="hidden mt-3 p-3.5 bg-red-500/10 border border-red-500/30 rounded-lg">
         <p class="text-xs text-red-600 font-medium text-center" data-i18n="dua_blocked">Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.</p>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="w-full">
-    <h2 class="font-headline text-2xl text-primary font-bold mb-3" data-i18n="contact_title">Biz bilan aloqa</h2>
-    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-high shadow-sm grid grid-cols-1 md:grid-cols-2">
+  <section id="contact" class="w-full px-margin-mobile md:px-0">
+    <h2 class="font-headline-md text-headline-md text-primary font-bold mb-3" data-i18n="contact_title">Biz bilan aloqa</h2>
+    <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-surface-container-high shadow-sm grid grid-cols-1 md:grid-cols-2">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2966.5!2d71.0956!3d40.9847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDU5JzA1LjAiTiA3McKwMDUnNDQuMiJF!5e0!3m2!1suz!2suz!4v1234567890"
         width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy" class="block w-full h-full min-h-[200px]"></iframe>
       <div class="p-5 md:p-6 space-y-4 flex flex-col justify-center">
         <div class="flex items-start gap-3">
           <span class="material-symbols-outlined text-emerald-deep text-[22px] mt-0.5">location_on</span>
           <div>
-            <div class="font-caps text-[10px] text-on-surface-variant font-bold">Manzil</div>
+            <div class="font-label-caps text-[10px] text-on-surface-variant font-bold">Manzil</div>
             <div class="text-sm text-on-surface">Namangan viloyati, Pop tumani, To'da qishlog'i</div>
           </div>
         </div>
         <a href="https://t.me/goyibyoronlar" target="_blank" class="flex items-start gap-3 hover:opacity-80 transition-opacity">
           <span class="material-symbols-outlined text-emerald-deep text-[22px] mt-0.5">send</span>
           <div>
-            <div class="font-caps text-[10px] text-on-surface-variant font-bold">Telegram kanal</div>
+            <div class="font-label-caps text-[10px] text-on-surface-variant font-bold">Telegram kanal</div>
             <div class="text-sm text-primary font-medium">@goyibyoronlar</div>
           </div>
         </a>
@@ -510,30 +565,36 @@
 
 </main>
 
-<!-- Mobile Bottom Navigation -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-3 py-2 bg-surface/95 backdrop-blur-md shadow-[0_-4px_16px_rgba(0,0,0,0.08)] border-t border-surface-container" id="bottom-nav">
-  <a class="bottom-nav-item flex flex-col items-center justify-center py-1 px-2.5 rounded-xl min-w-[50px] transition-all" href="#home" data-section="home">
-    <span class="material-symbols-outlined text-[21px]">home</span>
-    <span class="font-caps text-[9px] mt-0.5" data-i18n="nav_home">Bosh</span>
+<!-- Bottom Navigation Bar (Mobile: EXACT STITCH bosh_sahifa_mobile_yangilangan) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 pb-safe bg-surface shadow-lg shadow-[0_-4px_12px_rgba(180,83,9,0.05)] rounded-t-2xl border-t border-surface-container" id="bottom-nav">
+  <!-- Active Tab: Home -->
+  <a class="bottom-nav-item flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 min-w-[60px] active:scale-90 transition-transform duration-150 group" href="#home" data-section="home">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
+    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_home">Home</span>
   </a>
-  <a class="bottom-nav-item flex flex-col items-center justify-center py-1 px-2.5 rounded-xl min-w-[50px] transition-all" href="#prayers" data-section="prayers">
-    <span class="material-symbols-outlined text-[21px]">schedule</span>
-    <span class="font-caps text-[9px] mt-0.5" data-i18n="nav_about">Namoz</span>
+  <!-- Prayers -->
+  <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#prayers" data-section="prayers">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">schedule</span>
+    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_about">Prayers</span>
   </a>
-  <a class="bottom-nav-item flex flex-col items-center justify-center py-1 px-2.5 rounded-xl min-w-[50px] transition-all" href="#news" data-section="news">
-    <span class="material-symbols-outlined text-[21px]">newspaper</span>
-    <span class="font-caps text-[9px] mt-0.5" data-i18n="nav_news">Xabar</span>
+  <!-- Charity -->
+  <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#charity" data-section="charity">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">volunteer_activism</span>
+    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_charity">Charity</span>
   </a>
-  <a class="bottom-nav-item flex flex-col items-center justify-center py-1 px-2.5 rounded-xl min-w-[50px] transition-all" href="#charity" data-section="charity">
-    <span class="material-symbols-outlined text-[21px]">volunteer_activism</span>
-    <span class="font-caps text-[9px] mt-0.5" data-i18n="nav_charity">Ehson</span>
+  <!-- Gallery -->
+  <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#gallery" data-section="gallery">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">photo_library</span>
+    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_gallery">Gallery</span>
   </a>
-  <a class="bottom-nav-item flex flex-col items-center justify-center py-1 px-2.5 rounded-xl min-w-[50px] transition-all" href="#contact" data-section="contact">
-    <span class="material-symbols-outlined text-[21px]">location_on</span>
-    <span class="font-caps text-[9px] mt-0.5" data-i18n="nav_contact">Aloqa</span>
+  <!-- Dua / Contact -->
+  <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#dua" data-section="dua">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">prayer_times</span>
+    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_dua">Dua</span>
   </a>
 </nav>
 
+<!-- Modals -->
 <!-- Team & Sponsor Detail Modal -->
 <div id="team-modal" class="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
   <div class="bg-surface-container-lowest rounded-2xl max-w-md w-full p-6 relative border border-surface-container-high shadow-2xl">
@@ -542,8 +603,8 @@
       <div id="modal-avatar" class="w-24 h-24 rounded-full overflow-hidden bg-surface-container mb-4 border-2 border-emerald-deep flex items-center justify-center text-3xl text-primary">
         <span class="material-symbols-outlined text-[40px]">person</span>
       </div>
-      <h3 id="modal-name" class="font-headline text-xl font-bold text-primary"></h3>
-      <p id="modal-role" class="font-caps text-xs text-gold-metallic font-semibold mt-0.5"></p>
+      <h3 id="modal-name" class="font-headline-md text-xl font-bold text-primary"></h3>
+      <p id="modal-role" class="font-label-caps text-xs text-gold-metallic font-semibold mt-0.5"></p>
       <p id="modal-desc" class="text-sm text-on-surface-variant mt-4 leading-relaxed"></p>
       
       <div class="flex items-center gap-3 mt-5">
@@ -562,9 +623,9 @@
       <img src="" alt="" class="w-full h-full object-cover"/>
     </div>
     <div class="flex items-center gap-2 mb-2">
-      <span class="font-caps text-[10px] text-gold-metallic font-bold" id="news-modal-date"></span>
+      <span class="font-label-caps text-[10px] text-gold-metallic font-bold" id="news-modal-date"></span>
     </div>
-    <h3 id="news-modal-title" class="font-headline text-xl font-bold text-primary mb-3"></h3>
+    <h3 id="news-modal-title" class="font-headline-md text-xl font-bold text-primary mb-3"></h3>
     <p id="news-modal-desc" class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-line"></p>
   </div>
 </div>
