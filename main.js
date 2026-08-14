@@ -35,8 +35,8 @@ const translations = {
     dua_msg_ph: "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
     dua_submit: "Yuborish",
     dua_success: "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
-    masjid_time_label: "Masjidda o'qilish vaqti",
-    api_time_label: "Azon",
+    masjid_time_label: "MASJIDDA O'QILISH VAQTI",
+    api_time_label: "AZON",
     loading: "Yuklanmoqda...",
     next_prayer_in: "Keyingi namozga:",
     about_title: "Biz haqimizda",
@@ -81,12 +81,12 @@ const translations = {
     dua_msg_ph: "Дуо мазмуни (Масалан: Беморман, шифо сўраб дуо қилишларини сўрайман)",
     dua_submit: "Юбориш",
     dua_success: "Хабарингиз юборилди. Келаётган жума намозида етказилади!",
-    masjid_time_label: "Масжидда ўқилиш вақти",
-    api_time_label: "Азон",
+    masjid_time_label: "МАСЖИДДА ЎҚИЛИШ ВАҚТИ",
+    api_time_label: "АЗОН",
     loading: "Юкланмоқда...",
     next_prayer_in: "Кейинги намозга:",
     about_title: "Биз ҳақимизда",
-    about_text: "Ғойиб Ёронлар жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
+    about_text: "Ғойиб Ёронlar жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
     team_title: "Масжид жамоаси",
     sponsors_title: "Фахрийлар ва ҳомийлар",
     gallery_title: "Фото галерея",
@@ -127,8 +127,8 @@ const translations = {
     dua_msg_ph: "Содержание молитвы (Например: Прошу помолиться о моем исцелении)",
     dua_submit: "Отправить",
     dua_success: "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
-    masjid_time_label: "Время в мечети",
-    api_time_label: "Азан",
+    masjid_time_label: "ВРЕМЯ В МЕЧЕТИ",
+    api_time_label: "АЗАН",
     loading: "Загрузка...",
     next_prayer_in: "До следующего намаза:",
     about_title: "О нас",
@@ -173,8 +173,8 @@ const translations = {
     dua_msg_ph: "Prayer details (E.g. Please pray for my health and recovery)",
     dua_submit: "Submit",
     dua_success: "Your message has been sent successfully!",
-    masjid_time_label: "Mosque prayer time",
-    api_time_label: "Adhan",
+    masjid_time_label: "MOSQUE PRAYER TIME",
+    api_time_label: "ADHAN",
     loading: "Loading...",
     next_prayer_in: "Next prayer in:",
     about_title: "About Us",
@@ -329,32 +329,56 @@ try {
       firebase.initializeApp(firebaseConfig);
     }
     db = firebase.database();
-    console.log('✅ Firebase ulandi');
+    console.log('✅ Firebase muvaffaqiyatli ulandi');
   }
 } catch (e) {
   console.warn('Firebase init xatosi:', e);
 }
 
 // ============ PRAYER TIMES STATE & LOGIC ============
-let prayerTimes = {};
-let apiTimes = {};
+let prayerTimes = {
+  bomdod: '04:10',
+  quyosh: '05:17',
+  peshin: '13:00',
+  asr: '17:30',
+  shom: '19:30',
+  xufton: '21:10'
+};
+let apiTimes = {
+  bomdod: '03:40',
+  quyosh: '05:17',
+  peshin: '12:21',
+  asr: '17:15',
+  shom: '19:16',
+  xufton: '20:54'
+};
 let countdownTimerInterval = null;
 
 function renderMasjidTimes(data) {
   if (!data) return;
-  prayerTimes = data;
+  prayerTimes = { ...prayerTimes, ...data };
 
   const prayers = ['bomdod', 'quyosh', 'peshin', 'asr', 'shom', 'xufton'];
   prayers.forEach(p => {
     const el = document.getElementById(`time-${p}`);
-    if (el && data[p]) {
-      el.textContent = data[p];
+    if (el && prayerTimes[p]) {
+      el.textContent = prayerTimes[p];
     }
   });
 
   const lastUpdated = document.getElementById('last-updated');
-  if (lastUpdated && data.updated_at) {
-    lastUpdated.textContent = `Yangilandi: ${data.updated_at}`;
+  if (lastUpdated) {
+    if (data.updated_at) {
+      lastUpdated.textContent = `YANGILANDI: ${data.updated_at}`;
+    } else {
+      const now = new Date();
+      const yr = now.getFullYear();
+      const mo = String(now.getMonth() + 1).padStart(2, '0');
+      const da = String(now.getDate()).padStart(2, '0');
+      const ho = String(now.getHours()).padStart(2, '0');
+      const mi = String(now.getMinutes()).padStart(2, '0');
+      lastUpdated.textContent = `YANGILANDI: ${yr}-${mo}-${da} ${ho}:${mi}`;
+    }
   }
 
   highlightActivePrayer();
@@ -362,7 +386,10 @@ function renderMasjidTimes(data) {
 }
 
 function loadFirebasePrayerTimes() {
-  if (!db) return;
+  if (!db) {
+    renderMasjidTimes(prayerTimes);
+    return;
+  }
 
   // Cached read for instant display
   try {
@@ -423,7 +450,7 @@ async function loadAladhanApiTimes() {
   }
 }
 
-// ============ ACTIVE PRAYER HIGHLIGHT ============
+// ============ ACTIVE PRAYER HIGHLIGHT (EXACT STITCH LOOK) ============
 function highlightActivePrayer() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -448,25 +475,39 @@ function highlightActivePrayer() {
     }
   }
 
-  document.querySelectorAll('.prayer-cell').forEach(cell => {
-    const pName = cell.dataset.prayer;
-    const isCur = pName === active;
+  // Agar barcha vaqtlardan oldin bo'lsa (yarim tundagi vaqt), Xufton active
+  if (!active) active = 'xufton';
+
+  prayers.forEach(p => {
+    const cell = document.getElementById(`cell-${p}`);
+    if (!cell) return;
+
+    const isCur = p === active;
+    const nameEl = cell.querySelector('.prayer-name');
+    const pillEl = cell.querySelector('.prayer-pill');
+    const pillLabel = cell.querySelector('.prayer-pill-label');
+    const masjidTimeEl = cell.querySelector('.prayer-masjid');
+    const azonLabel = cell.querySelector('.prayer-azon-label');
+    const apiTimeEl = cell.querySelector('.prayer-api');
+
     if (isCur) {
-      cell.classList.remove('bg-surface-container-lowest');
-      cell.classList.add('bg-emerald-deep', 'text-white', 'shadow-md');
-      cell.querySelectorAll('.prayer-title, .prayer-masjid, .prayer-api, [data-i18n]').forEach(t => {
-        t.style.color = '#ffffff';
-      });
-      const icon = cell.querySelector('.material-symbols-outlined');
-      if (icon) icon.style.color = '#F59E0B';
+      // Active styling — Rich Emerald Deep with Gold shimmer
+      cell.className = 'prayer-cell bg-emerald-deep p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all shadow-md';
+      if (nameEl) nameEl.className = 'font-caps font-bold text-[12px] text-white tracking-wider mb-2 prayer-name';
+      if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded-xl py-2 px-1 mb-2.5 prayer-pill';
+      if (pillLabel) pillLabel.className = 'text-[10px] text-white/80 uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
+      if (masjidTimeEl) masjidTimeEl.className = 'text-[26px] md:text-[28px] font-bold text-white tabular-nums leading-tight prayer-masjid';
+      if (azonLabel) azonLabel.className = 'font-bold uppercase tracking-wider text-[11px] text-white/80 prayer-azon-label';
+      if (apiTimeEl) apiTimeEl.className = 'font-bold tabular-nums text-[13px] text-white prayer-api';
     } else {
-      cell.classList.remove('bg-emerald-deep', 'text-white', 'shadow-md');
-      cell.classList.add('bg-surface-container-lowest');
-      cell.querySelectorAll('.prayer-title, .prayer-masjid, .prayer-api, [data-i18n]').forEach(t => {
-        t.style.color = '';
-      });
-      const icon = cell.querySelector('.material-symbols-outlined');
-      if (icon) icon.style.color = '#F59E0B';
+      // Normal styling — Clean surface with primary emerald accents
+      cell.className = 'prayer-cell bg-surface-container-lowest p-4 md:p-5 text-center flex flex-col items-center justify-between min-h-[145px] transition-all';
+      if (nameEl) nameEl.className = 'font-caps font-bold text-[12px] text-on-surface tracking-wider mb-2 prayer-name';
+      if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded-xl py-2 px-1 mb-2.5 prayer-pill';
+      if (pillLabel) pillLabel.className = 'text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
+      if (masjidTimeEl) masjidTimeEl.className = 'text-[26px] md:text-[28px] font-bold text-primary tabular-nums leading-tight prayer-masjid';
+      if (azonLabel) azonLabel.className = 'font-bold uppercase tracking-wider text-[11px] text-on-surface-variant prayer-azon-label';
+      if (apiTimeEl) apiTimeEl.className = 'font-bold tabular-nums text-[13px] text-on-surface prayer-api';
     }
   });
 }
@@ -527,7 +568,7 @@ function renderNews() {
     return;
   }
 
-  allNews.slice(0, 6).forEach((item, idx) => {
+  allNews.slice(0, 6).forEach((item) => {
     const card = document.createElement('div');
     card.className = 'bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-high shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col group';
     card.onclick = () => openNewsModal(item.title, item.desc || item.content, item.imgUrl, item.date);
