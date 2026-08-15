@@ -688,14 +688,32 @@
         let editingEventKey = null;
         let oldImgUrl = null;
 
-        window.addEventListener('load', () => {
+        // Firebase Konfiguratsiyasi (Zaxira bilan)
+        const defaultFirebaseConfig = {
+            apiKey: "AIzaSyDjU4_Bt8gzbYTwYvdFz37LSOJ6rAnYxhA",
+            authDomain: "goyib-yoronlar-masjidi.firebaseapp.com",
+            databaseURL: "https://goyib-yoronlar-masjidi-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "goyib-yoronlar-masjidi",
+            storageBucket: "goyib-yoronlar-masjidi.firebasestorage.app",
+            messagingSenderId: "607943091616",
+            appId: "1:607943091616:web:1aa14cb0c530cd78b270c5",
+            measurementId: "G-S4HY09VZSJ"
+        };
+
+        function initFirebaseApp(retries = 20) {
             try {
-                if (typeof firebaseConfig === 'undefined') throw new Error('firebase-config.js yuklanmadi');
-                if (!firebaseConfig.databaseURL || firebaseConfig.apiKey === 'SIZNING_API_KALITINGIZ') {
-                    throw new Error('Firebase sozlamalari to\'g\'ri kiritilmagan');
+                if (typeof firebase === 'undefined') {
+                    if (retries > 0) {
+                        return setTimeout(() => initFirebaseApp(retries - 1), 100);
+                    }
+                    throw new Error("Firebase SDK yuklanmadi. Internet aloqasini tekshiring.");
                 }
+
+                const cfg = (typeof firebaseConfig !== 'undefined' && firebaseConfig.databaseURL) ? firebaseConfig : defaultFirebaseConfig;
                 
-                firebase.initializeApp(firebaseConfig);
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(cfg);
+                }
                 db = firebase.database();
                 fbReady = true;
 
@@ -705,7 +723,6 @@
                     const parts = session.split('.');
                     if (parts.length === 2) {
                         const ts = parseInt(parts[0]);
-                        // Oddiy tekshiruv: timestamp mavjudligi
                         if (!isNaN(ts) && Date.now() - ts < oneDay) {
                             document.getElementById('login-card').style.display = 'none';
                             document.getElementById('admin-card').style.display = 'block';
@@ -717,7 +734,8 @@
                     }
                 }
                 
-                document.getElementById('admin-fb-status').style.display = 'none';
+                const warn = document.getElementById('admin-fb-status');
+                if (warn) warn.style.display = 'none';
                 
                 loadList('news');
                 loadList('team');
@@ -727,11 +745,22 @@
                 loadCharityInfo();
                 loadStats();
                 loadPrayers();
+                console.log("✅ Firebase muvaffaqiyatli ishga tushdi");
             } catch (err) {
+                console.error("Firebase init xatosi:", err);
                 const warn = document.getElementById('admin-fb-status');
-                warn.style.display = 'block';
-                warn.innerText = `Xatolik: ${err.message}. Admin panel ishlamaydi.`;
+                if (warn) {
+                    warn.style.display = 'block';
+                    warn.innerText = `Xatolik: ${err.message}. Admin panel ishlamaydi.`;
+                }
             }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initFirebaseApp();
+        });
+        window.addEventListener('load', () => {
+            if (!fbReady) initFirebaseApp();
         });
 
         function loadCharityInfo() {
