@@ -546,8 +546,10 @@
             <input type="text" id="news-title" placeholder="Yangilik sarlavhasi...">
             <label>Matn</label>
             <textarea id="news-desc" placeholder="Batafsil ma'lumot..."></textarea>
-            <label>Rasm yuklash</label>
-            <input type="file" id="news-img" accept="image/*" style="padding:10px">
+            <label>Rasm yuklash yoki havola (URL)</label>
+            <input type="file" id="news-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'news-preview)">
+            <input type="text" id="news-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
+            <div id="news-preview" style="display:none;margin-top:10px;text-align:center;"></div>
             <button class="btn" id="btn-save-news" onclick="addNews()"><i class="fas fa-plus"
                     style="margin-right:8px"></i>Yangilik Qo'shish</button>
             <div class="msg success" id="news-ok"></div>
@@ -560,8 +562,10 @@
             <input type="text" id="sponsor-name" placeholder="Masalan: G'oyib yoronlar...">
             <label>Ta'rifi / Hissasi</label>
             <textarea id="sponsor-desc" placeholder="Batafsil ma'lumot..."></textarea>
-            <label>Rasm yuklash</label>
-            <input type="file" id="sponsor-img" accept="image/*" style="padding:10px">
+            <label>Rasm yuklash yoki havola (URL)</label>
+            <input type="file" id="sponsor-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'sponsor-preview)">
+            <input type="text" id="sponsor-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
+            <div id="sponsor-preview" style="display:none;margin-top:10px;text-align:center;"></div>
             <button class="btn" id="btn-save-sponsor" onclick="addSponsor()"><i class="fas fa-plus"
                     style="margin-right:8px"></i>Faxriy Qo'shish</button>
             <div class="msg success" id="sponsor-ok"></div>
@@ -580,8 +584,10 @@
             <input type="text" id="team-tg" placeholder="Masalan: abdulloh">
             <label>Ta'rifi</label>
             <textarea id="team-desc" placeholder="Xodim haqida qisqacha ma'lumot..."></textarea>
-            <label>Rasm yuklash</label>
-            <input type="file" id="team-img" accept="image/*" style="padding:10px">
+            <label>Rasm yuklash yoki havola (URL)</label>
+            <input type="file" id="team-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'team-preview)">
+            <input type="text" id="team-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
+            <div id="team-preview" style="display:none;margin-top:10px;text-align:center;"></div>
             <button class="btn" id="btn-save-team" onclick="addTeam()"><i class="fas fa-plus"
                     style="margin-right:8px"></i>Xodim Qo'shish</button>
             <div class="msg success" id="team-ok"></div>
@@ -590,8 +596,10 @@
 
         <!-- GALEREYA -->
         <div id="tab-gallery" class="tab-content">
-            <label>Yangi rasm yuklash</label>
-            <input type="file" id="gallery-img" accept="image/*" style="padding:10px" multiple>
+            <label>Yangi rasm yuklash yoki havola (URL)</label>
+            <input type="file" id="gallery-img" accept="image/*" style="padding:10px" multiple onchange="previewImage(this, 'gallery-preview)">
+            <input type="text" id="gallery-url" placeholder="yoki bitta rasm havolasi (URL)..." style="margin-top:8px">
+            <div id="gallery-preview" style="display:none;margin-top:10px;text-align:center;"></div>
             <button class="btn" id="btn-save-gallery" onclick="addGallery()"><i class="fas fa-upload"
                     style="margin-right:8px"></i>Rasmlarni Yuklash</button>
             <div class="msg success" id="gallery-ok"></div>
@@ -906,7 +914,23 @@
         }
 
         // ================= UPLOAD UTILS (ImgBB) =================
-        async function compressImage(file, maxWidth = 1000, maxHeight = 1000, quality = 0.75) {
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (!preview) return;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-height:130px;border-radius:12px;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.3);object-fit:cover;">`;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = "none";
+                preview.innerHTML = "";
+            }
+        }
+
+        async function compressToDataUrl(file, maxWidth = 600, maxHeight = 600, quality = 0.78) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -934,13 +958,9 @@
                         ctx.drawImage(img, 0, 0, width, height);
 
                         const dataUrl = canvas.toDataURL("image/jpeg", quality);
-                        const base64 = dataUrl.split(",")[1];
-                        resolve(base64);
+                        resolve(dataUrl);
                     };
-                    img.onerror = () => {
-                        const b64 = e.target.result ? e.target.result.split(",")[1] : null;
-                        resolve(b64);
-                    };
+                    img.onerror = () => resolve(e.target.result);
                     img.src = e.target.result;
                 };
                 reader.onerror = () => resolve(null);
@@ -948,92 +968,58 @@
             });
         }
 
-        async function uploadImage(file) {
+        async function uploadImage(file, manualUrl = "") {
+            if (manualUrl && manualUrl.trim().startsWith("http")) {
+                return manualUrl.trim();
+            }
             if (!file) return null;
-
-            // 1. Rasmni avtomatik siqish (Base64)
-            const base64Data = await compressImage(file);
-            if (!base64Data) throw new Error("Rasmni o‘qishda xatolik yuz berdi!");
-
-            // 2. Freeimage.host API orqali yuklash (100% tez va bloklanmagan)
-            try {
-                const params = new URLSearchParams();
-                params.append("key", "6d207e02198a847aa98d0a2a901485a5");
-                params.append("action", "upload");
-                params.append("source", base64Data);
-                params.append("format", "json");
-
-                const res = await fetch("https://freeimage.host/api/1/upload", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: params.toString()
-                });
-                const data = await res.json();
-                if (data && data.image && (data.image.url || data.image.display_url)) {
-                    return data.image.url || data.image.display_url;
-                }
-            } catch (err) {
-                console.warn("FreeImage.host yuklash xatosi, ImgBB zaxira serveri sinab ko‘rilmoqda...", err);
-            }
-
-            // 3. Zaxira: ImgBB API
-            try {
-                const imgbbKey = "0b33f824585f0a48f47c96d673cd0907";
-                const params = new URLSearchParams();
-                params.append("image", base64Data);
-                const res = await fetch("https://api.imgbb.com/1/upload?key=" + imgbbKey, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: params.toString()
-                });
-                const data = await res.json();
-                if (data && data.success && data.data && data.data.url) {
-                    return data.data.url;
-                }
-            } catch (err) {
-                console.warn("ImgBB xatosi:", err);
-            }
-
-            throw new Error("Rasm serverga yuklanmadi! Internet aloqasini tekshiring yoki qayta urinib ko‘ring.");
+            return await compressToDataUrl(file);
         }
 
         // ================= NEWS & TEAM (CRUD) =================
         async function addNews() {
-            const btn = document.getElementById('btn-save-news');
-            const title = document.getElementById('news-title').value;
-            const desc = document.getElementById('news-desc').value;
-            const file = document.getElementById('news-img').files[0];
+            const btn = document.getElementById("btn-save-news");
+            const title = document.getElementById("news-title").value.trim();
+            const desc = document.getElementById("news-desc").value.trim();
+            const file = document.getElementById("news-img").files[0];
+            const manualUrl = document.getElementById("news-url") ? document.getElementById("news-url").value.trim() : "";
+
             if (!title || !desc) return alert("Sarlavha va matnni kiriting!");
 
-            btn.innerHTML = `<span class="spinner"></span> Yuklanmoqda...`;
+            btn.innerHTML = `<span class="spinner"></span> Saqlanmoqda...`;
             btn.disabled = true;
             try {
-                let imgUrl = file ? await uploadImage(file) : oldImgUrl;
+                let imgUrl = await uploadImage(file, manualUrl) || oldImgUrl || "";
                 if (editingNewsKey) {
-                    await db.ref('news').child(editingNewsKey).update({
-                        title, desc, imgUrl: imgUrl || '', date: getFormattedDate()
+                    await db.ref("news").child(editingNewsKey).update({
+                        title, desc, imgUrl, date: getFormattedDate()
                     });
                     editingNewsKey = null;
                 } else {
-                    await db.ref('news').push({
-                        title, desc, imgUrl: imgUrl || '', date: getFormattedDate()
+                    await db.ref("news").push({
+                        title, desc, imgUrl, date: getFormattedDate()
                     });
                 }
                 oldImgUrl = null;
-                document.getElementById('news-title').value = '';
-                document.getElementById('news-desc').value = '';
-                document.getElementById('news-img').value = '';
-                loadList('news');
-            } catch (e) { alert(e.message); }
+                document.getElementById("news-title").value = "";
+                document.getElementById("news-desc").value = "";
+                document.getElementById("news-img").value = "";
+                if (document.getElementById("news-url")) document.getElementById("news-url").value = "";
+                const prev = document.getElementById("news-preview");
+                if (prev) { prev.style.display = "none"; prev.innerHTML = ""; }
+                loadList("news");
+                alert("Yangilik muvaffaqiyatli saqlandi!");
+            } catch (e) { alert("Xatolik: " + e.message); }
             btn.innerHTML = `<i class="fas fa-plus" style="margin-right:8px"></i>Yangilik Qo'shish`;
             btn.disabled = false;
         }
 
         async function addSponsor() {
-            const btn = document.getElementById('btn-save-sponsor');
-            const name = document.getElementById('sponsor-name').value.trim();
-            const desc = document.getElementById('sponsor-desc').value.trim();
-            const file = document.getElementById('sponsor-img').files[0];
+            const btn = document.getElementById("btn-save-sponsor");
+            const name = document.getElementById("sponsor-name").value.trim();
+            const desc = document.getElementById("sponsor-desc").value.trim();
+            const file = document.getElementById("sponsor-img").files[0];
+            const manualUrl = document.getElementById("sponsor-url") ? document.getElementById("sponsor-url").value.trim() : "";
 
             if (!name) return alert("Ism-sharifni kiriting!");
 
@@ -1041,127 +1027,113 @@
             btn.disabled = true;
 
             try {
-                let imgUrl = await uploadImage(file);
+                let imgUrl = await uploadImage(file, manualUrl) || oldImgUrl || "";
                 if (editingEventKey) {
-                    await db.ref('sponsors').child(editingEventKey).update({
-                        name, desc,
-                        imgUrl: imgUrl || oldImgUrl || ''
+                    await db.ref("sponsors").child(editingEventKey).update({
+                        name, desc, imgUrl
                     });
                     editingEventKey = null;
                 } else {
-                    await db.ref('sponsors').push({
-                        name, desc,
-                        imgUrl: imgUrl || '',
-                        date: getFormattedDate()
+                    await db.ref("sponsors").push({
+                        name, desc, imgUrl, date: getFormattedDate()
                     });
                 }
-                const msg = document.getElementById('sponsor-ok');
-                msg.classList.add('show');
-                setTimeout(() => msg.classList.remove('show'), 3000);
-                document.getElementById('sponsor-name').value = '';
-                document.getElementById('sponsor-desc').value = '';
-                document.getElementById('sponsor-img').value = '';
-                loadList('sponsors');
-            } catch (e) { alert(e.message); }
+                oldImgUrl = null;
+                const msg = document.getElementById("sponsor-ok");
+                if (msg) {
+                    msg.classList.add("show");
+                    setTimeout(() => msg.classList.remove("show"), 3000);
+                }
+                document.getElementById("sponsor-name").value = "";
+                document.getElementById("sponsor-desc").value = "";
+                document.getElementById("sponsor-img").value = "";
+                if (document.getElementById("sponsor-url")) document.getElementById("sponsor-url").value = "";
+                const prev = document.getElementById("sponsor-preview");
+                if (prev) { prev.style.display = "none"; prev.innerHTML = ""; }
+                loadList("sponsors");
+                alert("Faxriy ma'lumotlari saqlandi!");
+            } catch (e) { alert("Xatolik: " + e.message); }
             btn.innerHTML = `<i class="fas fa-plus" style="margin-right:8px"></i>Faxriy Qo'shish`;
             btn.disabled = false;
         }
 
         async function addTeam() {
-            const btn = document.getElementById('btn-save-team');
-            const name = document.getElementById('team-name').value;
-            const role = document.getElementById('team-role').value;
-            const phone = document.getElementById('team-phone').value;
-            const tg = document.getElementById('team-tg').value;
-            const desc = document.getElementById('team-desc').value;
-            const file = document.getElementById('team-img').files[0];
+            const btn = document.getElementById("btn-save-team");
+            const name = document.getElementById("team-name").value.trim();
+            const role = document.getElementById("team-role").value.trim();
+            const phone = document.getElementById("team-phone").value.trim();
+            const tg = document.getElementById("team-tg").value.trim();
+            const desc = document.getElementById("team-desc").value.trim();
+            const file = document.getElementById("team-img").files[0];
+            const manualUrl = document.getElementById("team-url") ? document.getElementById("team-url").value.trim() : "";
+
             if (!name || !role) return alert("Ism va vazifani kiriting!");
 
-            btn.innerHTML = `<span class="spinner"></span> Yuklanmoqda...`;
+            btn.innerHTML = `<span class="spinner"></span> Saqlanmoqda...`;
             btn.disabled = true;
             try {
-                let imgUrl = file ? await uploadImage(file) : oldImgUrl;
+                let imgUrl = await uploadImage(file, manualUrl) || oldImgUrl || "";
                 if (editingTeamKey) {
-                    await db.ref('team').child(editingTeamKey).update({
-                        name, role, phone, tg, desc, imgUrl: imgUrl || ''
+                    await db.ref("team").child(editingTeamKey).update({
+                        name, role, phone, tg, desc, imgUrl
                     });
                     editingTeamKey = null;
                 } else {
-                    await db.ref('team').push({ name, role, phone, tg, desc, imgUrl: imgUrl || '' });
+                    await db.ref("team").push({ name, role, phone, tg, desc, imgUrl });
                 }
                 oldImgUrl = null;
-                document.getElementById('team-name').value = '';
-                document.getElementById('team-role').value = '';
-                document.getElementById('team-phone').value = '';
-                document.getElementById('team-tg').value = '';
-                document.getElementById('team-desc').value = '';
-                document.getElementById('team-img').value = '';
-                loadList('team');
-            } catch (e) { alert(e.message); }
+                document.getElementById("team-name").value = "";
+                document.getElementById("team-role").value = "";
+                document.getElementById("team-phone").value = "";
+                document.getElementById("team-tg").value = "";
+                document.getElementById("team-desc").value = "";
+                document.getElementById("team-img").value = "";
+                if (document.getElementById("team-url")) document.getElementById("team-url").value = "";
+                const prev = document.getElementById("team-preview");
+                if (prev) { prev.style.display = "none"; prev.innerHTML = ""; }
+                loadList("team");
+                alert("Jamoa a'zosi muvaffaqiyatli saqlandi!");
+            } catch (e) { alert("Xatolik: " + e.message); }
             btn.innerHTML = `<i class="fas fa-plus" style="margin-right:8px"></i>Xodim Qo'shish`;
             btn.disabled = false;
         }
 
         function loadList(type) {
             if (!fbReady) return;
-            db.ref(type).on('value', snap => {
-                const container = document.getElementById(type + '-list');
-                container.innerHTML = '';
+            db.ref(type).on("value", snap => {
+                const container = document.getElementById(type + "-list");
+                container.innerHTML = "";
                 snap.forEach(child => {
                     const v = child.val();
-                    const titleText = (type === 'news') ? (v.title || '') : (v.name || '');
-                    const subtitleText = (type === 'news') ? (v.date || '') : (type === 'sponsors') ? (v.desc || '') : (v.role || '');
+                    const titleText = (type === "news") ? (v.title || "") : (v.name || "");
+                    const subtitleText = (type === "news") ? (v.date || "") : (type === "sponsors") ? (v.desc || "") : (v.role || "");
                     
-                    // XSS-xavfsiz: createElement + textContent
-                    const item = document.createElement('div');
-                    item.className = 'list-item';
-                    
-                    const leftDiv = document.createElement('div');
-                    leftDiv.style.cssText = 'display:flex;align-items:center';
-                    
-                    if (v.imgUrl) {
-                        const img = document.createElement('img');
-                        img.src = v.imgUrl;
-                        img.alt = titleText;
-                        img.className = 'list-item-img';
-                        img.loading = 'lazy';
-                        leftDiv.appendChild(img);
-                    } else {
-                        const imgPlaceholder = document.createElement('div');
-                        imgPlaceholder.className = 'list-item-img';
-                        imgPlaceholder.style.cssText = 'background:#333;display:flex;align-items:center;justify-content:center';
-                        imgPlaceholder.innerHTML = '<i class="fas fa-image"></i>';
-                        leftDiv.appendChild(imgPlaceholder);
-                    }
-                    
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'list-item-info';
-                    const h4 = document.createElement('h4');
-                    h4.textContent = titleText;
-                    const p = document.createElement('p');
-                    p.textContent = subtitleText;
-                    infoDiv.appendChild(h4);
-                    infoDiv.appendChild(p);
-                    leftDiv.appendChild(infoDiv);
-                    item.appendChild(leftDiv);
-                    
-                    const actionsDiv = document.createElement('div');
-                    actionsDiv.className = 'list-item-actions';
-                    
-                    if (type === 'news' || type === 'team' || type === 'sponsors') {
-                        const editBtn = document.createElement('button');
-                        editBtn.className = 'btn-edit';
-                        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                        editBtn.addEventListener('click', () => editItem(type, child.key));
-                        actionsDiv.appendChild(editBtn);
-                    }
-                    
-                    const delBtn = document.createElement('button');
-                    delBtn.className = 'btn-del';
-                    delBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                    delBtn.addEventListener('click', () => deleteItem(type, child.key));
-                    actionsDiv.appendChild(delBtn);
-                    
+                    const item = document.createElement("div");
+                    item.className = "list-item";
+
+                    const titleSpan = document.createElement("span");
+                    titleSpan.innerHTML = `<strong>${titleText}</strong> <small style="color:var(--muted)">(${subtitleText})</small>`;
+
+                    const actionsDiv = document.createElement("div");
+                    actionsDiv.style.display = "flex";
+                    actionsDiv.style.gap = "8px";
+
+                    const editBtn = document.createElement("button");
+                    editBtn.className = "btn-icon";
+                    editBtn.title = "Tahrirlash";
+                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                    editBtn.onclick = () => editItem(type, child.key);
+
+                    const deleteBtn = document.createElement("button");
+                    deleteBtn.className = "btn-icon delete";
+                    deleteBtn.title = "O\x27chirish";
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.onclick = () => deleteItem(type, child.key);
+
+                    actionsDiv.appendChild(editBtn);
+                    actionsDiv.appendChild(deleteBtn);
+
+                    item.appendChild(titleSpan);
                     item.appendChild(actionsDiv);
                     container.appendChild(item);
                 });
@@ -1175,34 +1147,52 @@
         }
 
         function editItem(type, key) {
-            db.ref(type).child(key).once('value').then(snap => {
+            db.ref(type).child(key).once("value").then(snap => {
                 const v = snap.val();
-                if (type === 'news') {
+                if (type === "news") {
                     editingNewsKey = key;
                     oldImgUrl = v.imgUrl || null;
-                    document.getElementById('news-title').value = v.title;
-                    document.getElementById('news-desc').value = v.desc;
-                    document.getElementById('btn-save-news').innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
-                    switchTab('tab-news');
+                    document.getElementById("news-title").value = v.title;
+                    document.getElementById("news-desc").value = v.desc;
+                    if (document.getElementById("news-url")) document.getElementById("news-url").value = v.imgUrl && v.imgUrl.startsWith("http") ? v.imgUrl : "";
+                    const prev = document.getElementById("news-preview");
+                    if (prev && v.imgUrl) {
+                        prev.innerHTML = `<img src="${v.imgUrl}" style="max-height:120px;border-radius:12px;border:1px solid var(--border);">`;
+                        prev.style.display = "block";
+                    }
+                    document.getElementById("btn-save-news").innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
+                    switchTab("tab-news");
                     window.scrollTo(0, 0);
-                } else if (type === 'sponsors') {
+                } else if (type === "sponsors") {
                     editingEventKey = key;
                     oldImgUrl = v.imgUrl || null;
-                    document.getElementById('sponsor-name').value = v.name;
-                    document.getElementById('sponsor-desc').value = v.desc;
-                    document.getElementById('btn-save-sponsor').innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
-                    switchTab('tab-sponsors');
+                    document.getElementById("sponsor-name").value = v.name;
+                    document.getElementById("sponsor-desc").value = v.desc;
+                    if (document.getElementById("sponsor-url")) document.getElementById("sponsor-url").value = v.imgUrl && v.imgUrl.startsWith("http") ? v.imgUrl : "";
+                    const prev = document.getElementById("sponsor-preview");
+                    if (prev && v.imgUrl) {
+                        prev.innerHTML = `<img src="${v.imgUrl}" style="max-height:120px;border-radius:12px;border:1px solid var(--border);">`;
+                        prev.style.display = "block";
+                    }
+                    document.getElementById("btn-save-sponsor").innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
+                    switchTab("tab-sponsors");
                     window.scrollTo(0, 0);
-                } else if (type === 'team') {
+                } else if (type === "team") {
                     editingTeamKey = key;
                     oldImgUrl = v.imgUrl || null;
-                    document.getElementById('team-name').value = v.name;
-                    document.getElementById('team-role').value = v.role;
-                    document.getElementById('team-phone').value = v.phone || '';
-                    document.getElementById('team-tg').value = v.tg || '';
-                    document.getElementById('team-desc').value = v.desc || '';
-                    document.getElementById('btn-save-team').innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
-                    switchTab('tab-team');
+                    document.getElementById("team-name").value = v.name;
+                    document.getElementById("team-role").value = v.role;
+                    document.getElementById("team-phone").value = v.phone || "";
+                    document.getElementById("team-tg").value = v.tg || "";
+                    document.getElementById("team-desc").value = v.desc || "";
+                    if (document.getElementById("team-url")) document.getElementById("team-url").value = v.imgUrl && v.imgUrl.startsWith("http") ? v.imgUrl : "";
+                    const prev = document.getElementById("team-preview");
+                    if (prev && v.imgUrl) {
+                        prev.innerHTML = `<img src="${v.imgUrl}" style="max-height:120px;border-radius:12px;border:1px solid var(--border);">`;
+                        prev.style.display = "block";
+                    }
+                    document.getElementById("btn-save-team").innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Yangilash`;
+                    switchTab("tab-team");
                     window.scrollTo(0, 0);
                 }
             });
@@ -1210,21 +1200,30 @@
 
         // ================= GALLERY =================
         async function addGallery() {
-            const btn = document.getElementById('btn-save-gallery');
-            const files = document.getElementById('gallery-img').files;
-            if (files.length === 0) return alert("Rasm tanlang!");
+            const btn = document.getElementById("btn-save-gallery");
+            const files = document.getElementById("gallery-img").files;
+            const manualUrl = document.getElementById("gallery-url") ? document.getElementById("gallery-url").value.trim() : "";
+
+            if (files.length === 0 && !manualUrl) return alert("Rasm tanlang yoki havola kiriting!");
 
             btn.innerHTML = `<span class="spinner"></span> Yuklanmoqda...`;
             btn.disabled = true;
             try {
+                if (manualUrl) {
+                    await db.ref("gallery").push({ url: manualUrl, date: Date.now() });
+                }
                 for (let i = 0; i < files.length; i++) {
                     let imgUrl = await uploadImage(files[i]);
-                    if (imgUrl) await db.ref('gallery').push({ url: imgUrl, date: Date.now() });
+                    if (imgUrl) await db.ref("gallery").push({ url: imgUrl, date: Date.now() });
                 }
-                document.getElementById('gallery-img').value = '';
+                document.getElementById("gallery-img").value = "";
+                if (document.getElementById("gallery-url")) document.getElementById("gallery-url").value = "";
+                const prev = document.getElementById("gallery-preview");
+                if (prev) { prev.style.display = "none"; prev.innerHTML = ""; }
                 loadGallery();
-            } catch (e) { alert(e.message); }
-            btn.innerHTML = `<i class="fas fa-upload"></i> Rasmlarni Yuklash`;
+                alert("Galereyaga rasm(lar) yuklandi!");
+            } catch (e) { alert("Xatolik: " + e.message); }
+            btn.innerHTML = `<i class="fas fa-upload" style="margin-right:8px"></i>Rasmlarni Yuklash`;
             btn.disabled = false;
         }
 
