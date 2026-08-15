@@ -1,7 +1,7 @@
 /* ============================================================
    G'oyib Yoronlar Jome Masjidi — v2
-   Multi-language, Font Scaling, Firebase & Stitch Theme
-   Markdown Support & Enhanced Profiles
+   Multi-language, Custom Floating Dropdowns, History Back Navigation,
+   Telegram Bot Integration, Markdown & Stitch Theme
    ============================================================ */
 
 'use strict';
@@ -10,23 +10,16 @@
 function parseMarkdown(text) {
   if (!text) return '';
   let html = text
-    // Escape HTML first
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    // Headers
     .replace(/^### (.*$)/gim, '<h4 class="text-sm font-bold text-primary dark:text-emerald-light mt-3 mb-1">$1</h4>')
     .replace(/^## (.*$)/gim, '<h3 class="text-base font-bold text-primary dark:text-emerald-light mt-3 mb-1">$1</h3>')
     .replace(/^# (.*$)/gim, '<h2 class="text-lg font-bold text-primary dark:text-emerald-light mt-4 mb-2">$1</h2>')
-    // Bold (**text**)
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-primary dark:text-emerald-light">$1</strong>')
-    // Italic (*text*)
     .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-    // Links [text](url)
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="text-emerald-deep dark:text-emerald-light underline font-medium hover:opacity-80">$1</a>')
-    // Bullet lists (- item or * item)
     .replace(/^\s*[-*]\s+(.*$)/gim, '<div class="flex items-start gap-2 my-1"><span class="text-gold-shimmer text-xs mt-1">•</span><span>$1</span></div>')
-    // Paragraphs / newlines
     .replace(/\n\n/g, '<div class="my-2.5"></div>')
     .replace(/\n/g, '<br/>');
 
@@ -78,6 +71,13 @@ const translations = {
     charity_utility: "Kommunal to'lovlar",
     domo_btn: "domo.uz orqali kommunal to'lash",
     read_more: "O'qish",
+    bottom_nav_home: "BOSH",
+    bottom_nav_prayers: "NAMOZ",
+    bottom_nav_charity: "XAYRIYA",
+    bottom_nav_gallery: "GALEREYA",
+    bottom_nav_dua: "DUO",
+    electric_note_title: "Qanday to'lash kerak?",
+    electric_note_desc: "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
     no_news: "Hozircha yangiliklar yo'q...",
     no_sponsors: "Hozircha ma'lumot kiritilmagan.",
     no_team: "Hozircha jamoa a'zolari kiritilmagan...",
@@ -126,6 +126,13 @@ const translations = {
     charity_utility: "Коммунал тўловлар",
     domo_btn: "domo.uz орқали коммунал тўлаш",
     read_more: "Ўқиш",
+    bottom_nav_home: "БОШ",
+    bottom_nav_prayers: "НАМОЗ",
+    bottom_nav_charity: "ХАЙРИЯ",
+    bottom_nav_gallery: "ГАЛЕРЕЯ",
+    bottom_nav_dua: "ДУО",
+    electric_note_title: "Қандай тўлаш керак?",
+    electric_note_desc: "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
     no_news: "Ҳозирча янгиликлар йўқ...",
     no_sponsors: "Ҳозирча маълумот киритилмаган.",
     no_team: "Ҳозирча жамоа аъзолари киритилмаган...",
@@ -164,7 +171,7 @@ const translations = {
     loading: "Загрузка...",
     next_prayer_in: "До следующего намаза:",
     about_title: "О нас",
-    about_text: "Соборная мечеть «Гойиб Ёронлар» расположена в селе Туда Папского района Наманганской области.",
+    about_text: "Соборная мечеть «Гойиб Ёронlar» расположена в селе Туда Папского района Наманганской области.",
     team_title: "Команда мечети",
     sponsors_title: "Почётные лица и спонсоры",
     gallery_title: "Фотогалерея",
@@ -174,6 +181,13 @@ const translations = {
     charity_utility: "Коммунальные платежи",
     domo_btn: "Оплата коммунальных через domo.uz",
     read_more: "Читать",
+    bottom_nav_home: "ГЛАВНАЯ",
+    bottom_nav_prayers: "НАМАЗ",
+    bottom_nav_charity: "ПОЖЕРТВОВАНИЕ",
+    bottom_nav_gallery: "ГАЛЕРЕЯ",
+    bottom_nav_dua: "МОЛИТВА",
+    electric_note_title: "Как оплатить?",
+    electric_note_desc: "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
     no_news: "Новостей пока нет...",
     no_sponsors: "Данных пока нет.",
     no_team: "Данных пока нет...",
@@ -222,11 +236,25 @@ const translations = {
     charity_utility: "Utility payments",
     domo_btn: "Pay utilities via domo.uz",
     read_more: "Read",
+    bottom_nav_home: "HOME",
+    bottom_nav_prayers: "PRAYERS",
+    bottom_nav_charity: "CHARITY",
+    bottom_nav_gallery: "GALLERY",
+    bottom_nav_dua: "DUA",
+    electric_note_title: "How to pay?",
+    electric_note_desc: "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
     no_news: "No news available...",
     no_sponsors: "No information yet.",
     no_team: "No team members yet...",
     no_gallery: "No images yet..."
   }
+};
+
+const langMeta = {
+  uz_lt: { flag: "🇺🇿", name: "O'zbekcha", code: "O'z" },
+  uz_cy: { flag: "🇺🇿", name: "Ўзбекча", code: "Ўз" },
+  ru: { flag: "🇷🇺", name: "Русский", code: "Ру" },
+  en: { flag: "🇺🇸", name: "English", code: "En" }
 };
 
 let currentLang = localStorage.getItem('selected_language') || 'uz_lt';
@@ -236,11 +264,21 @@ function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('selected_language', lang);
 
-  const langSelect = document.getElementById('lang-select');
-  if (langSelect) langSelect.value = lang;
-  const langSelectMob = document.getElementById('lang-select-mobile');
-  if (langSelectMob) langSelectMob.value = lang;
+  // Update dropdown labels
+  document.querySelectorAll('.lang-current-flag').forEach(el => el.textContent = langMeta[lang].flag);
+  document.querySelectorAll('.lang-current-name').forEach(el => el.textContent = langMeta[lang].name);
+  document.querySelectorAll('.lang-current-code').forEach(el => el.textContent = langMeta[lang].code);
 
+  // Update checkmarks
+  document.querySelectorAll('.lang-menu button').forEach(btn => {
+    const isCur = btn.dataset.lang === lang;
+    const check = btn.querySelector('.check-icon');
+    if (check) check.classList.toggle('hidden', !isCur);
+    btn.classList.toggle('bg-surface-container', isCur);
+    btn.classList.toggle('font-bold', isCur);
+  });
+
+  // Apply translations to all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang][key]) {
@@ -255,8 +293,34 @@ function setLanguage(lang) {
   if (textInput && translations[lang].dua_msg_ph) textInput.placeholder = translations[lang].dua_msg_ph;
 }
 
-document.getElementById('lang-select')?.addEventListener('change', (e) => setLanguage(e.target.value));
-document.getElementById('lang-select-mobile')?.addEventListener('change', (e) => setLanguage(e.target.value));
+// Custom Language Dropdown Event Handlers
+function initCustomLangDropdowns() {
+  document.querySelectorAll('.custom-lang-dropdown').forEach(dropdown => {
+    const trigger = dropdown.querySelector('.lang-dropdown-trigger');
+    const menu = dropdown.querySelector('.lang-menu');
+
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !menu.classList.contains('hidden');
+      document.querySelectorAll('.lang-menu').forEach(m => m.classList.add('hidden'));
+      if (!isOpen) menu.classList.remove('hidden');
+    });
+
+    menu?.querySelectorAll('button[data-lang]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setLanguage(btn.dataset.lang);
+        menu.classList.add('hidden');
+      });
+    });
+  });
+
+  // Close when clicked outside
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.lang-menu').forEach(m => m.classList.add('hidden'));
+  });
+}
+initCustomLangDropdowns();
 
 // ============ FONT SIZE SCALING ============
 function setFontSize(size) {
@@ -371,6 +435,38 @@ function initNavSync() {
   });
 }
 initNavSync();
+
+// ============ HISTORY BACK BUTTON HANDLER ============
+function closeAllModals(fromPopState = false) {
+  const teamModal = document.getElementById('team-modal');
+  const newsModal = document.getElementById('news-modal');
+  const lightboxModal = document.getElementById('lightbox-modal');
+
+  let wasOpen = false;
+  if (teamModal && !teamModal.classList.contains('hidden')) {
+    teamModal.classList.add('hidden');
+    teamModal.classList.remove('flex');
+    wasOpen = true;
+  }
+  if (newsModal && !newsModal.classList.contains('hidden')) {
+    newsModal.classList.add('hidden');
+    newsModal.classList.remove('flex');
+    wasOpen = true;
+  }
+  if (lightboxModal && !lightboxModal.classList.contains('hidden')) {
+    lightboxModal.classList.add('hidden');
+    lightboxModal.classList.remove('flex');
+    wasOpen = true;
+  }
+
+  if (wasOpen) {
+    document.body.style.overflow = '';
+  }
+}
+
+window.addEventListener('popstate', () => {
+  closeAllModals(true);
+});
 
 // ============ FIREBASE INITIALIZATION ============
 let db = null;
@@ -541,7 +637,7 @@ function highlightActivePrayer() {
     if (isCur) {
       cell.className = 'prayer-cell bg-emerald-deep p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all shadow-md relative overflow-hidden';
       if (nameEl) nameEl.className = 'font-label-caps text-[11px] font-bold text-gold-shimmer mb-1 prayer-name relative z-10';
-      if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded p-1.5 mb-1.5 prayer-pill relative z-10';
+      if (pillEl) pillEl.className = 'w-full bg-white/20 backdrop-blur-sm rounded-xl p-1.5 mb-1.5 prayer-pill relative z-10';
       if (pillLabel) pillLabel.className = 'text-[9px] text-white/80 uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
       if (masjidTimeEl) masjidTimeEl.className = 'font-prayer-time-display text-[22px] md:text-[24px] font-bold text-white tabular-nums leading-none prayer-masjid';
       if (azonLabel) azonLabel.className = 'text-[9px] font-bold uppercase tracking-wider text-white/70 prayer-azon-label';
@@ -549,7 +645,7 @@ function highlightActivePrayer() {
     } else {
       cell.className = 'prayer-cell bg-surface-container-lowest p-3.5 text-center flex flex-col items-center justify-between min-h-[140px] group transition-all';
       if (nameEl) nameEl.className = 'font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name';
-      if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill';
+      if (pillEl) pillEl.className = 'w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill';
       if (pillLabel) pillLabel.className = 'text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label';
       if (masjidTimeEl) masjidTimeEl.className = 'font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid';
       if (azonLabel) azonLabel.className = 'text-[9px] text-on-surface-variant uppercase font-bold tracking-wider prayer-azon-label';
@@ -611,7 +707,7 @@ function renderNews() {
 
   if (allNews.length === 0) {
     container.innerHTML = `
-      <div class="min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl p-6 text-center border border-surface-container-high col-span-full">
+      <div class="min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-2xl p-6 text-center border border-surface-container-high col-span-full shadow-sm">
         <span class="material-symbols-outlined text-[36px] text-gold-shimmer mb-2">newspaper</span>
         <p class="text-on-surface-variant text-sm">${translations[currentLang]?.no_news || "Hozircha yangiliklar yo'q..."}</p>
       </div>
@@ -621,13 +717,13 @@ function renderNews() {
 
   allNews.slice(0, 6).forEach((item) => {
     const card = document.createElement('div');
-    card.className = 'min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex flex-col flex-shrink-0 cursor-pointer group hover:shadow-md transition-all';
+    card.className = 'min-w-[280px] w-[280px] md:w-auto bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex flex-col flex-shrink-0 cursor-pointer group hover:shadow-md transition-all';
     card.onclick = () => openNewsModal(item.title, item.desc || item.content, item.imgUrl, item.date);
 
     card.innerHTML = `
       <div class="h-36 bg-surface-variant relative overflow-hidden">
         ${item.imgUrl ? `<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.imgUrl}" alt="${item.title || ''}" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px] opacity-40">article</span></div>`}
-        <div class="absolute top-2 left-2 bg-white/90 dark:bg-black/80 backdrop-blur px-2 py-0.5 rounded-full font-label-caps text-[10px] text-primary shadow-sm">
+        <div class="absolute top-2 left-2 bg-white/90 dark:bg-black/80 backdrop-blur px-2.5 py-0.5 rounded-full font-label-caps text-[10px] text-primary shadow-sm">
           ${item.date ? item.date.split(' ')[0] : 'Yangi'}
         </div>
       </div>
@@ -673,6 +769,7 @@ window.openNewsModal = function(title, desc, imgUrl, date) {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
   document.body.style.overflow = 'hidden';
+  history.pushState({ modalOpen: true }, "");
 };
 
 window.closeNewsModal = function() {
@@ -680,9 +777,12 @@ window.closeNewsModal = function() {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
   document.body.style.overflow = '';
+  if (history.state && history.state.modalOpen) {
+    history.back();
+  }
 };
 
-// ============ TEAM (ALL USERS LOADED DYNAMICALLY) ============
+// ============ TEAM ============
 let allTeam = [];
 
 function renderTeam() {
@@ -729,18 +829,15 @@ function loadTeam() {
   });
 }
 
-// Open large profile modal with markdown support
 window.openTeamModal = function(member) {
   document.getElementById('modal-name').textContent = member.name || '';
   document.getElementById('modal-role').textContent = member.role || '';
   
-  // Render markdown in description
   const descEl = document.getElementById('modal-desc');
   if (descEl) {
     descEl.innerHTML = parseMarkdown(member.desc || "Ma'lumot kiritilmagan.");
   }
 
-  // Big User Photo
   const avatar = document.getElementById('modal-avatar');
   if (member.imgUrl) {
     avatar.innerHTML = `<img src="${member.imgUrl}" alt="${member.name || ''}" class="w-full h-full object-cover"/>`;
@@ -748,7 +845,6 @@ window.openTeamModal = function(member) {
     avatar.innerHTML = `<span class="material-symbols-outlined text-[64px] text-on-surface-variant">person</span>`;
   }
 
-  // Phone button
   const phoneEl = document.getElementById('modal-phone');
   if (member.phone && member.phone.trim()) {
     phoneEl.innerHTML = `<span class="material-symbols-outlined text-[16px]">call</span><span>${member.phone}</span>`;
@@ -758,7 +854,6 @@ window.openTeamModal = function(member) {
     phoneEl.classList.add('hidden');
   }
 
-  // Telegram button
   const tgEl = document.getElementById('modal-tg');
   if (member.tg && member.tg.trim()) {
     const cleanTg = member.tg.replace('@', '');
@@ -773,6 +868,7 @@ window.openTeamModal = function(member) {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
   document.body.style.overflow = 'hidden';
+  history.pushState({ modalOpen: true }, "");
 };
 
 window.closeTeamModal = function() {
@@ -780,6 +876,9 @@ window.closeTeamModal = function() {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
   document.body.style.overflow = '';
+  if (history.state && history.state.modalOpen) {
+    history.back();
+  }
 };
 
 // ============ SPONSORS / FAXRIYLAR ============
@@ -797,7 +896,7 @@ function renderSponsors() {
 
   allSponsors.forEach(sponsor => {
     const card = document.createElement('div');
-    card.className = 'bg-surface-container-lowest rounded-xl p-4 border-t-4 border-gold-metallic border-x border-b border-surface-container-high shadow-sm flex items-center gap-3.5 hover:shadow-md transition-all cursor-pointer';
+    card.className = 'bg-surface-container-lowest rounded-2xl p-4 border-t-4 border-gold-metallic border-x border-b border-surface-container-high shadow-sm flex items-center gap-3.5 hover:shadow-md transition-all cursor-pointer';
     card.onclick = () => openSponsorModal(sponsor);
 
     card.innerHTML = `
@@ -834,7 +933,7 @@ window.openSponsorModal = function(sponsor) {
   });
 };
 
-// ============ CHARITY & UTILITIES (DOMO UNDER UTILITIES) ============
+// ============ CHARITY & UTILITIES ============
 function renderCharity(data) {
   const container = document.getElementById('charity-grid');
   if (!container) return;
@@ -842,9 +941,12 @@ function renderCharity(data) {
   const cardNum = data.general_card || '8600 0000 0000 0000';
   const cardOwner = data.general_owner || 'G\'oyib Yoronlar Jome Masjidi';
 
+  const elecNoteTitle = translations[currentLang]?.electric_note_title || "Qanday to'lash kerak?";
+  const elecNoteDesc = translations[currentLang]?.electric_note_desc || "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.";
+
   container.innerHTML = `
     <!-- Umumiy ehson kartasi (Faqat to'g'ridan-to'g'ri bank kartasi) -->
-    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
+    <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
         <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
           <span class="material-symbols-outlined text-emerald-deep text-[22px]">account_balance</span>
@@ -870,8 +972,8 @@ function renderCharity(data) {
       </div>
     </div>
 
-    <!-- Kommunal to'lovlar (Domo to'lovi shu yerda joylashgan) -->
-    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
+    <!-- Kommunal to'lovlar (Domo to'lovi va Elektr eslatmasi shu yerda) -->
+    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
         <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
           <span class="material-symbols-outlined text-emerald-deep text-[22px]">receipt_long</span>
@@ -879,7 +981,7 @@ function renderCharity(data) {
         </h3>
         <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.</p>
 
-        <div class="space-y-2.5 mb-4">
+        <div class="space-y-2.5 mb-3">
           <!-- Elektr -->
           <div class="bg-surface-container-low p-2.5 rounded-xl border border-surface-variant flex justify-between items-center">
             <div class="flex items-center gap-2.5">
@@ -937,10 +1039,19 @@ function renderCharity(data) {
             </div>
           ` : ''}
         </div>
+
+        <!-- Chiroyli Elektr To'lov Eslatmasi -->
+        <div class="mb-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-800 dark:text-amber-300 leading-relaxed shadow-sm">
+          <div class="font-bold flex items-center gap-1.5 mb-1 text-amber-700 dark:text-amber-400">
+            <span class="material-symbols-outlined text-[16px]">info</span>
+            <span>${elecNoteTitle}</span>
+          </div>
+          <p>${elecNoteDesc}</p>
+        </div>
       </div>
 
       <!-- Domo button under utilities -->
-      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold mt-2" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
+      <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold mt-1" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
         <span class="material-symbols-outlined text-[18px]">payment</span>
         <span data-i18n="domo_btn">domo.uz orqali kommunal to'lash</span>
       </a>
@@ -987,7 +1098,7 @@ function renderGallery() {
 
   allGallery.forEach((img, idx) => {
     const item = document.createElement('div');
-    item.className = 'aspect-square rounded-xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer transition-all group';
+    item.className = 'aspect-square rounded-2xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer transition-all group';
     item.onclick = () => openLightbox(idx);
     item.innerHTML = `<img src="${img.url}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>`;
     container.appendChild(item);
@@ -1015,6 +1126,7 @@ window.openLightbox = function(idx) {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
   document.body.style.overflow = 'hidden';
+  history.pushState({ modalOpen: true }, "");
 };
 
 function closeLightbox() {
@@ -1022,6 +1134,9 @@ function closeLightbox() {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
   document.body.style.overflow = '';
+  if (history.state && history.state.modalOpen) {
+    history.back();
+  }
 }
 
 function changeLightbox(dir) {
@@ -1041,43 +1156,92 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') changeLightbox(1);
 });
 
-// ============ DUA REQUEST FORM ============
+// ============ DUA REQUEST FORM + TELEGRAM BOT ============
 document.getElementById('dua-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const name = document.getElementById('dua-name')?.value.trim() || 'Anonim';
-  const text = document.getElementById('dua-text')?.value.trim();
-  if (!text) return;
+  const nameInput = document.getElementById('dua-name')?.value.trim();
+  const messageInput = document.getElementById('dua-text')?.value.trim();
+  if (!messageInput) return;
+
+  const submitBtn = document.getElementById('dua-submit-btn');
 
   // Friday prayer block check (12:40 - 13:00)
   const now = new Date();
   const isFriday = now.getDay() === 5;
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  if (isFriday && currentMinutes >= 760 && currentMinutes <= 780) {
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  if (isFriday && hours === 12 && minutes >= 40) {
     const blockedEl = document.getElementById('dua-blocked');
     if (blockedEl) {
       blockedEl.classList.remove('hidden');
-      setTimeout(() => blockedEl.classList.add('hidden'), 5000);
+      setTimeout(() => blockedEl.classList.add('hidden'), 6000);
     }
     return;
   }
 
   try {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-70');
+    }
+
+    const userName = nameInput || 'Yashirin';
+
+    // 1. Save to Firebase
     if (db) {
       await db.ref('dua_requests').push({
-        name,
-        message: text,
-        timestamp: Date.now(),
-        date: now.toLocaleString('uz-UZ')
+        name: userName,
+        message: messageInput,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
       });
     }
+
+    // 2. Format Telegram message & date
+    const subDay = String(now.getDate()).padStart(2, '0');
+    const subMonth = String(now.getMonth() + 1).padStart(2, '0');
+    const subYear = now.getFullYear();
+    const subHours = String(now.getHours()).padStart(2, '0');
+    const subMins = String(now.getMinutes()).padStart(2, '0');
+    const submissionTime = `${subDay}.${subMonth}.${subYear} ${subHours}:${subMins}`;
+
+    const nextFriday = new Date(now);
+    let daysUntilFriday = (5 - now.getDay() + 7) % 7;
+    if (now.getDay() === 5 && (hours > 13 || (hours === 13 && minutes > 0))) {
+      daysUntilFriday = 7;
+    }
+    nextFriday.setDate(now.getDate() + daysUntilFriday);
+    const friDay = String(nextFriday.getDate()).padStart(2, '0');
+    const friMonth = String(nextFriday.getMonth() + 1).padStart(2, '0');
+    const hashtag = `#Juma_${friDay}_${friMonth}_${nextFriday.getFullYear()}`;
+
+    // Telegram bot token & chats
+    const botToken = atob('ODk2NTgwMDcyMjpBQUVYOGk2UmdEdndDTWxYWnVPLXZrMFdpNFM2OXZrZTlGWQ==');
+    const chatIds = [atob('ODIyMDMzOTY1'), atob('MjkwODAzMzAw'), atob('ODI0NjM4NDk0Ng==')];
+    const tgText = `🤲 Yangi duo so'rovi:\n\n👤 Ism: ${userName}\n📝 Matn: ${messageInput}\n\n🕒 Vaqt: ${submissionTime}\n🔖 Xeshteg: ${hashtag}`;
+
+    chatIds.forEach(chatId => {
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: tgText })
+      }).catch(console.error);
+    });
+
     document.getElementById('dua-form').reset();
     const successEl = document.getElementById('dua-success');
     if (successEl) {
       successEl.classList.remove('hidden');
-      setTimeout(() => successEl.classList.add('hidden'), 5000);
+      setTimeout(() => successEl.classList.add('hidden'), 6000);
     }
   } catch (err) {
-    console.warn('Dua yuborish xatosi:', err);
+    console.error('Dua yuborishda xatolik:', err);
+    alert("Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.");
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-70');
+    }
   }
 });
 

@@ -160,19 +160,8 @@
 <div class="hidden md:block w-full bg-emerald-deep text-white text-xs border-b border-emerald-light/40">
   <div class="max-w-container-max mx-auto px-margin-desktop py-1.5 flex justify-between items-center">
     <div class="flex items-center gap-4">
-      <!-- Language -->
-      <div class="flex items-center gap-1 bg-black/20 rounded px-2 py-0.5">
-        <span class="material-symbols-outlined text-[15px] opacity-80">translate</span>
-        <select id="lang-select" class="bg-transparent text-white border-0 text-xs focus:ring-0 cursor-pointer p-0 font-medium pr-4">
-          <option value="uz_lt" class="text-black">🇺🇿 O'zbekcha</option>
-          <option value="uz_cy" class="text-black">🇺🇿 Ўзбекча</option>
-          <option value="ru" class="text-black">🇷🇺 Русский</option>
-          <option value="en" class="text-black">🇺🇸 English</option>
-        </select>
-      </div>
-
       <!-- Font size -->
-      <div class="flex items-center gap-1 bg-black/20 rounded px-2 py-0.5">
+      <div class="flex items-center gap-1 bg-black/20 rounded-lg px-2 py-0.5">
         <span class="text-[11px] opacity-80" data-i18n="text_size">Matn:</span>
         <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="norm">A</button>
         <button class="font-btn px-1.5 hover:text-gold-shimmer font-bold" data-size="lg">A+</button>
@@ -180,7 +169,7 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-4">
       <div class="font-label-caps text-[11px] tracking-wider tabular-nums font-bold flex items-center gap-1.5 text-gold-shimmer">
         <span class="material-symbols-outlined text-[14px]">schedule</span>
         <span id="current-time">00:00:00</span>
@@ -218,38 +207,106 @@
     </nav>
 
     <div class="flex items-center gap-3">
+      <!-- Desktop Custom Language Dropdown -->
+      <div class="relative custom-lang-dropdown">
+        <button type="button" class="lang-dropdown-trigger flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high border border-surface-variant px-3 py-1.5 rounded-xl text-xs font-semibold text-on-surface transition-colors shadow-sm">
+          <span class="lang-current-flag text-sm">🇺🇿</span>
+          <span class="lang-current-name font-medium">O'zbekcha</span>
+          <span class="material-symbols-outlined text-[16px] opacity-70">expand_more</span>
+        </button>
+        <div class="lang-menu absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest/95 backdrop-blur-xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50">
+          <button data-lang="uz_lt" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+            <span class="flex items-center gap-2"><span>🇺🇿</span><span>O'zbekcha (Lotin)</span></span>
+            <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+          </button>
+          <button data-lang="uz_cy" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+            <span class="flex items-center gap-2"><span>🇺🇿</span><span>Ўзбекча (Кирилл)</span></span>
+            <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+          </button>
+          <button data-lang="ru" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+            <span class="flex items-center gap-2"><span>🇷🇺</span><span>Русский</span></span>
+            <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+          </button>
+          <button data-lang="en" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+            <span class="flex items-center gap-2"><span>🇺🇸</span><span>English</span></span>
+            <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Theme toggle -->
       <button id="theme-toggle-desktop" class="w-10 h-10 rounded-full border-2 border-gold-metallic/70 flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors shadow-sm" title="Tungi / Kunduzgi rejim">
         <span class="material-symbols-outlined text-[20px] text-gold-shimmer" id="theme-icon-desktop">light_mode</span>
       </button>
       <a href="#charity" class="bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm font-bold" data-i18n="nav_donate">
         <span class="material-symbols-outlined text-[16px]">volunteer_activism</span>
-        <span>Ehson</span>
+        <span data-i18n="nav_donate">Ehson</span>
       </a>
     </div>
   </div>
 </header>
 
-<!-- Mobile Minimal Header -->
-<header class="md:hidden w-full bg-surface/90 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-outline-variant px-margin-mobile py-3 flex justify-between items-center">
-  <div class="flex items-center gap-2">
-    <div class="w-9 h-9 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm">
-      <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mosque</span>
+<!-- Mobile Minimal Header with Custom Floating Language Dropdown & Font Sizer -->
+<header class="md:hidden w-full bg-surface/90 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-outline-variant px-margin-mobile py-2.5 flex justify-between items-center">
+  <a href="#" class="flex items-center gap-2">
+    <div class="w-9 h-9 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm flex-shrink-0">
+      <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">mosque</span>
     </div>
-    <h1 class="font-headline-md text-lg font-bold text-primary">G'oyib Yoronlar</h1>
-  </div>
+    <h1 class="font-headline-md text-[17px] font-bold text-primary leading-tight">G'oyib Yoronlar</h1>
+  </a>
   
   <div class="flex items-center gap-2">
-    <!-- Language select for mobile -->
-    <select id="lang-select-mobile" class="bg-surface-container border border-surface-variant text-xs rounded-lg px-2 py-1 text-on-surface focus:ring-0">
-      <option value="uz_lt">🇺🇿 O'z</option>
-      <option value="uz_cy">🇺🇿 Ўз</option>
-      <option value="ru">🇷🇺 Ру</option>
-      <option value="en">🇺🇸 En</option>
-    </select>
+    <!-- Mobile Font Size Button -->
+    <div class="flex items-center bg-surface-container border border-surface-variant rounded-xl px-1.5 py-1">
+      <button class="font-btn px-1 text-[11px] hover:text-gold-shimmer font-bold" data-size="norm">A</button>
+      <button class="font-btn px-1 text-[12px] hover:text-gold-shimmer font-bold" data-size="lg">A+</button>
+      <button class="font-btn px-1 text-[13px] hover:text-gold-shimmer font-bold" data-size="xl">A++</button>
+    </div>
+
+    <!-- Mobile Custom Floating Language Dropdown (Downward, Transparent, Uncramped) -->
+    <div class="relative custom-lang-dropdown">
+      <button type="button" class="lang-dropdown-trigger flex items-center gap-1 bg-surface-container border border-surface-variant rounded-xl px-2.5 py-1.5 text-xs font-bold text-on-surface shadow-sm active:scale-95 transition-transform">
+        <span class="lang-current-flag text-sm">🇺🇿</span>
+        <span class="lang-current-code text-[11px] uppercase font-bold">O'z</span>
+        <span class="material-symbols-outlined text-[15px] opacity-70">expand_more</span>
+      </button>
+      
+      <!-- Downward Glassmorphism Dropdown Menu -->
+      <div class="lang-menu absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest/95 dark:bg-[#1d201e]/95 backdrop-blur-2xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50 animate-fadeIn">
+        <button data-lang="uz_lt" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🇺🇿</span>
+            <span>O'zbekcha (Lotin)</span>
+          </span>
+          <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+        </button>
+        <button data-lang="uz_cy" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🇺🇿</span>
+            <span>Ўзбекча (Кирилл)</span>
+          </span>
+          <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+        </button>
+        <button data-lang="ru" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🇷🇺</span>
+            <span>Русский</span>
+          </span>
+          <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+        </button>
+        <button data-lang="en" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🇺🇸</span>
+            <span>English</span>
+          </span>
+          <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
+        </button>
+      </div>
+    </div>
     
     <!-- Theme toggle for mobile -->
-    <button id="theme-toggle" class="w-9 h-9 rounded-full border-2 border-gold-metallic/70 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" title="Tungi / Kunduzgi rejim">
-      <span class="material-symbols-outlined text-[18px] text-gold-shimmer" id="theme-icon">light_mode</span>
+    <button id="theme-toggle" class="w-8 h-8 rounded-full border border-gold-metallic/60 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" title="Tungi / Kunduzgi rejim">
+      <span class="material-symbols-outlined text-[17px] text-gold-shimmer" id="theme-icon">light_mode</span>
     </button>
   </div>
 </header>
@@ -259,16 +316,16 @@
 
   <!-- Hero Section -->
   <section id="home" class="w-full relative px-margin-mobile md:px-0 pt-stack-md">
-    <div class="relative w-full h-64 md:h-80 rounded-xl overflow-hidden shadow-lg border border-surface-container-high group">
+    <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-surface-container-high group">
       <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent z-10"></div>
       <img alt="G'oyib Yoronlar Masjidi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="public/assets/masjid-yangi.png" onerror="this.src='https://images.unsplash.com/photo-1579404243938-f8d202ff6f36?q=85&fm=jpg&w=1200'"/>
       <div class="absolute bottom-4 left-4 right-4 z-20 text-white">
-        <span class="bg-primary/80 backdrop-blur-sm text-on-primary font-label-caps text-[10px] px-2 py-1 rounded mb-2 inline-block">Jome Masjidi</span>
+        <span class="bg-primary/80 backdrop-blur-sm text-on-primary font-label-caps text-[10px] px-2.5 py-1 rounded mb-2 inline-block">Jome Masjidi</span>
         <h2 class="font-headline-lg-mobile text-2xl md:text-3xl text-white drop-shadow-md font-bold" data-i18n="hero_title">Xush kelibsiz</h2>
         <p class="font-body-md text-xs md:text-sm text-surface-container-low mt-1" data-i18n="hero_subtitle">Namangan viloyati, Pop tumani, To'da qishlog'i</p>
         
         <!-- Countdown -->
-        <div class="mt-2.5 flex items-center gap-2 flex-wrap bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg inline-flex border border-white/10">
+        <div class="mt-2.5 flex items-center gap-2 flex-wrap bg-black/40 backdrop-blur-md px-3 py-1 rounded-xl inline-flex border border-white/10">
           <span class="material-symbols-outlined text-gold-shimmer text-[16px]">alarm</span>
           <span class="font-label-caps text-[10px] text-white/90" data-i18n="next_prayer_in">Keyingi namozga:</span>
           <span id="countdown-timer" class="font-prayer-time-display text-[15px] text-gold-shimmer font-bold tabular-nums">--:--:--</span>
@@ -276,48 +333,6 @@
         </div>
         <div class="mt-1 text-[11px] text-white/70" id="current-date"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- Quick Actions Grid -->
-  <section class="w-full px-margin-mobile md:px-0">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-stack-sm">
-      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#charity">
-        <div class="w-12 h-12 rounded-full bg-emerald-deep text-on-primary flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
-        </div>
-        <div>
-          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_charity">Xayriya</h3>
-          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="charity_general">Ehson qilish</p>
-        </div>
-      </a>
-      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#dua">
-        <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">prayer_times</span>
-        </div>
-        <div>
-          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_dua">Duo olish</h3>
-          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="dua_title">Jamoatdan duo</p>
-        </div>
-      </a>
-      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#gallery">
-        <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">photo_library</span>
-        </div>
-        <div>
-          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_gallery">Galereya</h3>
-          <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="gallery_title">Rasmlar</p>
-        </div>
-      </a>
-      <a class="bg-surface-container rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 border border-surface-container-high shadow-[0_2px_8px_rgba(180,83,9,0.05)] hover:shadow-md transition-shadow active:scale-[0.98]" href="#about">
-        <div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm">
-          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">info</span>
-        </div>
-        <div>
-          <h3 class="font-body-md text-body-md font-semibold text-on-surface" data-i18n="nav_about">Biz haqimizda</h3>
-          <p class="text-xs text-on-surface-variant mt-0.5">Masjid tarixi</p>
-        </div>
-      </a>
     </div>
   </section>
 
@@ -336,8 +351,8 @@
       </div>
     </div>
 
-    <!-- Outer container box with rounded-xl border and shadow -->
-    <div class="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(180,83,9,0.05)] border border-surface-container-high">
+    <!-- Outer container box with rounded-2xl border and shadow -->
+    <div class="bg-surface-container rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(180,83,9,0.05)] border border-surface-container-high">
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-px bg-surface-container-high" id="prayer-grid-container">
 
         <!-- BOMDOD -->
@@ -345,7 +360,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">wb_twilight</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="bomdod">BOMDOD</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-bomdod">04:10</div>
           </div>
@@ -361,7 +376,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">light_mode</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="quyosh">QUYOSH</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label">Chiqishi</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-quyosh">05:17</div>
           </div>
@@ -377,7 +392,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">partly_cloudy_day</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="peshin">PESHIN</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-peshin">13:00</div>
           </div>
@@ -393,7 +408,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">wb_sunny</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="asr">ASR</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-asr">17:30</div>
           </div>
@@ -409,7 +424,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">nights_stay</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="shom">SHOM</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-shom">19:30</div>
           </div>
@@ -425,7 +440,7 @@
           <span class="material-symbols-outlined text-gold-shimmer mb-1 text-[22px]">dark_mode</span>
           <div class="font-label-caps text-[11px] text-on-surface-variant font-bold mb-1 prayer-name" data-i18n="xufton">XUFTON</div>
           
-          <div class="w-full bg-surface-container-low rounded p-1.5 mb-1.5 prayer-pill">
+          <div class="w-full bg-surface-container-low rounded-xl p-1.5 mb-1.5 prayer-pill">
             <div class="text-[9px] text-on-surface-variant uppercase font-bold tracking-wider mb-0.5 prayer-pill-label" data-i18n="masjid_time_label">Masjidda o'qilish vaqti</div>
             <div class="font-prayer-time-display text-[22px] md:text-[24px] font-bold text-primary tabular-nums leading-none prayer-masjid" id="time-xufton">21:10</div>
           </div>
@@ -448,8 +463,8 @@
   <!-- About Section -->
   <section id="about" class="w-full px-margin-mobile md:px-0">
     <h2 class="font-headline-md text-headline-md text-primary font-bold mb-3" data-i18n="about_title">Biz haqimizda</h2>
-    <div class="bg-surface-container-lowest rounded-xl p-5 md:p-6 border border-surface-container-high shadow-sm flex items-start gap-4">
-      <div class="w-12 h-12 rounded-xl bg-emerald-deep text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+    <div class="bg-surface-container-lowest rounded-2xl p-5 md:p-6 border border-surface-container-high shadow-sm flex items-start gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-emerald-deep text-white flex items-center justify-center flex-shrink-0 shadow-sm">
         <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1">mosque</span>
       </div>
       <div>
@@ -469,9 +484,8 @@
       </div>
     </div>
     
-    <!-- All 5+ team members displayed in clean responsive cards -->
     <div id="team-grid" class="flex gap-3.5 overflow-x-auto hide-scrollbar px-margin-mobile md:px-0 md:grid md:grid-cols-3 lg:grid-cols-5 snap-x pb-2">
-      <!-- Loaded dynamically via Firebase (All 5 users) -->
+      <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
@@ -495,13 +509,13 @@
     </div>
   </section>
 
-  <!-- Charity & Utilities Section (Domo inside Utilities) -->
+  <!-- Charity & Utilities Section -->
   <section id="charity" class="w-full px-margin-mobile md:px-0">
     <div class="mb-3">
       <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="charity_title">Xayriya va ehson</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="charity-grid">
-      <!-- Loaded dynamically via Firebase: Umumiy ehson on left, Kommunal to'lovlar + Domo on right -->
+      <!-- Loaded dynamically via Firebase -->
     </div>
   </section>
 
@@ -521,19 +535,19 @@
       <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="dua_title">Jamoatdan duo olish</h2>
       <p class="text-xs text-on-surface-variant mt-0.5" data-i18n="dua_warning_note">Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish to'xtatiladi.</p>
     </div>
-    <div class="bg-surface-container-lowest rounded-xl p-5 md:p-6 border border-surface-container-high shadow-sm">
+    <div class="bg-surface-container-lowest rounded-2xl p-5 md:p-6 border border-surface-container-high shadow-sm">
       <form id="dua-form" class="space-y-3">
-        <input type="text" id="dua-name" placeholder="Ismingiz (ixtiyoriy)" class="w-full bg-surface-container-low border border-surface-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors"/>
-        <textarea id="dua-text" rows="3" placeholder="Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)" required class="w-full bg-surface-container-low border border-surface-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors resize-none"></textarea>
-        <button type="submit" class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-xs py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm font-bold" data-i18n="dua_submit">
+        <input type="text" id="dua-name" placeholder="Ismingiz (ixtiyoriy)" class="w-full bg-surface-container-low border border-surface-variant rounded-xl px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors"/>
+        <textarea id="dua-text" rows="3" placeholder="Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)" required class="w-full bg-surface-container-low border border-surface-variant rounded-xl px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-gold-shimmer transition-colors resize-none"></textarea>
+        <button type="submit" id="dua-submit-btn" class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold active:scale-[0.98]">
           <span class="material-symbols-outlined text-[18px]">send</span>
-          <span>Yuborish</span>
+          <span data-i18n="dua_submit">Yuborish</span>
         </button>
       </form>
-      <div id="dua-success" class="hidden mt-3 p-3.5 bg-emerald-deep/10 border border-emerald-deep/30 rounded-lg">
-        <p class="text-xs text-emerald-deep font-medium text-center" data-i18n="dua_success">Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!</p>
+      <div id="dua-success" class="hidden mt-3 p-3.5 bg-emerald-deep/10 border border-emerald-deep/30 rounded-xl">
+        <p class="text-xs text-emerald-deep dark:text-emerald-light font-medium text-center" data-i18n="dua_success">Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!</p>
       </div>
-      <div id="dua-blocked" class="hidden mt-3 p-3.5 bg-red-500/10 border border-red-500/30 rounded-lg">
+      <div id="dua-blocked" class="hidden mt-3 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl">
         <p class="text-xs text-red-600 font-medium text-center" data-i18n="dua_blocked">Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.</p>
       </div>
     </div>
@@ -542,7 +556,7 @@
   <!-- Contact Section -->
   <section id="contact" class="w-full px-margin-mobile md:px-0">
     <h2 class="font-headline-md text-headline-md text-primary font-bold mb-3" data-i18n="contact_title">Biz bilan aloqa</h2>
-    <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-surface-container-high shadow-sm grid grid-cols-1 md:grid-cols-2">
+    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-high shadow-sm grid grid-cols-1 md:grid-cols-2">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2966.5!2d71.0956!3d40.9847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDU5JzA1LjAiTiA3McKwMDUnNDQuMiJF!5e0!3m2!1suz!2suz!4v1234567890"
         width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy" class="block w-full h-full min-h-[200px]"></iframe>
       <div class="p-5 md:p-6 space-y-4 flex flex-col justify-center">
@@ -566,27 +580,27 @@
 
 </main>
 
-<!-- Bottom Navigation Bar (Mobile: EXACT STITCH bosh_sahifa_mobile_yangilangan) -->
+<!-- Bottom Navigation Bar -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 pb-safe bg-surface shadow-lg shadow-[0_-4px_12px_rgba(180,83,9,0.05)] rounded-t-2xl border-t border-surface-container" id="bottom-nav">
   <a class="bottom-nav-item flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 min-w-[60px] active:scale-90 transition-transform duration-150 group" href="#home" data-section="home">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
-    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_home">Home</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_home">BOSH</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#prayers" data-section="prayers">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">schedule</span>
-    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_about">Prayers</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_prayers">NAMOZ</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#charity" data-section="charity">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">volunteer_activism</span>
-    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_charity">Charity</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_charity">XAYRIYA</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#gallery" data-section="gallery">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">photo_library</span>
-    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_gallery">Gallery</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_gallery">GALEREYA</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#dua" data-section="dua">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">prayer_times</span>
-    <span class="font-label-caps text-[10px] mt-0.5" data-i18n="nav_dua">Dua</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_dua">DUO</span>
   </a>
 </nav>
 
