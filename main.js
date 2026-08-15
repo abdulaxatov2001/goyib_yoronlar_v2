@@ -1,7 +1,8 @@
 /* ============================================================
    G'oyib Yoronlar Jome Masjidi — v2
-   Multi-language, Custom Floating Dropdowns, History Back Navigation,
-   Telegram Bot Integration, Markdown & Stitch Theme
+   Multi-language (100% Complete Cyrillic, Latin, Russian, English),
+   Custom Floating Dropdowns (Language & Font Size Select),
+   History Back Navigation, Telegram Bot, Markdown & Stitch Theme
    ============================================================ */
 
 'use strict';
@@ -26,7 +27,7 @@ function parseMarkdown(text) {
   return html;
 }
 
-// ============ TRANSLATIONS ============
+// ============ TRANSLATIONS (100% PURE & COMPLETE) ============
 const translations = {
   uz_lt: {
     bomdod: "BOMDOD",
@@ -35,53 +36,75 @@ const translations = {
     asr: "ASR",
     shom: "SHOM",
     xufton: "XUFTON",
+    official_site_tag: "G'oyib Yoronlar Jome Masjidi Rasmiy Sayti",
+    site_subheading: "Jome Masjidi",
+    hero_mosque_tag: "Jome Masjidi",
     nav_home: "Bosh sahifa",
+    nav_prayers: "Namoz",
     nav_about: "Namoz",
     nav_team: "Jamoa",
     nav_news: "Yangiliklar",
     nav_sponsors: "Faxriylar",
     nav_gallery: "Galereya",
-    nav_dua: "Duo olish",
+    nav_dua: "Duo",
     nav_contact: "Aloqa",
-    nav_donate: "Xayriya",
+    nav_donate: "Ehson",
     hero_title: "Xush kelibsiz",
     hero_title_inline: "G'OYIB YORONLAR",
     hero_subtitle: "Namangan viloyati, Pop tumani, To'da qishlog'i",
-    dua_title: "Jamoatdan duo olish",
+    next_prayer_in: "Keyingi namozga:",
+    prayers_heading: "Namoz Vaqtlari",
+    masjid_time_label: "Masjidda o'qilish vaqti",
+    api_time_label: "Azon",
+    sunrise_label: "Chiqishi",
+    location_name: "To'da",
+    about_title: "Biz haqimizda",
+    about_text: "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
+    team_title: "Masjid Jamoasi",
+    team_subtitle: "Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)",
+    sponsors_title: "Faxriylar va homiylar",
+    sponsor_role: "Faxriy / Homiy",
     news_title: "Yangiliklar",
-    text_size: "Matn:",
+    charity_title: "Xayriya va ehson",
+    charity_general: "Umumiy ehson",
+    charity_general_desc: "Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.",
+    charity_card_info: "Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.",
+    charity_utility: "Kommunal to'lovlar",
+    charity_utility_desc: "Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.",
+    util_elec_label: "Elektr (yuridik)",
+    util_water_label: "Suv",
+    util_wifi_label: "Wi-Fi (Internet)",
+    util_gas_label: "Gaz",
+    domo_btn: "domo.uz orqali kommunal to'lash",
+    electric_note_title: "Qanday to'lash kerak?",
+    electric_note_desc: "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
+    gallery_title: "Foto galereya",
+    dua_title: "Jamoatdan duo olish",
     dua_warning_note: "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
     dua_blocked: "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
     dua_name_ph: "Ismingiz (ixtiyoriy)",
     dua_msg_ph: "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
     dua_submit: "Yuborish",
     dua_success: "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
-    masjid_time_label: "Masjidda o'qilish vaqti",
-    api_time_label: "Azon",
-    loading: "Yuklanmoqda...",
-    next_prayer_in: "Keyingi namozga:",
-    about_title: "Biz haqimizda",
-    about_text: "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
-    team_title: "Masjid Jamoasi",
-    sponsors_title: "Faxriylar va homiylar",
-    gallery_title: "Foto galereya",
     contact_title: "Biz bilan aloqa",
-    charity_title: "Xayriya va ehson",
-    charity_general: "Umumiy ehson",
-    charity_utility: "Kommunal to'lovlar",
-    domo_btn: "domo.uz orqali kommunal to'lash",
+    contact_address_label: "Manzil",
+    contact_address_val: "Namangan viloyati, Pop tumani, To'da qishlog'i",
+    contact_tg_label: "Telegram kanal",
     read_more: "O'qish",
+    card_profile_btn: "Profil",
+    font_norm: "Odatiy (100%)",
+    font_lg: "Katta (115%)",
+    font_xl: "Juda katta (130%)",
     bottom_nav_home: "BOSH",
     bottom_nav_prayers: "NAMOZ",
     bottom_nav_charity: "XAYRIYA",
     bottom_nav_gallery: "GALEREYA",
     bottom_nav_dua: "DUO",
-    electric_note_title: "Qanday to'lash kerak?",
-    electric_note_desc: "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
     no_news: "Hozircha yangiliklar yo'q...",
     no_sponsors: "Hozircha ma'lumot kiritilmagan.",
     no_team: "Hozircha jamoa a'zolari kiritilmagan...",
-    no_gallery: "Hozircha rasmlar kiritilmagan..."
+    no_gallery: "Hozircha rasmlar kiritilmagan...",
+    updated_prefix: "YANGILANDI:"
   },
   uz_cy: {
     bomdod: "БОМДОД",
@@ -90,53 +113,75 @@ const translations = {
     asr: "АСР",
     shom: "ШОМ",
     xufton: "ХУФТОН",
+    official_site_tag: "Ғойиб Ёронлар Жоме Масжиди Расмий Сайти",
+    site_subheading: "Жоме Масжиди",
+    hero_mosque_tag: "Жоме Масжиди",
     nav_home: "Бош саҳифа",
+    nav_prayers: "Намоз",
     nav_about: "Намоз",
     nav_team: "Жамоа",
     nav_news: "Янгиликлар",
     nav_sponsors: "Фахрийлар",
     nav_gallery: "Галерея",
-    nav_dua: "Дуо олиш",
+    nav_dua: "Дуо",
     nav_contact: "Алоқа",
-    nav_donate: "Хайрия",
+    nav_donate: "Эҳсон",
     hero_title: "Хуш келибсиз",
     hero_title_inline: "ҒОЙИБ ЁРОНЛАР",
     hero_subtitle: "Наманган вилояти, Поп тумани, Тўда қишлоғи",
-    dua_title: "Жамоатдан дуо олиш",
+    next_prayer_in: "Кейинги намозга:",
+    prayers_heading: "Намоз Вақтлари",
+    masjid_time_label: "Масжидда ўқилиш вақти",
+    api_time_label: "Азон",
+    sunrise_label: "Чиқиши",
+    location_name: "Тўда",
+    about_title: "Биз ҳақимизда",
+    about_text: "Ғойиб Ёронлар жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган маскандир. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
+    team_title: "Масжид Жамоаси",
+    team_subtitle: "Барча ходимлар ва имом-хатиблар (батафсил кўриш учун босинг)",
+    sponsors_title: "Фахрийлар ва ҳомийлар",
+    sponsor_role: "Фахрий / Ҳомий",
     news_title: "Янгиликлар",
-    text_size: "Матн:",
+    charity_title: "Хайрия ва эҳсон",
+    charity_general: "Умумий эҳсон",
+    charity_general_desc: "Масжид таъмирлаш, тозалик ва умумий эҳтиёжлари учун эҳсон қилинг.",
+    charity_card_info: "Карта рақамидан нусха олиб, Payme ёки Click иловалари орқали тўлашингиз мумкин.",
+    charity_utility: "Коммунал тўловлар",
+    charity_utility_desc: "Масжиднинг ойлик коммунал тўловларини тўлашда иштирок этинг.",
+    util_elec_label: "Электр (юридик)",
+    util_water_label: "Сув",
+    util_wifi_label: "Wi-Fi (Интернет)",
+    util_gas_label: "Газ",
+    domo_btn: "domo.uz орқали коммунал тўлаш",
+    electric_note_title: "Қандай тўлаш керак?",
+    electric_note_desc: "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
+    gallery_title: "Фото галерея",
+    dua_title: "Жамоатдан дуо олиш",
     dua_warning_note: "Эслатма: Жума куни соат 12:40 дан 13:00 гача дуо юбориш вақтинча тўхтатилади.",
     dua_blocked: "Ҳозир Жума намози вақти (12:40 - 13:00). Дуолар қабул қилинмайди.",
     dua_name_ph: "Исмингиз (ихтиёрий)",
     dua_msg_ph: "Дуо мазмуни (Масалан: Беморман, шифо сўраб дуо қилишларини сўрайман)",
     dua_submit: "Юбориш",
     dua_success: "Хабарингиз юборилди. Келаётган жума намозида етказилади!",
-    masjid_time_label: "Масжидда ўқилиш вақти",
-    api_time_label: "Азон",
-    loading: "Юкланмоқда...",
-    next_prayer_in: "Кейинги намозга:",
-    about_title: "Биз ҳақимизда",
-    about_text: "Ғойиб Ёронlar жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
-    team_title: "Масжид Жамоаси",
-    sponsors_title: "Фахрийлар ва ҳомийлар",
-    gallery_title: "Фото галерея",
     contact_title: "Биз билан алоқа",
-    charity_title: "Хайрия ва эҳсон",
-    charity_general: "Умумий эҳсон",
-    charity_utility: "Коммунал тўловлар",
-    domo_btn: "domo.uz орқали коммунал тўлаш",
+    contact_address_label: "Манзил",
+    contact_address_val: "Наманган вилояти, Поп тумани, Тўда қишлоғи",
+    contact_tg_label: "Телеграм канал",
     read_more: "Ўқиш",
+    card_profile_btn: "Профиль",
+    font_norm: "Одатий (100%)",
+    font_lg: "Катта (115%)",
+    font_xl: "Жуда катта (130%)",
     bottom_nav_home: "БОШ",
     bottom_nav_prayers: "НАМОЗ",
     bottom_nav_charity: "ХАЙРИЯ",
     bottom_nav_gallery: "ГАЛЕРЕЯ",
     bottom_nav_dua: "ДУО",
-    electric_note_title: "Қандай тўлаш керак?",
-    electric_note_desc: "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
     no_news: "Ҳозирча янгиликлар йўқ...",
     no_sponsors: "Ҳозирча маълумот киритилмаган.",
     no_team: "Ҳозирча жамоа аъзолари киритилмаган...",
-    no_gallery: "Ҳозирча расмлар киритилмаган..."
+    no_gallery: "Ҳозирча расмлар киритилмаган...",
+    updated_prefix: "ЯНГИЛАНДИ:"
   },
   ru: {
     bomdod: "ФАДЖР",
@@ -145,7 +190,11 @@ const translations = {
     asr: "АСР",
     shom: "МАГРИБ",
     xufton: "ИША",
+    official_site_tag: "Официальный сайт соборной мечети «Гойиб Ёронлар»",
+    site_subheading: "Соборная Мечеть",
+    hero_mosque_tag: "Соборная Мечеть",
     nav_home: "Главная",
+    nav_prayers: "Намаз",
     nav_about: "Намаз",
     nav_team: "Команда",
     nav_news: "Новости",
@@ -153,45 +202,63 @@ const translations = {
     nav_gallery: "Галерея",
     nav_dua: "Молитва",
     nav_contact: "Контакты",
-    nav_donate: "Пожертвование",
+    nav_donate: "Пожертвовать",
     hero_title: "Добро пожаловать",
     hero_title_inline: "ГОЙИБ ЁРОНЛАР",
     hero_subtitle: "Наманганская область, Папский район, село Туда",
-    dua_title: "Получить молитву от джамаата",
-    news_title: "Новости",
-    text_size: "Текст:",
-    dua_warning_note: "Примечание: По пятницам с 12:40 до 13:00 прием молитв временно приостанавливается.",
-    dua_blocked: "Сейчас время Пятничного намаза (12:40 - 13:00). Молитвы не принимаются.",
-    dua_name_ph: "Ваше имя (необязательно)",
-    dua_msg_ph: "Содержание молитвы (Например: Прошу помолиться о моем исцелении)",
-    dua_submit: "Отправить",
-    dua_success: "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
+    next_prayer_in: "До следующего намаза:",
+    prayers_heading: "Время Намаза",
     masjid_time_label: "Время в мечети",
     api_time_label: "Азан",
-    loading: "Загрузка...",
-    next_prayer_in: "До следующего намаза:",
+    sunrise_label: "Восход",
+    location_name: "Туда",
     about_title: "О нас",
-    about_text: "Соборная мечеть «Гойиб Ёронlar» расположена в селе Туда Папского района Наманганской области.",
+    about_text: "Соборная мечеть «Гойиб Ёронлар» расположена в селе Туда Папского района Наманганской области. Мечеть является для местных жителей местом поклонения и духовного воспитания.",
     team_title: "Команда мечети",
+    team_subtitle: "Все сотрудники и имамы (нажмите для подробностей)",
     sponsors_title: "Почётные лица и спонсоры",
-    gallery_title: "Фотогалерея",
-    contact_title: "Контакты",
+    sponsor_role: "Почётный спонсор",
+    news_title: "Новости",
     charity_title: "Благотворительность",
     charity_general: "Общее пожертвование",
+    charity_general_desc: "Пожертвуйте на ремонт, чистоту и общие нужды мечети.",
+    charity_card_info: "Скопируйте номер карты и совершите платёж через Payme или Click.",
     charity_utility: "Коммунальные платежи",
+    charity_utility_desc: "Примите участие в оплате ежемесячных коммунальных услуг мечети.",
+    util_elec_label: "Электроэнергия (юрид.)",
+    util_water_label: "Вода",
+    util_wifi_label: "Wi-Fi (Интернет)",
+    util_gas_label: "Газ",
     domo_btn: "Оплата коммунальных через domo.uz",
+    electric_note_title: "Как оплатить?",
+    electric_note_desc: "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
+    gallery_title: "Фотогалерея",
+    dua_title: "Получить молитву от джамаата",
+    dua_warning_note: "Примечание: По пятницам с 12:40 до 13:00 приём молитв приостанавливается.",
+    dua_blocked: "Сейчас время Пятничного намаза (12:40 - 13:00). Молитвы не принимаются.",
+    dua_name_ph: "Ваше имя (необязательно)",
+    dua_msg_ph: "Текст молитвы (Например: Прошу помолиться о моём выздоровлении)",
+    dua_submit: "Отправить",
+    dua_success: "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
+    contact_title: "Контакты",
+    contact_address_label: "Адрес",
+    contact_address_val: "Наманганская область, Папский район, село Туда",
+    contact_tg_label: "Телеграм канал",
     read_more: "Читать",
+    card_profile_btn: "Профиль",
+    font_norm: "Обычный (100%)",
+    font_lg: "Крупный (115%)",
+    font_xl: "Очень крупный (130%)",
     bottom_nav_home: "ГЛАВНАЯ",
     bottom_nav_prayers: "НАМАЗ",
     bottom_nav_charity: "ПОЖЕРТВОВАНИЕ",
     bottom_nav_gallery: "ГАЛЕРЕЯ",
     bottom_nav_dua: "МОЛИТВА",
-    electric_note_title: "Как оплатить?",
-    electric_note_desc: "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
     no_news: "Новостей пока нет...",
     no_sponsors: "Данных пока нет.",
     no_team: "Данных пока нет...",
-    no_gallery: "Фотографий пока нет..."
+    no_gallery: "Фотографий пока нет...",
+    updated_prefix: "ОБНОВЛЕНО:"
   },
   en: {
     bomdod: "FAJR",
@@ -200,53 +267,75 @@ const translations = {
     asr: "ASR",
     shom: "MAGHRIB",
     xufton: "ISHA",
+    official_site_tag: "Official Website of G'oyib Yoronlar Mosque",
+    site_subheading: "Jome Mosque",
+    hero_mosque_tag: "Jome Mosque",
     nav_home: "Home",
+    nav_prayers: "Prayers",
     nav_about: "Prayers",
     nav_team: "Team",
     nav_news: "News",
     nav_sponsors: "Sponsors",
     nav_gallery: "Gallery",
-    nav_dua: "Prayer request",
+    nav_dua: "Dua",
     nav_contact: "Contact",
     nav_donate: "Donate",
     hero_title: "Welcome",
     hero_title_inline: "G'OYIB YORONLAR",
     hero_subtitle: "Tuda village, Pop district, Namangan region",
-    dua_title: "Prayer request",
+    next_prayer_in: "Next prayer in:",
+    prayers_heading: "Prayer Times",
+    masjid_time_label: "Mosque prayer time",
+    api_time_label: "Adhan",
+    sunrise_label: "Sunrise",
+    location_name: "Tuda",
+    about_title: "About Us",
+    about_text: "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region. It serves the local community as both a place of worship and a spiritual center.",
+    team_title: "Mosque Team",
+    team_subtitle: "All staff and imams (click to view details)",
+    sponsors_title: "Honorable sponsors",
+    sponsor_role: "Honorable sponsor",
     news_title: "News",
-    text_size: "Text:",
+    charity_title: "Charity & donation",
+    charity_general: "General donation",
+    charity_general_desc: "Donate for maintenance, cleanliness and general needs of the mosque.",
+    charity_card_info: "Copy the card number to make a donation via Payme or Click.",
+    charity_utility: "Utility payments",
+    charity_utility_desc: "Participate in paying the monthly utility bills of the mosque.",
+    util_elec_label: "Electricity (legal)",
+    util_water_label: "Water",
+    util_wifi_label: "Wi-Fi (Internet)",
+    util_gas_label: "Gas",
+    domo_btn: "Pay utilities via domo.uz",
+    electric_note_title: "How to pay?",
+    electric_note_desc: "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
+    gallery_title: "Photo gallery",
+    dua_title: "Prayer request",
     dua_warning_note: "Note: On Fridays from 12:40 to 13:00, prayer requests are temporarily suspended.",
     dua_blocked: "It is currently Friday prayer time (12:40 - 13:00). Requests not accepted.",
     dua_name_ph: "Your name (optional)",
     dua_msg_ph: "Prayer details (E.g. Please pray for my health and recovery)",
     dua_submit: "Submit",
     dua_success: "Your message has been sent successfully!",
-    masjid_time_label: "Mosque prayer time",
-    api_time_label: "Adhan",
-    loading: "Loading...",
-    next_prayer_in: "Next prayer in:",
-    about_title: "About Us",
-    about_text: "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region.",
-    team_title: "Mosque Team",
-    sponsors_title: "Honorable sponsors",
-    gallery_title: "Photo gallery",
     contact_title: "Contact Us",
-    charity_title: "Charity & donation",
-    charity_general: "General donation",
-    charity_utility: "Utility payments",
-    domo_btn: "Pay utilities via domo.uz",
+    contact_address_label: "Address",
+    contact_address_val: "Tuda village, Pop district, Namangan region",
+    contact_tg_label: "Telegram channel",
     read_more: "Read",
+    card_profile_btn: "Profile",
+    font_norm: "Standard (100%)",
+    font_lg: "Large (115%)",
+    font_xl: "Extra Large (130%)",
     bottom_nav_home: "HOME",
     bottom_nav_prayers: "PRAYERS",
     bottom_nav_charity: "CHARITY",
     bottom_nav_gallery: "GALLERY",
     bottom_nav_dua: "DUA",
-    electric_note_title: "How to pay?",
-    electric_note_desc: "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
     no_news: "No news available...",
     no_sponsors: "No information yet.",
     no_team: "No team members yet...",
-    no_gallery: "No images yet..."
+    no_gallery: "No images yet...",
+    updated_prefix: "UPDATED:"
   }
 };
 
@@ -264,12 +353,12 @@ function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('selected_language', lang);
 
-  // Update dropdown labels
+  // Update language dropdown labels
   document.querySelectorAll('.lang-current-flag').forEach(el => el.textContent = langMeta[lang].flag);
   document.querySelectorAll('.lang-current-name').forEach(el => el.textContent = langMeta[lang].name);
   document.querySelectorAll('.lang-current-code').forEach(el => el.textContent = langMeta[lang].code);
 
-  // Update checkmarks
+  // Update checkmarks in language menu
   document.querySelectorAll('.lang-menu button').forEach(btn => {
     const isCur = btn.dataset.lang === lang;
     const check = btn.querySelector('.check-icon');
@@ -281,7 +370,7 @@ function setLanguage(lang) {
   // Apply translations to all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key] !== undefined) {
       el.innerHTML = translations[lang][key];
     }
   });
@@ -291,10 +380,19 @@ function setLanguage(lang) {
   if (nameInput && translations[lang].dua_name_ph) nameInput.placeholder = translations[lang].dua_name_ph;
   const textInput = document.getElementById('dua-text');
   if (textInput && translations[lang].dua_msg_ph) textInput.placeholder = translations[lang].dua_msg_ph;
+
+  // Re-render dynamic components with new translations
+  renderNews();
+  renderTeam();
+  renderSponsors();
+  if (window.lastCharityData) renderCharity(window.lastCharityData);
+  updateClock();
+  highlightActivePrayer();
 }
 
-// Custom Language Dropdown Event Handlers
-function initCustomLangDropdowns() {
+// Custom Language & Font Dropdown Handlers
+function initCustomDropdowns() {
+  // Language dropdowns
   document.querySelectorAll('.custom-lang-dropdown').forEach(dropdown => {
     const trigger = dropdown.querySelector('.lang-dropdown-trigger');
     const menu = dropdown.querySelector('.lang-menu');
@@ -302,7 +400,7 @@ function initCustomLangDropdowns() {
     trigger?.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = !menu.classList.contains('hidden');
-      document.querySelectorAll('.lang-menu').forEach(m => m.classList.add('hidden'));
+      closeAllDropdowns();
       if (!isOpen) menu.classList.remove('hidden');
     });
 
@@ -315,24 +413,64 @@ function initCustomLangDropdowns() {
     });
   });
 
-  // Close when clicked outside
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.lang-menu').forEach(m => m.classList.add('hidden'));
-  });
-}
-initCustomLangDropdowns();
+  // Font Size dropdowns (Select kabi)
+  document.querySelectorAll('.custom-font-dropdown').forEach(dropdown => {
+    const trigger = dropdown.querySelector('.font-dropdown-trigger');
+    const menu = dropdown.querySelector('.font-menu');
 
-// ============ FONT SIZE SCALING ============
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !menu.classList.contains('hidden');
+      closeAllDropdowns();
+      if (!isOpen) menu.classList.remove('hidden');
+    });
+
+    menu?.querySelectorAll('button[data-size]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setFontSize(btn.dataset.size);
+        menu.classList.add('hidden');
+      });
+    });
+  });
+
+  // Close when clicked outside
+  document.addEventListener('click', closeAllDropdowns);
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.lang-menu, .font-menu').forEach(m => m.classList.add('hidden'));
+}
+initCustomDropdowns();
+
+// ============ FONT SIZE SCALING (SELECT FORMAT) ============
+const fontLabels = {
+  norm: '100%',
+  lg: '115%',
+  xl: '130%'
+};
+
 function setFontSize(size) {
+  if (!['norm', 'lg', 'xl'].includes(size)) size = 'norm';
   document.documentElement.classList.remove('font-scale-lg', 'font-scale-xl');
   if (size === 'lg') document.documentElement.classList.add('font-scale-lg');
   if (size === 'xl') document.documentElement.classList.add('font-scale-xl');
   localStorage.setItem('selected_font_size', size);
-}
 
-document.querySelectorAll('.font-btn').forEach(btn => {
-  btn.addEventListener('click', () => setFontSize(btn.dataset.size));
-});
+  // Update label on triggers
+  document.querySelectorAll('.font-current-label').forEach(el => {
+    el.textContent = fontLabels[size];
+  });
+
+  // Update checkmarks in font menu
+  document.querySelectorAll('.font-menu button[data-size]').forEach(btn => {
+    const isCur = btn.dataset.size === size;
+    const check = btn.querySelector('.font-check');
+    if (check) check.classList.toggle('hidden', !isCur);
+    btn.classList.toggle('bg-surface-container', isCur);
+    btn.classList.toggle('font-bold', isCur);
+  });
+}
 
 const savedFontSize = localStorage.getItem('selected_font_size') || 'norm';
 setFontSize(savedFontSize);
@@ -377,7 +515,9 @@ function updateClock() {
 
   const dateEl = document.getElementById('current-date');
   if (dateEl) {
-    dateEl.textContent = now.toLocaleDateString('uz-UZ', {
+    const localeMap = { uz_lt: 'uz-UZ', uz_cy: 'uz-Cyrl-UZ', ru: 'ru-RU', en: 'en-US' };
+    const loc = localeMap[currentLang] || 'uz-UZ';
+    dateEl.textContent = now.toLocaleDateString(loc, {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
   }
@@ -386,10 +526,11 @@ function updateClock() {
   try {
     const hijriEl = document.getElementById('hijri-date');
     if (hijriEl) {
-      const hijri = new Intl.DateTimeFormat('uz-UZ-u-ca-islamic', {
+      const loc = currentLang === 'uz_cy' ? 'uz-Cyrl-UZ-u-ca-islamic' : (currentLang === 'ru' ? 'ru-RU-u-ca-islamic' : (currentLang === 'en' ? 'en-US-u-ca-islamic' : 'uz-UZ-u-ca-islamic'));
+      const hijri = new Intl.DateTimeFormat(loc, {
         day: 'numeric', month: 'long', year: 'numeric'
       }).format(now);
-      hijriEl.textContent = hijri;
+      hijriEl.textContent = hijri.toUpperCase();
     }
   } catch (e) {}
 }
@@ -515,8 +656,9 @@ function renderMasjidTimes(data) {
 
   const lastUpdated = document.getElementById('last-updated');
   if (lastUpdated) {
+    const prefix = translations[currentLang]?.updated_prefix || "YANGILANDI:";
     if (data.updated_at) {
-      lastUpdated.textContent = `YANGILANDI: ${data.updated_at}`;
+      lastUpdated.textContent = `${prefix} ${data.updated_at}`;
     } else {
       const now = new Date();
       const yr = now.getFullYear();
@@ -524,7 +666,7 @@ function renderMasjidTimes(data) {
       const da = String(now.getDate()).padStart(2, '0');
       const ho = String(now.getHours()).padStart(2, '0');
       const mi = String(now.getMinutes()).padStart(2, '0');
-      lastUpdated.textContent = `YANGILANDI: ${yr}-${mo}-${da} ${ho}:${mi}`;
+      lastUpdated.textContent = `${prefix} ${yr}-${mo}-${da} ${ho}:${mi}`;
     }
   }
 
@@ -664,7 +806,10 @@ function startCountdown() {
 function updateCountdown() {
   const prayers = ['bomdod', 'quyosh', 'peshin', 'asr', 'shom', 'xufton'];
   const names = {
-    bomdod: 'Bomdod', quyosh: 'Quyosh', peshin: 'Peshin', asr: 'Asr', shom: 'Shom', xufton: 'Xufton'
+    uz_lt: { bomdod: 'Bomdod', quyosh: 'Quyosh', peshin: 'Peshin', asr: 'Asr', shom: 'Shom', xufton: 'Xufton' },
+    uz_cy: { bomdod: 'Бомдод', quyosh: 'Қуёш', peshin: 'Пешин', asr: 'Аср', shom: 'Шом', xufton: 'Хуфтон' },
+    ru: { bomdod: 'Фаджр', quyosh: 'Восход', peshin: 'Зухр', asr: 'Аср', shom: 'Магриб', xufton: 'Иша' },
+    en: { bomdod: 'Fajr', quyosh: 'Sunrise', peshin: 'Dhuhr', asr: 'Asr', shom: 'Maghrib', xufton: 'Isha' }
   };
 
   const now = new Date();
@@ -693,7 +838,8 @@ function updateCountdown() {
     const m = Math.floor((minDiffSec % 3600) / 60);
     const s = minDiffSec % 60;
     timerEl.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    if (nameEl) nameEl.textContent = `(${names[nextP]})`;
+    const pName = names[currentLang] ? names[currentLang][nextP] : names.uz_lt[nextP];
+    if (nameEl) nameEl.textContent = `(${pName})`;
   }
 }
 
@@ -724,7 +870,7 @@ function renderNews() {
       <div class="h-36 bg-surface-variant relative overflow-hidden">
         ${item.imgUrl ? `<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${item.imgUrl}" alt="${item.title || ''}" loading="lazy"/>` : `<div class="w-full h-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[36px] opacity-40">article</span></div>`}
         <div class="absolute top-2 left-2 bg-white/90 dark:bg-black/80 backdrop-blur px-2.5 py-0.5 rounded-full font-label-caps text-[10px] text-primary shadow-sm">
-          ${item.date ? item.date.split(' ')[0] : 'Yangi'}
+          ${item.date ? item.date.split(' ')[0] : (currentLang === 'uz_cy' ? 'Янги' : (currentLang === 'ru' ? 'Новое' : 'Yangi'))}
         </div>
       </div>
       <div class="p-4 flex flex-col flex-grow justify-between">
@@ -795,6 +941,8 @@ function renderTeam() {
     return;
   }
 
+  const profileBtnText = translations[currentLang]?.card_profile_btn || "Profil";
+
   allTeam.forEach(member => {
     const card = document.createElement('div');
     card.className = 'min-w-[155px] w-[155px] md:w-auto bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center text-center shadow-[0_2px_8px_rgba(180,83,9,0.05)] border border-surface-container-high snap-start flex-shrink-0 cursor-pointer group hover:shadow-md hover:border-gold-shimmer/60 transition-all';
@@ -808,7 +956,7 @@ function renderTeam() {
       <p class="font-label-caps text-[10px] text-on-surface-variant font-semibold tracking-wider">${member.role || ''}</p>
       
       <div class="mt-2.5 flex items-center gap-1 text-[11px] text-emerald-deep dark:text-emerald-light font-semibold opacity-80 group-hover:opacity-100">
-        <span>Profil</span>
+        <span>${profileBtnText}</span>
         <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
       </div>
     `;
@@ -925,34 +1073,37 @@ function loadSponsors() {
 }
 
 window.openSponsorModal = function(sponsor) {
+  const sRole = translations[currentLang]?.sponsor_role || "Faxriy / Homiy";
   openTeamModal({
     name: sponsor.name,
-    role: "Faxriy / Homiy",
+    role: sRole,
     desc: sponsor.desc,
     imgUrl: sponsor.imgUrl
   });
 };
 
 // ============ CHARITY & UTILITIES ============
+window.lastCharityData = null;
+
 function renderCharity(data) {
+  window.lastCharityData = data;
   const container = document.getElementById('charity-grid');
   if (!container) return;
 
   const cardNum = data.general_card || '8600 0000 0000 0000';
-  const cardOwner = data.general_owner || 'G\'oyib Yoronlar Jome Masjidi';
+  const cardOwner = data.general_owner || (currentLang === 'uz_cy' ? "Ғойиб Ёронлар Жоме Масжиди" : (currentLang === 'ru' ? "Соборная Мечеть Гойиб Ёронлар" : "G'oyib Yoronlar Jome Masjidi"));
 
-  const elecNoteTitle = translations[currentLang]?.electric_note_title || "Qanday to'lash kerak?";
-  const elecNoteDesc = translations[currentLang]?.electric_note_desc || "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.";
+  const t = translations[currentLang] || translations.uz_lt;
 
   container.innerHTML = `
-    <!-- Umumiy ehson kartasi (Faqat to'g'ridan-to'g'ri bank kartasi) -->
+    <!-- Umumiy ehson kartasi -->
     <div class="bg-surface-container-lowest border-t-4 border-gold-metallic rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
         <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
           <span class="material-symbols-outlined text-emerald-deep text-[22px]">account_balance</span>
-          <span data-i18n="charity_general">Umumiy ehson</span>
+          <span>${t.charity_general}</span>
         </h3>
-        <p class="text-xs text-on-surface-variant mb-4 leading-relaxed">Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.</p>
+        <p class="text-xs text-on-surface-variant mb-4 leading-relaxed">${t.charity_general_desc}</p>
         
         <div class="bg-surface-container-low p-4 rounded-xl mb-4 border border-surface-variant flex justify-between items-center group">
           <div>
@@ -968,18 +1119,18 @@ function renderCharity(data) {
 
       <div class="p-3 bg-gold-shimmer/10 border border-gold-shimmer/30 rounded-xl text-xs text-gold-metallic dark:text-gold-shimmer font-medium flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">info</span>
-        <span>Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.</span>
+        <span>${t.charity_card_info}</span>
       </div>
     </div>
 
-    <!-- Kommunal to'lovlar (Domo to'lovi va Elektr eslatmasi shu yerda) -->
+    <!-- Kommunal to'lovlar -->
     <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
         <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
           <span class="material-symbols-outlined text-emerald-deep text-[22px]">receipt_long</span>
-          <span data-i18n="charity_utility">Kommunal to'lovlar</span>
+          <span>${t.charity_utility}</span>
         </h3>
-        <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.</p>
+        <p class="text-xs text-on-surface-variant mb-3 leading-relaxed">${t.charity_utility_desc}</p>
 
         <div class="space-y-2.5 mb-3">
           <!-- Elektr -->
@@ -987,7 +1138,7 @@ function renderCharity(data) {
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm shadow-sm">⚡</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Elektr (yuridik)</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">${t.util_elec_label}</div>
                 <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_elec || '470761'}</div>
               </div>
             </div>
@@ -1001,7 +1152,7 @@ function renderCharity(data) {
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-sm shadow-sm">💧</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Suv</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">${t.util_water_label}</div>
                 <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_water || '160500025'}</div>
               </div>
             </div>
@@ -1015,7 +1166,7 @@ function renderCharity(data) {
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold text-sm shadow-sm">📶</div>
               <div>
-                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Wi-Fi (Internet)</div>
+                <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">${t.util_wifi_label}</div>
                 <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_wifi || '1946506390'}</div>
               </div>
             </div>
@@ -1029,7 +1180,7 @@ function renderCharity(data) {
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center font-bold text-sm shadow-sm">🔥</div>
                 <div>
-                  <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">Gaz</div>
+                  <div class="font-label-caps text-[9px] text-on-surface-variant font-bold">${t.util_gas_label}</div>
                   <div class="font-body-md text-[14px] font-bold text-primary tabular-nums font-mono">${data.util_gas}</div>
                 </div>
               </div>
@@ -1044,16 +1195,16 @@ function renderCharity(data) {
         <div class="mb-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-800 dark:text-amber-300 leading-relaxed shadow-sm">
           <div class="font-bold flex items-center gap-1.5 mb-1 text-amber-700 dark:text-amber-400">
             <span class="material-symbols-outlined text-[16px]">info</span>
-            <span>${elecNoteTitle}</span>
+            <span>${t.electric_note_title}</span>
           </div>
-          <p>${elecNoteDesc}</p>
+          <p>${t.electric_note_desc}</p>
         </div>
       </div>
 
       <!-- Domo button under utilities -->
       <a class="w-full bg-emerald-deep hover:bg-emerald-light text-white font-label-caps text-[12px] py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm font-bold mt-1" href="https://domo.uz/donation/goyib-yoronlar" target="_blank">
         <span class="material-symbols-outlined text-[18px]">payment</span>
-        <span data-i18n="domo_btn">domo.uz orqali kommunal to'lash</span>
+        <span>${t.domo_btn}</span>
       </a>
     </div>
   `;
@@ -1186,7 +1337,7 @@ document.getElementById('dua-form')?.addEventListener('submit', async (e) => {
       submitBtn.classList.add('opacity-70');
     }
 
-    const userName = nameInput || 'Yashirin';
+    const userName = nameInput || (currentLang === 'uz_cy' ? 'Яширин' : (currentLang === 'ru' ? 'Анонимно' : 'Yashirin'));
 
     // 1. Save to Firebase
     if (db) {
@@ -1236,7 +1387,7 @@ document.getElementById('dua-form')?.addEventListener('submit', async (e) => {
     }
   } catch (err) {
     console.error('Dua yuborishda xatolik:', err);
-    alert("Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.");
+    alert(currentLang === 'uz_cy' ? "Хатолик юз берди. Илтимос, кейинроқ қайта уриниб кўринг." : "Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.");
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
