@@ -551,18 +551,25 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="gallery" class="w-full px-margin-mobile md:px-0">
-    <div class="flex items-center justify-between mb-3">
+    <!-- Gallery Section (Stitch Redesign) -->
+  <section id="gallery" class="w-full px-margin-mobile md:px-0 scroll-mt-24">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 gap-2">
       <div>
         <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="gallery_title">Foto galereya</h2>
-        <p class="text-xs text-on-surface-variant" data-i18n="gallery_subtitle">Masjid hayoti va go'zalligidan fotolavhalar</p>
+        <p class="font-body-md text-sm text-slate-gray mt-1 max-w-xl" data-i18n="gallery_subtitle">Masjidimizning go'zal me'moriy ko'rinishlari va jamoat tadbirlaridan olingan yorqin lahzalar bilan tanishing.</p>
       </div>
-      <span id="gallery-count-badge" class="font-label-caps text-[10px] font-bold bg-primary/10 text-emerald-deep dark:text-emerald-light px-3 py-1 rounded-full border border-primary/20"></span>
+      <div class="flex items-center gap-2 self-start md:self-auto">
+        <span id="gallery-count-badge" class="font-label-caps text-xs font-bold bg-primary/10 text-emerald-deep dark:text-emerald-light px-3.5 py-1.5 rounded-full border border-primary/20 shadow-xs"></span>
+      </div>
     </div>
-    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+
+    <!-- Gallery Bento/Masonry Grid -->
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[220px]">
       <!-- Loaded dynamically via Firebase -->
     </div>
-    <div id="gallery-pagination" class="mt-5 flex items-center justify-center gap-2 hidden">
+
+    <!-- Gallery Pagination Controls -->
+    <div id="gallery-pagination" class="mt-6 flex items-center justify-center gap-2 hidden">
       <!-- Pagination buttons generated dynamically -->
     </div>
   </section>

@@ -1275,7 +1275,7 @@ function loadCharity() {
   });
 }
 
-// ============ GALLERY WITH PAGINATION ============
+// ============ GALLERY WITH BENTO/PAGINATION (STITCH DESIGN) ============
 let allGallery = [];
 let galleryCurrentPage = 1;
 const galleryItemsPerPage = 8;
@@ -1297,7 +1297,7 @@ function renderGallery() {
   }
 
   if (total === 0) {
-    container.innerHTML = `<p class="text-on-surface-variant text-sm col-span-full py-6 text-center">${translations[currentLang]?.no_gallery || "Hozircha rasmlar kiritilmagan..."}</p>`;
+    container.innerHTML = `<p class="text-on-surface-variant text-sm col-span-full py-8 text-center bg-surface-container-low rounded-2xl border border-surface-container-high">${translations[currentLang]?.no_gallery || "Hozircha rasmlar kiritilmagan..."}</p>`;
     if (paginationContainer) paginationContainer.classList.add('hidden');
     return;
   }
@@ -1315,19 +1315,24 @@ function renderGallery() {
     const imgUrl = img.url || img.imgUrl || img.image || img.src || '';
     if (!imgUrl) return;
 
+    const isFeatured = (indexInPage === 0 && currentImages.length >= 3);
     const item = document.createElement('div');
-    item.className = 'aspect-square rounded-2xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer hover:shadow-md transition-all group relative bg-surface-container-low';
+    item.className = `${isFeatured ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'} rounded-2xl overflow-hidden shadow-sm hover:shadow-lg relative group cursor-pointer border border-surface-container-high hover:border-gold-shimmer transition-all duration-300 bg-surface-container-low`;
     item.onclick = () => openLightbox(globalIdx);
+    
     item.innerHTML = `
-      <img src="${imgUrl}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
-      <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-        <span class="material-symbols-outlined text-white text-[26px] drop-shadow-md">zoom_in</span>
+      <img src="${imgUrl}" alt="Masjid fotosurati" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 md:p-5">
+        <span class="text-white font-bold text-xs md:text-sm drop-shadow-sm flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm md:text-base text-gold-shimmer">zoom_in</span>
+          <span>${translations[currentLang]?.gallery_title || 'Galereya'}</span>
+        </span>
       </div>
     `;
     container.appendChild(item);
   });
 
-  // Render pagination
+  // Render pagination controls
   if (paginationContainer) {
     if (totalPages > 1) {
       paginationContainer.classList.remove('hidden');
@@ -1335,7 +1340,7 @@ function renderGallery() {
 
       // Prev Button
       const prevBtn = document.createElement('button');
-      prevBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === 1 ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-sm'}`;
+      prevBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === 1 ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-xs'}`;
       prevBtn.innerHTML = translations[currentLang]?.prev_page || '‹ Oldingi';
       prevBtn.disabled = galleryCurrentPage === 1;
       prevBtn.onclick = () => {
@@ -1363,7 +1368,7 @@ function renderGallery() {
 
       // Next Button
       const nextBtn = document.createElement('button');
-      nextBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === totalPages ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-sm'}`;
+      nextBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === totalPages ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-xs'}`;
       nextBtn.innerHTML = translations[currentLang]?.next_page || 'Keyingi ›';
       nextBtn.disabled = galleryCurrentPage === totalPages;
       nextBtn.onclick = () => {
@@ -1399,7 +1404,8 @@ window.openLightbox = function(idx) {
   const img = document.getElementById('lightbox-img');
   const counter = document.getElementById('lightbox-counter');
   
-  img.src = allGallery[idx].url;
+  const currentItem = allGallery[idx];
+  img.src = currentItem.url || currentItem.imgUrl || currentItem.image || currentItem.src || '';
   if (counter) counter.textContent = `${lightboxIdx + 1} / ${allGallery.length}`;
   modal.classList.remove('hidden');
   modal.classList.add('flex');
@@ -1419,7 +1425,8 @@ function closeLightbox() {
 
 function changeLightbox(dir) {
   lightboxIdx = (lightboxIdx + dir + allGallery.length) % allGallery.length;
-  document.getElementById('lightbox-img').src = allGallery[lightboxIdx].url;
+  const currentItem = allGallery[lightboxIdx];
+  document.getElementById('lightbox-img').src = currentItem.url || currentItem.imgUrl || currentItem.image || currentItem.src || '';
   const counter = document.getElementById('lightbox-counter');
   if (counter) counter.textContent = `${lightboxIdx + 1} / ${allGallery.length}`;
 }
