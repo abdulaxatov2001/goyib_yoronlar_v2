@@ -121,6 +121,30 @@ const translations = {
     "today_badge": "Bugun"
   },
   "uz_cy": {
+    "nav_subscription": "Обуна",
+    "sub_title": "Диний матбуотга онлайн обуна",
+    "sub_subtitle": "Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.",
+    "sub_year_badge": "2026 ЙИЛГИ ОБУНА",
+    "sub_card_issues_12": "12 ТА СОН",
+    "sub_card_issues_24": "24 ТА СОН",
+    "sub_hidoyat_name": "«Ҳидоят» журнали",
+    "sub_hidoyat_desc": "Диний-маърифий, илмий-адабий ва ижтимоий бош нашр. Оила ва жамият тарбияси учун зарур қўлланма.",
+    "sub_mominalar_name": "«Мўминалар» журнали",
+    "sub_mominalar_desc": "Хотин-қизлар ва оила маънавияти, фарзанд тарбияси ва миллий-диний қадриятлар учун махсус журнал.",
+    "sub_islomnuri_name": "«Ислом нури» газетаси",
+    "sub_islomnuri_desc": "Долзарб диний мақолалар, савол-жавоблар, фатволар ва муҳим ҳаётий мавзулар ҳақида маълумотлар.",
+    "sub_yearly_label": "Йиллик:",
+    "sub_form_title": "Обуна бўлиш учун ариза қолдириш",
+    "sub_form_desc": "Қуйидаги формани тўлдиринг. Масжид маъмурияти сиз билан боғланиб, обунани расмийлаштириб беради.",
+    "sub_choose_label": "Обуна бўлмоқчи бўлган нашр(лар)ни танланг:",
+    "sub_name_label": "Исм-фамилиянгиз *",
+    "sub_phone_label": "Телефон рақамингиз *",
+    "sub_delivery_label": "Етказиб бериш усули",
+    "sub_address_label": "Манзил / Мўлжал",
+    "sub_total_label": "Жами тўлов:",
+    "sub_submit_btn": "Обунага ёзилиш",
+    "sub_success": "✅ Сизнинг аризангиз қабул қилинди! Масжид маъмурияти тез орада сиз билан боғланади.",
+    "sub_select_err": "Илтимос, камида битта нашрни танланг!",
     "bomdod": "БОМДОД",
     "quyosh": "ҚУЁШ",
     "peshin": "ПЕШИН",
@@ -1811,4 +1835,110 @@ document.getElementById('cal-next-month')?.addEventListener('click', () => {
 
 document.getElementById('cal-print-btn')?.addEventListener('click', () => {
   window.print();
+});
+
+
+// ============ ONLINE SUBSCRIPTION LOGIC ============
+function calcSubTotal() {
+  const checkboxes = document.querySelectorAll('.sub-checkbox:checked');
+  let total = 0;
+  checkboxes.forEach(cb => {
+    total += parseInt(cb.dataset.price, 10) || 0;
+  });
+  const display = document.getElementById('sub-total-display');
+  if (display) {
+    const formatted = total.toLocaleString('ru-RU').replace(/,/g, ' ');
+    const curr = currentLang === 'uz_cy' ? 'сўм' : (currentLang === 'ru' ? 'сум' : (currentLang === 'en' ? 'UZS' : "so'm"));
+    display.textContent = `${formatted} ${curr}`;
+  }
+  return total;
+}
+
+window.calcSubTotal = calcSubTotal;
+
+document.getElementById('subscription-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const checkboxes = document.querySelectorAll('.sub-checkbox:checked');
+  if (checkboxes.length === 0) {
+    alert(translations[currentLang]?.sub_select_err || "Илтимос, камида битта нашрни танланг!");
+    return;
+  }
+
+  const selectedTitles = [];
+  let totalSum = 0;
+  checkboxes.forEach(cb => {
+    selectedTitles.push(cb.value);
+    totalSum += parseInt(cb.dataset.price, 10) || 0;
+  });
+
+  const name = document.getElementById('sub-name')?.value.trim();
+  const phone = document.getElementById('sub-phone')?.value.trim();
+  const delivery = document.getElementById('sub-delivery')?.value;
+  const address = document.getElementById('sub-address')?.value.trim() || 'Кўрсатилмаган';
+
+  if (!name || !phone) return;
+
+  const btn = document.getElementById('sub-submit-btn');
+  const successMsg = document.getElementById('sub-success-msg');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner inline-block mr-2"></span> Юборилмоқда...';
+  }
+
+  const subData = {
+    name: name,
+    phone: phone,
+    publications: selectedTitles,
+    total_price: totalSum,
+    delivery_method: delivery,
+    address: address,
+    created_at: new Date().toISOString(),
+    status: 'pending'
+  };
+
+  try {
+    if (db) {
+      await db.ref('subscriptions').push(subData);
+    }
+
+    // Send Telegram Notification to Mosque Admins
+    try {
+      const tgText = encodeURIComponent(
+        `📖 <b>#YANGI_DINIY_MATBUOT_OBUNA</b>\n\n` +
+        `👤 <b>Ism:</b> ${name}\n` +
+        `📞 <b>Telefon:</b> ${phone}\n` +
+        `📚 <b>Nashrlar:</b> ${selectedTitles.join(', ')}\n` +
+        `💰 <b>Umumiy summa:</b> ${totalSum.toLocaleString()} so'm\n` +
+        `🚚 <b>Yetkazish:</b> ${delivery}\n` +
+        `📍 <b>Manzil:</b> ${address}\n` +
+        `⏱ <b>Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}`
+      );
+      // Send to registered bot chats
+      const botToken = "8156106653:AAEZ6Yy88T4v5T_q2pA0-6jG7U4cW0c12mE"; // Default mosque notification token
+      const chatId = "647585098"; // Admin chat ID
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${tgText}&parse_mode=HTML`).catch(()=>{});
+    } catch (e) {}
+
+    if (successMsg) {
+      successMsg.classList.remove('hidden');
+      successMsg.textContent = translations[currentLang]?.sub_success || "✅ Сизнинг аризангиз қабул қилинди! Масжид маъмурияти тез орада сиз билан боғланади.";
+    }
+
+    document.getElementById('subscription-form').reset();
+    calcSubTotal();
+
+    setTimeout(() => {
+      if (successMsg) successMsg.classList.add('hidden');
+    }, 8000);
+
+  } catch (err) {
+    console.error("Subscription error:", err);
+    alert(currentLang === 'uz_cy' ? "Хатолик юз берди. Қайта уриниб кўринг." : "Xatolik yuz berdi. Qayta urinib ko'ring.");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<span class="material-symbols-outlined text-base">send</span> <span>${translations[currentLang]?.sub_submit_btn || 'Обунага ёзилиш'}</span>`;
+    }
+  }
 });
