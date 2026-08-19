@@ -1622,7 +1622,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ============ MONTHLY PRAYER CALENDAR ============
+// ============ MONTHLY PRAYER CALENDAR (LOCALIZED & SINGLE-PAGE PRINT) ============
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth() + 1; // 1-12
 let calDataCache = {};
@@ -1641,6 +1641,13 @@ const calWeekdayNames = {
   en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 };
 
+const calHijriMonthNames = {
+  uz_cy: ["Муҳаррам", "Сафар", "Рабиул-аввал", "Рабиус-соний", "Жамодиул-аввал", "Жамодиус-соний", "Ражаб", "Шаъбон", "Рамазон", "Шаввол", "Зулқаъда", "Зулҳижжа"],
+  uz_lt: ["Muharram", "Safar", "Rabiul-avval", "Rabius-soniy", "Jamodiul-avval", "Jamodius-soniy", "Rajab", "Sha'bon", "Ramazon", "Shavvol", "Zulqa'da", "Zulhijja"],
+  ru: ["Мухаррам", "Сафар", "Раби аль-авваль", "Раби ас-сани", "Джумада аль-уля", "Джумада ас-сания", "Раджаб", "Шаабан", "Рамадан", "Шавваль", "Зуль-каада", "Зуль-хиджа"],
+  en: ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"]
+};
+
 function cleanTime(tStr) {
   if (!tStr) return '--:--';
   return tStr.split(' ')[0];
@@ -1656,7 +1663,7 @@ async function fetchAndRenderMonthlyCalendar(year, month) {
     displayEl.textContent = `${mNames[month - 1]} ${year}`;
   }
 
-  tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-sm text-on-surface-variant"><span class="spinner inline-block mr-2"></span> Маълумотлар юкланмоқда...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-sm text-on-surface-variant"><span class="spinner inline-block mr-2"></span> ' + (translations[currentLang]?.loading || 'Маълумотлар юкланмоқда...') + '</td></tr>';
 
   const cacheKey = `cal_${year}_${month}`;
   let days = calDataCache[cacheKey];
@@ -1682,7 +1689,7 @@ async function fetchAndRenderMonthlyCalendar(year, month) {
       }
     } catch (err) {
       console.error("Monthly calendar fetch error:", err);
-      tbody.innerHTML = '<tr><td colspan="9" class="py-6 text-center text-sm text-red-500">Маълумотларни юклаб бўлмади. Интернет алоқасини текширинг.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="py-6 text-center text-sm text-red-500">Хатолик: Интернет алоқасини текширинг.</td></tr>';
       return;
     }
   }
@@ -1698,6 +1705,7 @@ async function fetchAndRenderMonthlyCalendar(year, month) {
   const curD = now.getDate();
 
   const wNames = calWeekdayNames[currentLang] || calWeekdayNames.uz_cy;
+  const hNames = calHijriMonthNames[currentLang] || calHijriMonthNames.uz_cy;
   const todayBadgeText = translations[currentLang]?.today_badge || "Бугун";
 
   tbody.innerHTML = '';
@@ -1710,34 +1718,39 @@ async function fetchAndRenderMonthlyCalendar(year, month) {
     const isFriday = weekdayIdx === 5; // Juma
     const isToday = (year === curY && month === curM && dayNum === curD);
 
-    const hijriDay = d.date.hijri ? `${d.date.hijri.day} ${d.date.hijri.month.ar || d.date.hijri.month.en}` : '-';
+    let hijriStr = '-';
+    if (d.date.hijri) {
+      const hMonthNum = parseInt(d.date.hijri.month.number, 10) || 1;
+      const hMonthName = hNames[hMonthNum - 1] || d.date.hijri.month.en;
+      hijriStr = `${d.date.hijri.day} ${hMonthName}`;
+    }
 
     const tr = document.createElement('tr');
     tr.className = isToday 
       ? 'bg-emerald-deep/15 dark:bg-emerald-deep/40 font-bold border-l-4 border-gold-shimmer text-primary shadow-xs transition-colors' 
-      : (isFriday ? 'bg-primary/5 hover:bg-surface-container-high transition-colors' : 'hover:bg-surface-container transition-colors');
+      : (isFriday ? 'bg-primary/5 hover:bg-surface-container-high transition-colors font-semibold' : 'hover:bg-surface-container transition-colors');
 
     if (isToday) todayRowEl = tr;
 
     const timings = d.timings;
     tr.innerHTML = `
-      <td class="py-2.5 px-3 text-center font-bold">
+      <td class="py-2 px-2 text-center font-bold">
         <span class="inline-flex items-center gap-1">
           <span>${dayNum}</span>
-          ${isToday ? `<span class="text-[9px] bg-gold-shimmer text-black px-1.5 py-0.5 rounded-full font-bold uppercase">${todayBadgeText}</span>` : ''}
+          ${isToday ? `<span class="text-[9px] bg-gold-shimmer text-black px-1.5 py-0.5 rounded-full font-bold uppercase no-print">${todayBadgeText}</span>` : ''}
         </span>
       </td>
-      <td class="py-2.5 px-3 ${isFriday ? 'text-emerald-deep dark:text-emerald-light font-bold flex items-center gap-1' : ''}">
-        ${isFriday ? '<span class="material-symbols-outlined text-[13px]">verified</span>' : ''}
+      <td class="py-2 px-2.5 ${isFriday ? 'text-emerald-deep dark:text-emerald-light font-bold flex items-center gap-1' : ''}">
+        ${isFriday ? '<span class="material-symbols-outlined text-[13px] no-print">verified</span>' : ''}
         <span>${wNames[weekdayIdx]}</span>
       </td>
-      <td class="py-2.5 px-3 text-on-surface-variant font-medium">${hijriDay}</td>
-      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Fajr)}</td>
-      <td class="py-2.5 px-2.5 text-center text-on-surface-variant tabular-nums">${cleanTime(timings.Sunrise)}</td>
-      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Dhuhr)}</td>
-      <td class="py-2.5 px-2.5 text-center font-bold tabular-nums">${cleanTime(timings.Asr)}</td>
-      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 text-gold-metallic dark:text-gold-shimmer tabular-nums">${cleanTime(timings.Maghrib)}</td>
-      <td class="py-2.5 px-2.5 text-center font-bold tabular-nums">${cleanTime(timings.Isha)}</td>
+      <td class="py-2 px-2 text-on-surface-variant font-medium text-[11px]">${hijriStr}</td>
+      <td class="py-2 px-2 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Fajr)}</td>
+      <td class="py-2 px-2 text-center text-on-surface-variant tabular-nums">${cleanTime(timings.Sunrise)}</td>
+      <td class="py-2 px-2 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Dhuhr)}</td>
+      <td class="py-2 px-2 text-center font-bold tabular-nums">${cleanTime(timings.Asr)}</td>
+      <td class="py-2 px-2 text-center font-bold bg-primary/5 text-gold-metallic dark:text-gold-shimmer tabular-nums">${cleanTime(timings.Maghrib)}</td>
+      <td class="py-2 px-2 text-center font-bold tabular-nums">${cleanTime(timings.Isha)}</td>
     `;
 
     tbody.appendChild(tr);
