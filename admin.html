@@ -609,7 +609,17 @@
 
         <!-- Duo So'rovlari Tab -->
         <div id="tab-dua" class="tab-content">
-            <h2>Haftalik Duo So'rovlari</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Jamoat Duo So'rovlari</h2>
+                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">Juma namozida o'qib beriladigan haftalik duo so'rovlari ro'yxati.</p>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button onclick="printWeeklyDuas()" style="background:var(--gold); color:#000; font-weight:700; border:none; padding:10px 18px; border-radius:8px; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; gap:8px; box-shadow:0 2px 8px rgba(212,160,23,0.3);">
+                        <i class="fas fa-print"></i> Duolarni chop etish (Juma uchun)
+                    </button>
+                </div>
+            </div>
             <div id="dua-admin-list">
                 <!-- Javascript will populate this with grouped weeks -->
             </div>
@@ -1316,6 +1326,7 @@
                 container.innerHTML = '';
                 
                 let duas = [];
+                window.currentDuasForPrint = duas;
                 snap.forEach(child => {
                     duas.push({ key: child.key, ...child.val() });
                 });
