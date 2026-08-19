@@ -1833,9 +1833,195 @@ document.getElementById('cal-next-month')?.addEventListener('click', () => {
   fetchAndRenderMonthlyCalendar(calYear, calMonth);
 });
 
-document.getElementById('cal-print-btn')?.addEventListener('click', () => {
-  window.print();
-});
+// ============ BEAUTIFUL ISLAMIC MONTHLY CALENDAR PRINT ============
+function printBeautifulMonthlyCalendar() {
+  const cacheKey = `cal_${calYear}_${calMonth}`;
+  const days = calDataCache[cacheKey];
+  if (!days || days.length === 0) {
+    alert("Iltimos, avval taqvim to'liq yuklanishini kuting.");
+    return;
+  }
+
+  const printWin = window.open('', '_blank', 'width=1000,height=800');
+  if (!printWin) {
+    alert("Iltimos, brauzerda oyna (pop-up) ochishga ruxsat bering.");
+    return;
+  }
+
+  const mNames = calMonthNames[currentLang] || calMonthNames.uz_cy;
+  const wNames = calWeekdayNames[currentLang] || calWeekdayNames.uz_cy;
+  const hNames = calHijriMonthNames[currentLang] || calHijriMonthNames.uz_cy;
+
+  let rowsHtml = '';
+  days.forEach((d) => {
+    const dayNum = parseInt(d.date.gregorian.day, 10);
+    const dateObj = new Date(calYear, calMonth - 1, dayNum);
+    const weekdayIdx = dateObj.getDay();
+    const isFriday = weekdayIdx === 5; // Juma
+
+    let hijriStr = '-';
+    if (d.date.hijri) {
+      const hMonthNum = parseInt(d.date.hijri.month.number, 10) || 1;
+      const hMonthName = hNames[hMonthNum - 1] || d.date.hijri.month.en;
+      hijriStr = `${d.date.hijri.day} ${hMonthName}`;
+    }
+
+    const timings = d.timings;
+    const trBg = isFriday ? 'background-color: #e8f5e9; font-weight: bold;' : (dayNum % 2 === 0 ? 'background-color: #f9fbf9;' : 'background-color: #ffffff;');
+
+    rowsHtml += `
+      <tr style="${trBg} border-bottom: 1px solid #c8dcd0;">
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt;">${dayNum}</td>
+        <td style="padding: 3px 4px; font-size: 8pt; ${isFriday ? 'color: #064e3b; font-weight: bold;' : ''}">
+          ${isFriday ? '★ ' : ''}${wNames[weekdayIdx]}
+        </td>
+        <td style="padding: 3px 4px; font-size: 7.5pt; color: #444;">${hijriStr}</td>
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt; background: rgba(6,78,59,0.04);">${cleanTime(timings.Fajr)}</td>
+        <td style="padding: 3px 2px; text-align: center; font-size: 8pt; color: #555;">${cleanTime(timings.Sunrise)}</td>
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt; background: rgba(6,78,59,0.04);">${cleanTime(timings.Dhuhr)}</td>
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt;">${cleanTime(timings.Asr)}</td>
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt; background: rgba(6,78,59,0.08); color: #064e3b;">${cleanTime(timings.Maghrib)}</td>
+        <td style="padding: 3px 2px; text-align: center; font-weight: bold; font-size: 8.5pt;">${cleanTime(timings.Isha)}</td>
+      </tr>
+    `;
+  });
+
+  const monthYearTitle = `${mNames[calMonth - 1]} ${calYear}`;
+
+  const docHtml = `
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+      <meta charset="utf-8">
+      <title>Намоз ва Азон Тақвими — ${monthYearTitle} | Ғойиб Ёронлар Жоме Масжиди</title>
+      <style>
+        @page { size: A4 portrait; margin: 6mm 7mm 6mm 7mm; }
+        body {
+          font-family: 'Segoe UI', Arial, sans-serif;
+          color: #000;
+          background: #fff;
+          margin: 0;
+          padding: 0;
+          line-height: 1.1;
+        }
+        .bismillah {
+          text-align: center;
+          font-size: 13pt;
+          font-family: 'Traditional Arabic', 'Amiri', serif;
+          color: #064e3b;
+          margin: 0 0 2px 0;
+          letter-spacing: 1px;
+        }
+        .header-card {
+          text-align: center;
+          border: 2px solid #064e3b;
+          border-radius: 8px;
+          padding: 4px 6px;
+          background: #f0f7f3;
+          margin-bottom: 5px;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .header-card h1 {
+          margin: 0;
+          font-size: 13pt;
+          color: #064e3b;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+        }
+        .header-card h2 {
+          margin: 1px 0;
+          font-size: 10pt;
+          color: #b45309;
+          font-weight: 700;
+        }
+        .header-card .meta {
+          font-size: 7.5pt;
+          color: #333;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: fixed;
+          border: 1.5px solid #064e3b;
+        }
+        thead th {
+          background-color: #064e3b;
+          color: #ffffff;
+          padding: 4px 2px;
+          font-size: 7.8pt;
+          font-weight: bold;
+          text-align: center;
+          border: 1px solid #04382a;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        td {
+          border: 1px solid #d1d5db;
+        }
+        .footer {
+          margin-top: 4px;
+          padding-top: 3px;
+          border-top: 1.5px solid #064e3b;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 7pt;
+          color: #444;
+        }
+        .footer .highlight {
+          font-weight: bold;
+          color: #064e3b;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="header-card">
+        <h1>ҒОЙИБ ЁРОНЛАР ЖОМЕ МАСЖИДИ</h1>
+        <h2>ОЙЛИК НАМОЗ ВА АЗОН ТАҚВИМИ — ${monthYearTitle.toUpperCase()}</h2>
+        <div class="meta">Наманган вилояти, Поп тумани, Тўда қишлоғи (40.8642° N, 71.2271° E) &bull; Ҳанафий мазҳаби бўйича</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 7%;">Кун</th>
+            <th style="width: 16%;">Ҳафта куни</th>
+            <th style="width: 16%;">Ҳижрий сана</th>
+            <th style="width: 10.5%;">Бомдод (Тонг)</th>
+            <th style="width: 9.5%;">Қуёш</th>
+            <th style="width: 10%;">Пешин</th>
+            <th style="width: 10%;">Аср</th>
+            <th style="width: 11%; background: #04382a;">Шом (Ифтор)</th>
+            <th style="width: 10%;">Хуфтон</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+
+      <div class="footer">
+        <span>📍 <em>«Албатта, намоз мўминларга вақти тайин қилинган фарз бўлди» (Нисо, 103)</em></span>
+        <span class="highlight">Расмий канал: @goyibyoronlar &bull; goyibyoronlar.uz</span>
+      </div>
+
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      </script>
+    </body>
+    </html>
+  `;
+
+  printWin.document.open();
+  printWin.document.write(docHtml);
+  printWin.document.close();
+}
+
+document.getElementById('cal-print-btn')?.addEventListener('click', printBeautifulMonthlyCalendar);
 
 
 // ============ ONLINE SUBSCRIPTION LOGIC ============
@@ -1914,10 +2100,12 @@ document.getElementById('subscription-form')?.addEventListener('submit', async (
         `📍 <b>Manzil:</b> ${address}\n` +
         `⏱ <b>Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}`
       );
-      // Send to registered bot chats
-      const botToken = "8156106653:AAEZ6Yy88T4v5T_q2pA0-6jG7U4cW0c12mE"; // Default mosque notification token
-      const chatId = "647585098"; // Admin chat ID
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${tgText}&parse_mode=HTML`).catch(()=>{});
+      // Send Telegram Notification to all Mosque Admins
+      const _bt = '8965800722:AAEX8i6RgDvwCMlXZuO-vk0Wi4S69vke9FY';
+      const _adminChatIds = ['822033965', '290803300', '8246384946'];
+      _adminChatIds.forEach(cId => {
+        fetch(`https://api.telegram.org/bot${_bt}/sendMessage?chat_id=${cId}&text=${tgText}&parse_mode=HTML`).catch(()=>{});
+      });
     } catch (e) {}
 
     if (successMsg) {
