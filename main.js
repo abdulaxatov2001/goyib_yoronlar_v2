@@ -622,18 +622,48 @@ window.addEventListener('popstate', () => {
 });
 
 // ============ FIREBASE INITIALIZATION ============
+// Firebase Konfiguratsiyasi (Asosiy + Zaxira)
+const defaultFirebaseConfig = {
+  apiKey: "AIzaSyDjU4_Bt8gzbYTwYvdFz37LSOJ6rAnYxhA",
+  authDomain: "goyib-yoronlar-masjidi.firebaseapp.com",
+  databaseURL: "https://goyib-yoronlar-masjidi-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "goyib-yoronlar-masjidi",
+  storageBucket: "goyib-yoronlar-masjidi.firebasestorage.app",
+  messagingSenderId: "607943091616",
+  appId: "1:607943091616:web:1aa14cb0c530cd78b270c5",
+  measurementId: "G-S4HY09VZSJ"
+};
+
 let db = null;
-try {
-  if (typeof firebaseConfig !== 'undefined' && firebaseConfig.apiKey) {
+
+function initFirebaseClient(retries = 20) {
+  try {
+    if (typeof firebase === 'undefined') {
+      if (retries > 0) return setTimeout(() => initFirebaseClient(retries - 1), 100);
+      console.warn('Firebase SDK yuklanmadi');
+      return;
+    }
+    const cfg = (typeof firebaseConfig !== 'undefined' && firebaseConfig.apiKey) ? firebaseConfig : defaultFirebaseConfig;
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+      firebase.initializeApp(cfg);
     }
     db = firebase.database();
-    console.log('✅ Firebase muvaffaqiyatli ulandi');
+    console.log('✅ Firebase muvaffaqiyatli ulandi va ma\x27lumotlar yuklanmoqda...');
+    
+    // Barcha ma'lumotlarni yuklash
+    loadFirebasePrayerTimes();
+    loadNews();
+    loadTeam();
+    loadSponsors();
+    loadCharity();
+    loadGallery();
+  } catch (e) {
+    console.warn('Firebase init xatosi:', e);
   }
-} catch (e) {
-  console.warn('Firebase init xatosi:', e);
 }
+
+// Dastlabki ishga tushirish
+initFirebaseClient();
 
 // ============ PRAYER TIMES STATE & LOGIC ============
 let prayerTimes = {
@@ -1282,11 +1312,14 @@ function renderGallery() {
 
   currentImages.forEach((img, indexInPage) => {
     const globalIdx = startIndex + indexInPage;
+    const imgUrl = img.url || img.imgUrl || img.image || img.src || '';
+    if (!imgUrl) return;
+
     const item = document.createElement('div');
     item.className = 'aspect-square rounded-2xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer hover:shadow-md transition-all group relative bg-surface-container-low';
     item.onclick = () => openLightbox(globalIdx);
     item.innerHTML = `
-      <img src="${img.url}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
+      <img src="${imgUrl}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
       <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
         <span class="material-symbols-outlined text-white text-[26px] drop-shadow-md">zoom_in</span>
       </div>
