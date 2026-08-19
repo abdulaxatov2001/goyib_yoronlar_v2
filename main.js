@@ -29,325 +29,369 @@ function parseMarkdown(text) {
 
 // ============ TRANSLATIONS (100% PURE & COMPLETE) ============
 const translations = {
-  uz_lt: {
-    bomdod: "BOMDOD",
-    quyosh: "QUYOSH",
-    peshin: "PESHIN",
-    asr: "ASR",
-    shom: "SHOM",
-    xufton: "XUFTON",
-    official_site_tag: "G'oyib Yoronlar Jome Masjidi Rasmiy Sayti",
-    site_subheading: "Jome Masjidi",
-    hero_mosque_tag: "Jome Masjidi",
-    nav_home: "Bosh sahifa",
-    nav_prayers: "Namoz",
-    nav_about: "Namoz",
-    nav_team: "Jamoa",
-    nav_news: "Yangiliklar",
-    nav_sponsors: "Faxriylar",
-    nav_gallery: "Galereya",
-    nav_dua: "Duo",
-    nav_contact: "Aloqa",
-    nav_donate: "Ehson",
-    hero_title: "Xush kelibsiz",
-    hero_title_inline: "G'OYIB YORONLAR",
-    hero_subtitle: "Namangan viloyati, Pop tumani, To'da qishlog'i",
-    next_prayer_in: "Keyingi namozga:",
-    prayers_heading: "Namoz Vaqtlari",
-    masjid_time_label: "Masjidda o'qilish vaqti",
-    api_time_label: "Azon",
-    sunrise_label: "Chiqishi",
-    location_name: "To'da",
-    about_title: "Biz haqimizda",
-    about_text: "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
-    team_title: "Masjid Jamoasi",
-    team_subtitle: "Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)",
-    sponsors_title: "Faxriylar va homiylar",
-    sponsor_role: "Faxriy / Homiy",
-    news_title: "Yangiliklar",
-    charity_title: "Xayriya va ehson",
-    charity_general: "Umumiy ehson",
-    charity_general_desc: "Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.",
-    charity_card_info: "Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.",
-    charity_utility: "Kommunal to'lovlar",
-    charity_utility_desc: "Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.",
-    util_elec_label: "Elektr (yuridik)",
-    util_water_label: "Suv",
-    util_wifi_label: "Wi-Fi (Internet)",
-    util_gas_label: "Gaz",
-    domo_btn: "domo.uz orqali kommunal to'lash",
-    electric_note_title: "Qanday to'lash kerak?",
-    electric_note_desc: "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
-    gallery_title: "Foto galereya",
-    gallery_subtitle: "Masjid hayoti va go'zalligidan fotolavhalar",
-    dua_title: "Jamoatdan duo olish",
-    dua_warning_note: "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
-    dua_blocked: "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
-    dua_name_ph: "Ismingiz (ixtiyoriy)",
-    dua_msg_ph: "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
-    dua_submit: "Yuborish",
-    dua_success: "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
-    contact_title: "Biz bilan aloqa",
-    contact_address_label: "Manzil",
-    contact_address_val: "Namangan viloyati, Pop tumani, To'da qishlog'i",
-    contact_tg_label: "Telegram kanal",
-    read_more: "O'qish",
-    card_profile_btn: "Profil",
-    font_norm: "Odatiy (100%)",
-    font_lg: "Katta (115%)",
-    font_xl: "Juda katta (130%)",
-    bottom_nav_home: "BOSH",
-    bottom_nav_prayers: "NAMOZ",
-    bottom_nav_charity: "XAYRIYA",
-    bottom_nav_gallery: "GALEREYA",
-    bottom_nav_dua: "DUO",
-    no_news: "Hozircha yangiliklar yo'q...",
-    no_sponsors: "Hozircha ma'lumot kiritilmagan.",
-    no_team: "Hozircha jamoa a'zolari kiritilmagan...",
-    no_gallery: "Hozircha rasmlar kiritilmagan...",
-    updated_prefix: "YANGILANDI:",
-    prev_page: "‹ Oldingi",
-    next_page: "Keyingi ›"
+  "uz_lt": {
+    "bomdod": "BOMDOD",
+    "quyosh": "QUYOSH",
+    "peshin": "PESHIN",
+    "asr": "ASR",
+    "shom": "SHOM",
+    "xufton": "XUFTON",
+    "official_site_tag": "G'oyib Yoronlar Jome Masjidi Rasmiy Sayti",
+    "site_subheading": "Jome Masjidi",
+    "hero_mosque_tag": "Jome Masjidi",
+    "nav_home": "Bosh sahifa",
+    "nav_prayers": "Namoz",
+    "nav_about": "Namoz",
+    "nav_team": "Jamoa",
+    "nav_news": "Yangiliklar",
+    "nav_sponsors": "Faxriylar",
+    "nav_gallery": "Galereya",
+    "nav_dua": "Duo",
+    "nav_contact": "Aloqa",
+    "nav_donate": "Ehson",
+    "hero_title": "Xush kelibsiz",
+    "hero_title_inline": "G'OYIB YORONLAR",
+    "hero_subtitle": "Namangan viloyati, Pop tumani, To'da qishlog'i",
+    "next_prayer_in": "Keyingi namozga:",
+    "prayers_heading": "Namoz Vaqtlari",
+    "masjid_time_label": "Masjidda o'qilish vaqti",
+    "api_time_label": "Azon",
+    "sunrise_label": "Chiqishi",
+    "location_name": "To'da",
+    "about_title": "Biz haqimizda",
+    "about_text": "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
+    "team_title": "Masjid Jamoasi",
+    "team_subtitle": "Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)",
+    "sponsors_title": "Faxriylar va homiylar",
+    "sponsor_role": "Faxriy / Homiy",
+    "news_title": "Yangiliklar",
+    "charity_title": "Xayriya va ehson",
+    "charity_general": "Umumiy ehson",
+    "charity_general_desc": "Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.",
+    "charity_card_info": "Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.",
+    "charity_utility": "Kommunal to'lovlar",
+    "charity_utility_desc": "Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.",
+    "util_elec_label": "Elektr (yuridik)",
+    "util_water_label": "Suv",
+    "util_wifi_label": "Wi-Fi (Internet)",
+    "util_gas_label": "Gaz",
+    "domo_btn": "domo.uz orqali kommunal to'lash",
+    "electric_note_title": "Qanday to'lash kerak?",
+    "electric_note_desc": "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
+    "gallery_title": "Foto galereya",
+    "gallery_subtitle": "Masjidimizning go'zal me'moriy ko'rinishlari va jamoat tadbirlaridan olingan yorqin lahzalar bilan tanishing.",
+    "dua_title": "Jamoatdan duo olish",
+    "dua_warning_note": "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
+    "dua_blocked": "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
+    "dua_name_ph": "Ismingiz (ixtiyoriy)",
+    "dua_msg_ph": "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
+    "dua_submit": "Yuborish",
+    "dua_success": "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
+    "contact_title": "Biz bilan aloqa",
+    "contact_address_label": "Manzil",
+    "contact_address_val": "Namangan viloyati, Pop tumani, To'da qishlog'i",
+    "contact_tg_label": "Telegram kanal",
+    "read_more": "O'qish",
+    "card_profile_btn": "Profil",
+    "font_norm": "Odatiy (100%)",
+    "font_lg": "Katta (115%)",
+    "font_xl": "Juda katta (130%)",
+    "bottom_nav_home": "BOSH",
+    "bottom_nav_prayers": "NAMOZ",
+    "bottom_nav_charity": "XAYRIYA",
+    "bottom_nav_gallery": "GALEREYA",
+    "bottom_nav_dua": "DUO",
+    "no_news": "Hozircha yangiliklar yo'q...",
+    "no_sponsors": "Hozircha ma'lumot kiritilmagan.",
+    "no_team": "Hozircha jamoa a'zolari kiritilmagan...",
+    "no_gallery": "Hozircha rasmlar kiritilmagan...",
+    "updated_prefix": "YANGILANDI:",
+    "prev_page": "‹ Oldingi",
+    "next_page": "Keyingi ›",
+    "monthly_calendar_btn": "Oylik taqvim",
+    "monthly_calendar_title": "Oylik namoz taqvimi",
+    "monthly_calendar_sub": "G'oyib Yoronlar Jome Masjidi (To'da qishlog'i, Pop tumani)",
+    "th_day": "Kun",
+    "th_weekday": "Hafta kuni",
+    "th_hijri": "Hijriy",
+    "th_shom_iftor": "Shom (Iftor)",
+    "print_btn": "Chop etish",
+    "calendar_coords_note": "Pop tumani, To'da qishlog'i (40.8642° N, 71.2271° E) hisobi bo'yicha.",
+    "hanafi_method": "Hanafiy mazhabi bo'yicha",
+    "today_badge": "Bugun"
   },
-  uz_cy: {
-    bomdod: "БОМДОД",
-    quyosh: "ҚУЁШ",
-    peshin: "ПЕШИН",
-    asr: "АСР",
-    shom: "ШОМ",
-    xufton: "ХУФТОН",
-    official_site_tag: "Ғойиб Ёронлар Жоме Масжиди Расмий Сайти",
-    site_subheading: "Жоме Масжиди",
-    hero_mosque_tag: "Жоме Масжиди",
-    nav_home: "Бош саҳифа",
-    nav_prayers: "Намоз",
-    nav_about: "Намоз",
-    nav_team: "Жамоа",
-    nav_news: "Янгиликлар",
-    nav_sponsors: "Фахрийлар",
-    nav_gallery: "Галерея",
-    nav_dua: "Дуо",
-    nav_contact: "Алоқа",
-    nav_donate: "Эҳсон",
-    hero_title: "Хуш келибсиз",
-    hero_title_inline: "ҒОЙИБ ЁРОНЛАР",
-    hero_subtitle: "Наманган вилояти, Поп тумани, Тўда қишлоғи",
-    next_prayer_in: "Кейинги намозга:",
-    prayers_heading: "Намоз Вақтлари",
-    masjid_time_label: "Масжидда ўқилиш вақти",
-    api_time_label: "Азон",
-    sunrise_label: "Чиқиши",
-    location_name: "Тўда",
-    about_title: "Биз ҳақимизда",
-    about_text: "Ғойиб Ёронлар жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган маскандир. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
-    team_title: "Масжид Жамоаси",
-    team_subtitle: "Барча ходимлар ва имом-хатиблар (батафсил кўриш учун босинг)",
-    sponsors_title: "Фахрийлар ва ҳомийлар",
-    sponsor_role: "Фахрий / Ҳомий",
-    news_title: "Янгиликлар",
-    charity_title: "Хайрия ва эҳсон",
-    charity_general: "Умумий эҳсон",
-    charity_general_desc: "Масжид таъмирлаш, тозалик ва умумий эҳтиёжлари учун эҳсон қилинг.",
-    charity_card_info: "Карта рақамидан нусха олиб, Payme ёки Click иловалари орқали тўлашингиз мумкин.",
-    charity_utility: "Коммунал тўловлар",
-    charity_utility_desc: "Масжиднинг ойлик коммунал тўловларини тўлашда иштирок этинг.",
-    util_elec_label: "Электр (юридик)",
-    util_water_label: "Сув",
-    util_wifi_label: "Wi-Fi (Интернет)",
-    util_gas_label: "Газ",
-    domo_btn: "domo.uz орқали коммунал тўлаш",
-    electric_note_title: "Қандай тўлаш керак?",
-    electric_note_desc: "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
-    gallery_title: "Фото галерея",
-    gallery_subtitle: "Масжид ҳаёти ва гўзаллигидан фотолавҳалар",
-    dua_title: "Жамоатдан дуо олиш",
-    dua_warning_note: "Эслатма: Жума куни соат 12:40 дан 13:00 гача дуо юбориш вақтинча тўхтатилади.",
-    dua_blocked: "Ҳозир Жума намози вақти (12:40 - 13:00). Дуолар қабул қилинмайди.",
-    dua_name_ph: "Исмингиз (ихтиёрий)",
-    dua_msg_ph: "Дуо мазмуни (Масалан: Беморман, шифо сўраб дуо қилишларини сўрайман)",
-    dua_submit: "Юбориш",
-    dua_success: "Хабарингиз юборилди. Келаётган жума намозида етказилади!",
-    contact_title: "Биз билан алоқа",
-    contact_address_label: "Манзил",
-    contact_address_val: "Наманган вилояти, Поп тумани, Тўда қишлоғи",
-    contact_tg_label: "Телеграм канал",
-    read_more: "Ўқиш",
-    card_profile_btn: "Профиль",
-    font_norm: "Одатий (100%)",
-    font_lg: "Катта (115%)",
-    font_xl: "Жуда катта (130%)",
-    bottom_nav_home: "БОШ",
-    bottom_nav_prayers: "НАМОЗ",
-    bottom_nav_charity: "ХАЙРИЯ",
-    bottom_nav_gallery: "ГАЛЕРЕЯ",
-    bottom_nav_dua: "ДУО",
-    no_news: "Ҳозирча янгиликлар йўқ...",
-    no_sponsors: "Ҳозирча маълумот киритилмаган.",
-    no_team: "Ҳозирча жамоа аъзолари киритилмаган...",
-    no_gallery: "Ҳозирча расмлар киритилмаган...",
-    updated_prefix: "ЯНГИЛАНДИ:",
-    prev_page: "‹ Олдинги",
-    next_page: "Кейинги ›"
+  "uz_cy": {
+    "bomdod": "БОМДОД",
+    "quyosh": "ҚУЁШ",
+    "peshin": "ПЕШИН",
+    "asr": "АСР",
+    "shom": "ШОМ",
+    "xufton": "ХУФТОН",
+    "official_site_tag": "Ғойиб Ёронлар Жоме Масжиди Расмий Сайти",
+    "site_subheading": "Жоме Масжиди",
+    "hero_mosque_tag": "Жоме Масжиди",
+    "nav_home": "Бош саҳифа",
+    "nav_prayers": "Намоз",
+    "nav_about": "Намоз",
+    "nav_team": "Жамоа",
+    "nav_news": "Янгиликлар",
+    "nav_sponsors": "Фахрийлар",
+    "nav_gallery": "Галерея",
+    "nav_dua": "Дуо",
+    "nav_contact": "Алоқа",
+    "nav_donate": "Эҳсон",
+    "hero_title": "Хуш келибсиз",
+    "hero_title_inline": "ҒОЙИБ ЁРОНЛАР",
+    "hero_subtitle": "Наманган вилояти, Поп тумани, Тўда қишлоғи",
+    "next_prayer_in": "Кейинги намозга:",
+    "prayers_heading": "Намоз Вақтлари",
+    "masjid_time_label": "Масжидда ўқилиш вақти",
+    "api_time_label": "Азон",
+    "sunrise_label": "Чиқиши",
+    "location_name": "Тўда",
+    "about_title": "Биз ҳақимизда",
+    "about_text": "Ғойиб Ёронлар жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган маскандир. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
+    "team_title": "Масжид Жамоаси",
+    "team_subtitle": "Барча ходимлар ва имом-хатиблар (батафсил кўриш учун босинг)",
+    "sponsors_title": "Фахрийлар ва ҳомийлар",
+    "sponsor_role": "Фахрий / Ҳомий",
+    "news_title": "Янгиликлар",
+    "charity_title": "Хайрия ва эҳсон",
+    "charity_general": "Умумий эҳсон",
+    "charity_general_desc": "Масжид таъмирлаш, тозалик ва умумий эҳтиёжлари учун эҳсон қилинг.",
+    "charity_card_info": "Карта рақамидан нусха олиб, Payme ёки Click иловалари орқали тўлашингиз мумкин.",
+    "charity_utility": "Коммунал тўловлар",
+    "charity_utility_desc": "Масжиднинг ойлик коммунал тўловларини тўлашда иштирок этинг.",
+    "util_elec_label": "Электр (юридик)",
+    "util_water_label": "Сув",
+    "util_wifi_label": "Wi-Fi (Интернет)",
+    "util_gas_label": "Газ",
+    "domo_btn": "domo.uz орқали коммунал тўлаш",
+    "electric_note_title": "Қандай тўлаш керак?",
+    "electric_note_desc": "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
+    "gallery_title": "Фото галерея",
+    "gallery_subtitle": "Масжидимизнинг гўзал меъморий кўринишлари ва жамоат тадбирларидан олинган ёрқин лаҳзалар билан танишинг.",
+    "dua_title": "Жамоатдан дуо олиш",
+    "dua_warning_note": "Эслатма: Жума куни соат 12:40 дан 13:00 гача дуо юбориш вақтинча тўхтатилади.",
+    "dua_blocked": "Ҳозир Жума намози вақти (12:40 - 13:00). Дуолар қабул қилинмайди.",
+    "dua_name_ph": "Исмингиз (ихтиёрий)",
+    "dua_msg_ph": "Дуо мазмуни (Масалан: Беморман, шифо сўраб дуо қилишларини сўрайман)",
+    "dua_submit": "Юбориш",
+    "dua_success": "Хабарингиз юборилди. Келаётган жума намозида етказилади!",
+    "contact_title": "Биз билан алоқа",
+    "contact_address_label": "Манзил",
+    "contact_address_val": "Наманган вилояти, Поп тумани, Тўда қишлоғи",
+    "contact_tg_label": "Телеграм канал",
+    "read_more": "Ўқиш",
+    "card_profile_btn": "Профиль",
+    "font_norm": "Одатий (100%)",
+    "font_lg": "Катта (115%)",
+    "font_xl": "Жуда катта (130%)",
+    "bottom_nav_home": "БОШ",
+    "bottom_nav_prayers": "НАМОЗ",
+    "bottom_nav_charity": "ХАЙРИЯ",
+    "bottom_nav_gallery": "ГАЛЕРЕЯ",
+    "bottom_nav_dua": "ДУО",
+    "no_news": "Ҳозирча янгиликлар йўқ...",
+    "no_sponsors": "Ҳозирча маълумот киритилмаган.",
+    "no_team": "Ҳозирча жамоа аъзолари киритилмаган...",
+    "no_gallery": "Ҳозирча расмлар киритилмаган...",
+    "updated_prefix": "ЯНГИЛАНДИ:",
+    "prev_page": "‹ Олдинги",
+    "next_page": "Кейинги ›",
+    "monthly_calendar_btn": "Ойлик тақвим",
+    "monthly_calendar_title": "Ойлик намоз тақвими",
+    "monthly_calendar_sub": "Ғойиб Ёронлар Жоме Масжиди (Тўда қишлоғи, Поп тумани)",
+    "th_day": "Кун",
+    "th_weekday": "Ҳафта куни",
+    "th_hijri": "Ҳижрий",
+    "th_shom_iftor": "Шом (Ифтор)",
+    "print_btn": "Чоп этиш",
+    "calendar_coords_note": "Поп тумани, Тўда қишлоғи (40.8642° N, 71.2271° E) ҳисоби бўйича.",
+    "hanafi_method": "Ҳанафий мазҳаби бўйича",
+    "today_badge": "Бугун"
   },
-  ru: {
-    bomdod: "ФАДЖР",
-    quyosh: "ВОСХОД",
-    peshin: "ЗУХР",
-    asr: "АСР",
-    shom: "МАГРИБ",
-    xufton: "ИША",
-    official_site_tag: "Официальный сайт соборной мечети «Гойиб Ёронлар»",
-    site_subheading: "Соборная Мечеть",
-    hero_mosque_tag: "Соборная Мечеть",
-    nav_home: "Главная",
-    nav_prayers: "Намаз",
-    nav_about: "Намаз",
-    nav_team: "Команда",
-    nav_news: "Новости",
-    nav_sponsors: "Ветераны",
-    nav_gallery: "Галерея",
-    nav_dua: "Молитва",
-    nav_contact: "Контакты",
-    nav_donate: "Пожертвовать",
-    hero_title: "Добро пожаловать",
-    hero_title_inline: "ГОЙИБ ЁРОНЛАР",
-    hero_subtitle: "Наманганская область, Папский район, село Туда",
-    next_prayer_in: "До следующего намаза:",
-    prayers_heading: "Время Намаза",
-    masjid_time_label: "Время в мечети",
-    api_time_label: "Азан",
-    sunrise_label: "Восход",
-    location_name: "Туда",
-    about_title: "О нас",
-    about_text: "Соборная мечеть «Гойиб Ёронлар» расположена в селе Туда Папского района Наманганской области. Мечеть является для местных жителей местом поклонения и духовного воспитания.",
-    team_title: "Команда мечети",
-    team_subtitle: "Все сотрудники и имамы (нажмите для подробностей)",
-    sponsors_title: "Почётные лица и спонсоры",
-    sponsor_role: "Почётный спонсор",
-    news_title: "Новости",
-    charity_title: "Благотворительность",
-    charity_general: "Общее пожертвование",
-    charity_general_desc: "Пожертвуйте на ремонт, чистоту и общие нужды мечети.",
-    charity_card_info: "Скопируйте номер карты и совершите платёж через Payme или Click.",
-    charity_utility: "Коммунальные платежи",
-    charity_utility_desc: "Примите участие в оплате ежемесячных коммунальных услуг мечети.",
-    util_elec_label: "Электроэнергия (юрид.)",
-    util_water_label: "Вода",
-    util_wifi_label: "Wi-Fi (Интернет)",
-    util_gas_label: "Газ",
-    domo_btn: "Оплата коммунальных через domo.uz",
-    electric_note_title: "Как оплатить?",
-    electric_note_desc: "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
-    gallery_title: "Фотогалерея",
-    gallery_subtitle: "Фотохроника жизни и красоты мечети",
-    dua_title: "Получить молитву от джамаата",
-    dua_warning_note: "Примечание: По пятницам с 12:40 до 13:00 приём молитв приостанавливается.",
-    dua_blocked: "Сейчас время Пятничного намаза (12:40 - 13:00). Молитвы не принимаются.",
-    dua_name_ph: "Ваше имя (необязательно)",
-    dua_msg_ph: "Текст молитвы (Например: Прошу помолиться о моём выздоровлении)",
-    dua_submit: "Отправить",
-    dua_success: "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
-    contact_title: "Контакты",
-    contact_address_label: "Адрес",
-    contact_address_val: "Наманганская область, Папский район, село Туда",
-    contact_tg_label: "Телеграм канал",
-    read_more: "Читать",
-    card_profile_btn: "Профиль",
-    font_norm: "Обычный (100%)",
-    font_lg: "Крупный (115%)",
-    font_xl: "Очень крупный (130%)",
-    bottom_nav_home: "ГЛАВНАЯ",
-    bottom_nav_prayers: "НАМАЗ",
-    bottom_nav_charity: "ПОЖЕРТВОВАНИЕ",
-    bottom_nav_gallery: "ГАЛЕРЕЯ",
-    bottom_nav_dua: "МОЛИТВА",
-    no_news: "Новостей пока нет...",
-    no_sponsors: "Данных пока нет.",
-    no_team: "Данных пока нет...",
-    no_gallery: "Фотографий пока нет...",
-    updated_prefix: "ОБНОВЛЕНО:",
-    prev_page: "‹ Назад",
-    next_page: "Вперед ›"
+  "ru": {
+    "bomdod": "ФАДЖР",
+    "quyosh": "ВОСХОД",
+    "peshin": "ЗУХР",
+    "asr": "АСР",
+    "shom": "МАГРИБ",
+    "xufton": "ИША",
+    "official_site_tag": "Официальный сайт соборной мечети «Гойиб Ёронлар»",
+    "site_subheading": "Соборная Мечеть",
+    "hero_mosque_tag": "Соборная Мечеть",
+    "nav_home": "Главная",
+    "nav_prayers": "Намаз",
+    "nav_about": "Намаз",
+    "nav_team": "Команда",
+    "nav_news": "Новости",
+    "nav_sponsors": "Ветераны",
+    "nav_gallery": "Галерея",
+    "nav_dua": "Молитва",
+    "nav_contact": "Контакты",
+    "nav_donate": "Пожертвовать",
+    "hero_title": "Добро пожаловать",
+    "hero_title_inline": "ГОЙИБ ЁРОНЛАР",
+    "hero_subtitle": "Наманганская область, Папский район, село Туда",
+    "next_prayer_in": "До следующего намаза:",
+    "prayers_heading": "Время Намаза",
+    "masjid_time_label": "Время в мечети",
+    "api_time_label": "Азан",
+    "sunrise_label": "Восход",
+    "location_name": "Туда",
+    "about_title": "О нас",
+    "about_text": "Соборная мечеть «Гойиб Ёронлар» расположена в селе Туда Папского района Наманганской области. Мечеть является для местных жителей местом поклонения и духовного воспитания.",
+    "team_title": "Команда мечети",
+    "team_subtitle": "Все сотрудники и имамы (нажмите для подробностей)",
+    "sponsors_title": "Почётные лица и спонсоры",
+    "sponsor_role": "Почётный спонсор",
+    "news_title": "Новости",
+    "charity_title": "Благотворительность",
+    "charity_general": "Общее пожертвование",
+    "charity_general_desc": "Пожертвуйте на ремонт, чистоту и общие нужды мечети.",
+    "charity_card_info": "Скопируйте номер карты и совершите платёж через Payme или Click.",
+    "charity_utility": "Коммунальные платежи",
+    "charity_utility_desc": "Примите участие в оплате ежемесячных коммунальных услуг мечети.",
+    "util_elec_label": "Электроэнергия (юрид.)",
+    "util_water_label": "Вода",
+    "util_wifi_label": "Wi-Fi (Интернет)",
+    "util_gas_label": "Газ",
+    "domo_btn": "Оплата коммунальных через domo.uz",
+    "electric_note_title": "Как оплатить?",
+    "electric_note_desc": "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
+    "gallery_title": "Фотогалерея",
+    "gallery_subtitle": "Фотохроника жизни и красоты мечети",
+    "dua_title": "Получить молитву от джамаата",
+    "dua_warning_note": "Примечание: По пятницам с 12:40 до 13:00 приём молитв приостанавливается.",
+    "dua_blocked": "Сейчас время Пятничного намаза (12:40 - 13:00). Молитвы не принимаются.",
+    "dua_name_ph": "Ваше имя (необязательно)",
+    "dua_msg_ph": "Текст молитвы (Например: Прошу помолиться о моём выздоровлении)",
+    "dua_submit": "Отправить",
+    "dua_success": "Ваше сообщение отправлено. Оно будет передано на пятничном намазе!",
+    "contact_title": "Контакты",
+    "contact_address_label": "Адрес",
+    "contact_address_val": "Наманганская область, Папский район, село Туда",
+    "contact_tg_label": "Телеграм канал",
+    "read_more": "Читать",
+    "card_profile_btn": "Профиль",
+    "font_norm": "Обычный (100%)",
+    "font_lg": "Крупный (115%)",
+    "font_xl": "Очень крупный (130%)",
+    "bottom_nav_home": "ГЛАВНАЯ",
+    "bottom_nav_prayers": "НАМАЗ",
+    "bottom_nav_charity": "ПОЖЕРТВОВАНИЕ",
+    "bottom_nav_gallery": "ГАЛЕРЕЯ",
+    "bottom_nav_dua": "МОЛИТВА",
+    "no_news": "Новостей пока нет...",
+    "no_sponsors": "Данных пока нет.",
+    "no_team": "Данных пока нет...",
+    "no_gallery": "Фотографий пока нет...",
+    "updated_prefix": "ОБНОВЛЕНО:",
+    "prev_page": "‹ Назад",
+    "next_page": "Вперед ›",
+    "monthly_calendar_btn": "Месячный календарь",
+    "monthly_calendar_title": "Месячное расписание намаза",
+    "monthly_calendar_sub": "Соборная мечеть «Гойиб Ёронлар» (село Туда, Папский район)",
+    "th_day": "День",
+    "th_weekday": "День недели",
+    "th_hijri": "Хиджра",
+    "th_shom_iftor": "Магриб (Ифтар)",
+    "print_btn": "Печать",
+    "calendar_coords_note": "По координатам Папского района, с. Туда (40.8642° N, 71.2271° E).",
+    "hanafi_method": "По ханафитскому мазхабу",
+    "today_badge": "Сегодня"
   },
-  en: {
-    bomdod: "FAJR",
-    quyosh: "SUNRISE",
-    peshin: "DHUHR",
-    asr: "ASR",
-    shom: "MAGHRIB",
-    xufton: "ISHA",
-    official_site_tag: "Official Website of G'oyib Yoronlar Mosque",
-    site_subheading: "Jome Mosque",
-    hero_mosque_tag: "Jome Mosque",
-    nav_home: "Home",
-    nav_prayers: "Prayers",
-    nav_about: "Prayers",
-    nav_team: "Team",
-    nav_news: "News",
-    nav_sponsors: "Sponsors",
-    nav_gallery: "Gallery",
-    nav_dua: "Dua",
-    nav_contact: "Contact",
-    nav_donate: "Donate",
-    hero_title: "Welcome",
-    hero_title_inline: "G'OYIB YORONLAR",
-    hero_subtitle: "Tuda village, Pop district, Namangan region",
-    next_prayer_in: "Next prayer in:",
-    prayers_heading: "Prayer Times",
-    masjid_time_label: "Mosque prayer time",
-    api_time_label: "Adhan",
-    sunrise_label: "Sunrise",
-    location_name: "Tuda",
-    about_title: "About Us",
-    about_text: "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region. It serves the local community as both a place of worship and a spiritual center.",
-    team_title: "Mosque Team",
-    team_subtitle: "All staff and imams (click to view details)",
-    sponsors_title: "Honorable sponsors",
-    sponsor_role: "Honorable sponsor",
-    news_title: "News",
-    charity_title: "Charity & donation",
-    charity_general: "General donation",
-    charity_general_desc: "Donate for maintenance, cleanliness and general needs of the mosque.",
-    charity_card_info: "Copy the card number to make a donation via Payme or Click.",
-    charity_utility: "Utility payments",
-    charity_utility_desc: "Participate in paying the monthly utility bills of the mosque.",
-    util_elec_label: "Electricity (legal)",
-    util_water_label: "Water",
-    util_wifi_label: "Wi-Fi (Internet)",
-    util_gas_label: "Gas",
-    domo_btn: "Pay utilities via domo.uz",
-    electric_note_title: "How to pay?",
-    electric_note_desc: "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
-    gallery_title: "Photo gallery",
-    gallery_subtitle: "Photographic chronicle of mosque life and beauty",
-    dua_title: "Prayer request",
-    dua_warning_note: "Note: On Fridays from 12:40 to 13:00, prayer requests are temporarily suspended.",
-    dua_blocked: "It is currently Friday prayer time (12:40 - 13:00). Requests not accepted.",
-    dua_name_ph: "Your name (optional)",
-    dua_msg_ph: "Prayer details (E.g. Please pray for my health and recovery)",
-    dua_submit: "Submit",
-    dua_success: "Your message has been sent successfully!",
-    contact_title: "Contact Us",
-    contact_address_label: "Address",
-    contact_address_val: "Tuda village, Pop district, Namangan region",
-    contact_tg_label: "Telegram channel",
-    read_more: "Read",
-    card_profile_btn: "Profile",
-    font_norm: "Standard (100%)",
-    font_lg: "Large (115%)",
-    font_xl: "Extra Large (130%)",
-    bottom_nav_home: "HOME",
-    bottom_nav_prayers: "PRAYERS",
-    bottom_nav_charity: "CHARITY",
-    bottom_nav_gallery: "GALLERY",
-    bottom_nav_dua: "DUA",
-    no_news: "No news available...",
-    no_sponsors: "No information yet.",
-    no_team: "No team members yet...",
-    no_gallery: "No images yet...",
-    updated_prefix: "UPDATED:",
-    prev_page: "‹ Previous",
-    next_page: "Next ›"
+  "en": {
+    "bomdod": "FAJR",
+    "quyosh": "SUNRISE",
+    "peshin": "DHUHR",
+    "asr": "ASR",
+    "shom": "MAGHRIB",
+    "xufton": "ISHA",
+    "official_site_tag": "Official Website of G'oyib Yoronlar Mosque",
+    "site_subheading": "Jome Mosque",
+    "hero_mosque_tag": "Jome Mosque",
+    "nav_home": "Home",
+    "nav_prayers": "Prayers",
+    "nav_about": "Prayers",
+    "nav_team": "Team",
+    "nav_news": "News",
+    "nav_sponsors": "Sponsors",
+    "nav_gallery": "Gallery",
+    "nav_dua": "Dua",
+    "nav_contact": "Contact",
+    "nav_donate": "Donate",
+    "hero_title": "Welcome",
+    "hero_title_inline": "G'OYIB YORONLAR",
+    "hero_subtitle": "Tuda village, Pop district, Namangan region",
+    "next_prayer_in": "Next prayer in:",
+    "prayers_heading": "Prayer Times",
+    "masjid_time_label": "Mosque prayer time",
+    "api_time_label": "Adhan",
+    "sunrise_label": "Sunrise",
+    "location_name": "Tuda",
+    "about_title": "About Us",
+    "about_text": "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region. It serves the local community as both a place of worship and a spiritual center.",
+    "team_title": "Mosque Team",
+    "team_subtitle": "All staff and imams (click to view details)",
+    "sponsors_title": "Honorable sponsors",
+    "sponsor_role": "Honorable sponsor",
+    "news_title": "News",
+    "charity_title": "Charity & donation",
+    "charity_general": "General donation",
+    "charity_general_desc": "Donate for maintenance, cleanliness and general needs of the mosque.",
+    "charity_card_info": "Copy the card number to make a donation via Payme or Click.",
+    "charity_utility": "Utility payments",
+    "charity_utility_desc": "Participate in paying the monthly utility bills of the mosque.",
+    "util_elec_label": "Electricity (legal)",
+    "util_water_label": "Water",
+    "util_wifi_label": "Wi-Fi (Internet)",
+    "util_gas_label": "Gas",
+    "domo_btn": "Pay utilities via domo.uz",
+    "electric_note_title": "How to pay?",
+    "electric_note_desc": "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
+    "gallery_title": "Photo gallery",
+    "gallery_subtitle": "Photographic chronicle of mosque life and beauty",
+    "dua_title": "Prayer request",
+    "dua_warning_note": "Note: On Fridays from 12:40 to 13:00, prayer requests are temporarily suspended.",
+    "dua_blocked": "It is currently Friday prayer time (12:40 - 13:00). Requests not accepted.",
+    "dua_name_ph": "Your name (optional)",
+    "dua_msg_ph": "Prayer details (E.g. Please pray for my health and recovery)",
+    "dua_submit": "Submit",
+    "dua_success": "Your message has been sent successfully!",
+    "contact_title": "Contact Us",
+    "contact_address_label": "Address",
+    "contact_address_val": "Tuda village, Pop district, Namangan region",
+    "contact_tg_label": "Telegram channel",
+    "read_more": "Read",
+    "card_profile_btn": "Profile",
+    "font_norm": "Standard (100%)",
+    "font_lg": "Large (115%)",
+    "font_xl": "Extra Large (130%)",
+    "bottom_nav_home": "HOME",
+    "bottom_nav_prayers": "PRAYERS",
+    "bottom_nav_charity": "CHARITY",
+    "bottom_nav_gallery": "GALLERY",
+    "bottom_nav_dua": "DUA",
+    "no_news": "No news available...",
+    "no_sponsors": "No information yet.",
+    "no_team": "No team members yet...",
+    "no_gallery": "No images yet...",
+    "updated_prefix": "UPDATED:",
+    "prev_page": "‹ Previous",
+    "next_page": "Next ›",
+    "monthly_calendar_btn": "Monthly Calendar",
+    "monthly_calendar_title": "Monthly Prayer Timetable",
+    "monthly_calendar_sub": "G'oyib Yoronlar Mosque (Tuda village, Pop district)",
+    "th_day": "Day",
+    "th_weekday": "Weekday",
+    "th_hijri": "Hijri",
+    "th_shom_iftor": "Maghrib (Iftar)",
+    "print_btn": "Print",
+    "calendar_coords_note": "Calculated for Pop district, Tuda village (40.8642° N, 71.2271° E).",
+    "hanafi_method": "Hanafi school",
+    "today_badge": "Today"
   }
 };
 
@@ -1575,4 +1619,183 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSponsors();
   loadCharity();
   loadGallery();
+});
+
+
+// ============ MONTHLY PRAYER CALENDAR ============
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth() + 1; // 1-12
+let calDataCache = {};
+
+const calMonthNames = {
+  uz_cy: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  uz_lt: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
+  ru: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+};
+
+const calWeekdayNames = {
+  uz_cy: ["Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"],
+  uz_lt: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
+  ru: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+};
+
+function cleanTime(tStr) {
+  if (!tStr) return '--:--';
+  return tStr.split(' ')[0];
+}
+
+async function fetchAndRenderMonthlyCalendar(year, month) {
+  const displayEl = document.getElementById('cal-current-month-display');
+  const tbody = document.getElementById('monthly-calendar-tbody');
+  if (!tbody) return;
+
+  const mNames = calMonthNames[currentLang] || calMonthNames.uz_cy;
+  if (displayEl) {
+    displayEl.textContent = `${mNames[month - 1]} ${year}`;
+  }
+
+  tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-sm text-on-surface-variant"><span class="spinner inline-block mr-2"></span> Маълумотлар юкланмоқда...</td></tr>';
+
+  const cacheKey = `cal_${year}_${month}`;
+  let days = calDataCache[cacheKey];
+
+  if (!days) {
+    try {
+      const stored = localStorage.getItem(cacheKey);
+      if (stored) {
+        days = JSON.parse(stored);
+        calDataCache[cacheKey] = days;
+      }
+    } catch (e) {}
+  }
+
+  if (!days) {
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/calendar/${year}/${month}?latitude=40.8642127&longitude=71.22714&method=3&school=1`);
+      const json = await res.json();
+      if (json && json.data) {
+        days = json.data;
+        calDataCache[cacheKey] = days;
+        try { localStorage.setItem(cacheKey, JSON.stringify(days)); } catch (e) {}
+      }
+    } catch (err) {
+      console.error("Monthly calendar fetch error:", err);
+      tbody.innerHTML = '<tr><td colspan="9" class="py-6 text-center text-sm text-red-500">Маълумотларни юклаб бўлмади. Интернет алоқасини текширинг.</td></tr>';
+      return;
+    }
+  }
+
+  if (!days || days.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" class="py-6 text-center text-sm text-on-surface-variant">Маълумот мавжуд эмас.</td></tr>';
+    return;
+  }
+
+  const now = new Date();
+  const curY = now.getFullYear();
+  const curM = now.getMonth() + 1;
+  const curD = now.getDate();
+
+  const wNames = calWeekdayNames[currentLang] || calWeekdayNames.uz_cy;
+  const todayBadgeText = translations[currentLang]?.today_badge || "Бугун";
+
+  tbody.innerHTML = '';
+  let todayRowEl = null;
+
+  days.forEach((d) => {
+    const dayNum = parseInt(d.date.gregorian.day, 10);
+    const dateObj = new Date(year, month - 1, dayNum);
+    const weekdayIdx = dateObj.getDay();
+    const isFriday = weekdayIdx === 5; // Juma
+    const isToday = (year === curY && month === curM && dayNum === curD);
+
+    const hijriDay = d.date.hijri ? `${d.date.hijri.day} ${d.date.hijri.month.ar || d.date.hijri.month.en}` : '-';
+
+    const tr = document.createElement('tr');
+    tr.className = isToday 
+      ? 'bg-emerald-deep/15 dark:bg-emerald-deep/40 font-bold border-l-4 border-gold-shimmer text-primary shadow-xs transition-colors' 
+      : (isFriday ? 'bg-primary/5 hover:bg-surface-container-high transition-colors' : 'hover:bg-surface-container transition-colors');
+
+    if (isToday) todayRowEl = tr;
+
+    const timings = d.timings;
+    tr.innerHTML = `
+      <td class="py-2.5 px-3 text-center font-bold">
+        <span class="inline-flex items-center gap-1">
+          <span>${dayNum}</span>
+          ${isToday ? `<span class="text-[9px] bg-gold-shimmer text-black px-1.5 py-0.5 rounded-full font-bold uppercase">${todayBadgeText}</span>` : ''}
+        </span>
+      </td>
+      <td class="py-2.5 px-3 ${isFriday ? 'text-emerald-deep dark:text-emerald-light font-bold flex items-center gap-1' : ''}">
+        ${isFriday ? '<span class="material-symbols-outlined text-[13px]">verified</span>' : ''}
+        <span>${wNames[weekdayIdx]}</span>
+      </td>
+      <td class="py-2.5 px-3 text-on-surface-variant font-medium">${hijriDay}</td>
+      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Fajr)}</td>
+      <td class="py-2.5 px-2.5 text-center text-on-surface-variant tabular-nums">${cleanTime(timings.Sunrise)}</td>
+      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 tabular-nums">${cleanTime(timings.Dhuhr)}</td>
+      <td class="py-2.5 px-2.5 text-center font-bold tabular-nums">${cleanTime(timings.Asr)}</td>
+      <td class="py-2.5 px-2.5 text-center font-bold bg-primary/5 text-gold-metallic dark:text-gold-shimmer tabular-nums">${cleanTime(timings.Maghrib)}</td>
+      <td class="py-2.5 px-2.5 text-center font-bold tabular-nums">${cleanTime(timings.Isha)}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+
+  if (todayRowEl) {
+    setTimeout(() => {
+      todayRowEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 150);
+  }
+}
+
+function openMonthlyCalendarModal() {
+  const modal = document.getElementById('monthly-calendar-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+  history.pushState({ modalOpen: true }, "");
+  fetchAndRenderMonthlyCalendar(calYear, calMonth);
+}
+
+function closeMonthlyCalendarModal() {
+  const modal = document.getElementById('monthly-calendar-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.body.style.overflow = '';
+  if (history.state && history.state.modalOpen) {
+    history.back();
+  }
+}
+
+// Calendar Navigation Events
+document.getElementById('btn-open-monthly')?.addEventListener('click', openMonthlyCalendarModal);
+document.getElementById('cal-close-btn')?.addEventListener('click', closeMonthlyCalendarModal);
+document.getElementById('monthly-calendar-modal')?.addEventListener('click', (e) => {
+  if (e.target === document.getElementById('monthly-calendar-modal')) closeMonthlyCalendarModal();
+});
+
+document.getElementById('cal-prev-month')?.addEventListener('click', () => {
+  calMonth--;
+  if (calMonth < 1) {
+    calMonth = 12;
+    calYear--;
+  }
+  fetchAndRenderMonthlyCalendar(calYear, calMonth);
+});
+
+document.getElementById('cal-next-month')?.addEventListener('click', () => {
+  calMonth++;
+  if (calMonth > 12) {
+    calMonth = 1;
+    calYear++;
+  }
+  fetchAndRenderMonthlyCalendar(calYear, calMonth);
+});
+
+document.getElementById('cal-print-btn')?.addEventListener('click', () => {
+  window.print();
 });
