@@ -1315,16 +1315,15 @@ function renderGallery() {
     const imgUrl = img.url || img.imgUrl || img.image || img.src || '';
     if (!imgUrl) return;
 
-    const isFeatured = (indexInPage === 0 && currentImages.length >= 3);
     const item = document.createElement('div');
-    item.className = `${isFeatured ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'} rounded-2xl overflow-hidden shadow-sm hover:shadow-lg relative group cursor-pointer border border-surface-container-high hover:border-gold-shimmer transition-all duration-300 bg-surface-container-low`;
+    item.className = 'aspect-square rounded-2xl overflow-hidden shadow-xs hover:shadow-md relative group cursor-pointer border border-surface-container-high hover:border-gold-shimmer transition-all duration-300 bg-surface-container-low';
     item.onclick = () => openLightbox(globalIdx);
     
     item.innerHTML = `
       <img src="${imgUrl}" alt="Masjid fotosurati" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-      <div class="absolute inset-0 bg-gradient-to-t from-primary/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 md:p-5">
-        <span class="text-white font-bold text-xs md:text-sm drop-shadow-sm flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-sm md:text-base text-gold-shimmer">zoom_in</span>
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+        <span class="text-white font-bold text-xs flex items-center gap-1 drop-shadow-sm">
+          <span class="material-symbols-outlined text-sm text-gold-shimmer">zoom_in</span>
           <span>${translations[currentLang]?.gallery_title || 'Galereya'}</span>
         </span>
       </div>

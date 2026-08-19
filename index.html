@@ -564,7 +564,7 @@
     </div>
 
     <!-- Gallery Bento/Masonry Grid -->
-    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[220px]">
+    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
       <!-- Loaded dynamically via Firebase -->
     </div>
 
@@ -599,17 +599,25 @@
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="w-full px-margin-mobile md:px-0">
+  <section id="contact" class="w-full px-margin-mobile md:px-0 scroll-mt-24">
     <h2 class="font-headline-md text-headline-md text-primary font-bold mb-3" data-i18n="contact_title">Biz bilan aloqa</h2>
     <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-high shadow-sm grid grid-cols-1 md:grid-cols-2">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2966.5!2d71.0956!3d40.9847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDU5JzA1LjAiTiA3McKwMDUnNDQuMiJF!5e0!3m2!1suz!2suz!4v1234567890"
-        width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy" class="block w-full h-full min-h-[200px]"></iframe>
+      <iframe src="https://maps.google.com/maps?q=40.8642127,71.22714&hl=uz&z=17&output=embed"
+        width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy" class="block w-full h-full min-h-[220px]"></iframe>
       <div class="p-5 md:p-6 space-y-4 flex flex-col justify-center">
         <div class="flex items-start gap-3">
           <span class="material-symbols-outlined text-emerald-deep text-[22px] mt-0.5">location_on</span>
           <div>
             <div class="font-label-caps text-[10px] text-on-surface-variant font-bold" data-i18n="contact_address_label">Manzil</div>
-            <div class="text-sm text-on-surface" data-i18n="contact_address_val">Namangan viloyati, Pop tumani, To'da qishlog'i</div>
+            <div class="text-sm text-on-surface font-medium" data-i18n="contact_address_val">Namangan viloyati, Pop tumani, To'da qishlog'i</div>
+            <div class="flex items-center gap-2 mt-2">
+              <a href="https://www.google.com/maps?q=40.8642127,71.22714" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[11px] font-bold text-primary bg-primary/10 hover:bg-primary/20 px-2.5 py-1 rounded-lg transition-colors border border-primary/20">
+                <span class="material-symbols-outlined text-xs">map</span> Google Maps
+              </a>
+              <a href="https://yandex.uz/maps/?ll=71.22714,40.8642127&z=17&pt=71.22714,40.8642127" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-[11px] font-bold text-primary bg-primary/10 hover:bg-primary/20 px-2.5 py-1 rounded-lg transition-colors border border-primary/20">
+                <span class="material-symbols-outlined text-xs">navigation</span> Yandex Maps
+              </a>
+            </div>
           </div>
         </div>
         <a href="https://t.me/goyibyoronlar" target="_blank" class="flex items-start gap-3 hover:opacity-80 transition-opacity">
@@ -705,6 +713,6 @@
 </div>
 
 <!-- Main Script -->
-<script src="main.js?v=1787119783802"></script>
+<script src="main.js?v=1787121004291"></script>
 </body>
 </html>
