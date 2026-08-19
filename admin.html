@@ -457,7 +457,8 @@
         <div class="fb-warn" id="admin-fb-status"></div>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('tab-stats')">Statistika</div>
+            <div class="tab active" onclick="switchTab('tab-stats')">Statistika
+            <div class="tab" onclick="switchTab('tab-subscriptions')">Obunalar <span id="sub-badge" style="background:#ef4444; color:#fff; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:4px; display:none;">0</span></div></div>
             <div class="tab" onclick="switchTab('tab-prayer')">Vaqtlar</div>
             <div class="tab" onclick="switchTab('tab-news')">Yangiliklar</div>
             <div class="tab" onclick="switchTab('tab-sponsors')">Faxriylar</div>
@@ -634,6 +635,43 @@
                     <label>Karta Raqami</label>
                     <input type="text" id="charity-card" placeholder="Masalan: 8600 0000 0000 0000">
                 </div>
+
+        <!-- OBUNALAR TAB -->
+        <div id="tab-subscriptions" class="tab-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Diniy Matbuotga Obunalar</h2>
+                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">«Hidoyat», «Mo'minalar» jurnallari va «Islom nuri» gazetasiga kelib tushgan arizalar.</p>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button onclick="printSubscriptions()" style="background:rgba(255,255,255,0.08); border:1px solid var(--border); color:var(--text); padding:8px 14px; border-radius:8px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+                        <i class="fas fa-print"></i> Ro'yxatni chop etish
+                    </button>
+                </div>
+            </div>
+
+            <div style="overflow-x:auto; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:4px;">
+                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem; color:var(--text);">
+                    <thead>
+                        <tr style="border-bottom:1px solid var(--border); background:rgba(6,78,59,0.3); color:var(--gold);">
+                            <th style="padding:12px 10px;">Sana</th>
+                            <th style="padding:12px 10px;">Obunachi</th>
+                            <th style="padding:12px 10px;">Telefon</th>
+                            <th style="padding:12px 10px;">Nashrlar</th>
+                            <th style="padding:12px 10px;">Summa</th>
+                            <th style="padding:12px 10px;">Yetkazish & Manzil</th>
+                            <th style="padding:12px 10px;">Holati</th>
+                            <th style="padding:12px 10px; text-align:center;">Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subscriptions-tbody">
+                        <tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);"><i class="fas fa-spinner fa-spin"></i> Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
                 <div class="form-group">
                     <label>Karta Egasi</label>
                     <input type="text" id="charity-owner" placeholder="Masalan: G'oyib Yoronlar Jome Masjidi">
@@ -753,6 +791,7 @@
                 loadList('sponsors');
                 loadGallery();
                 loadDuas();
+                loadSubscriptions();
                 loadCharityInfo();
                 loadStats();
                 loadPrayers();
@@ -828,6 +867,7 @@
             loadList("team");
             loadGallery();
             loadDuas();
+            loadSubscriptions();
         }
 
         let generatedTgCode = null;
@@ -1327,6 +1367,7 @@
                 
                 let duas = [];
                 window.currentDuasForPrint = duas;
+                window.currentDuasForPrint = duas;
                 snap.forEach(child => {
                     duas.push({ key: child.key, ...child.val() });
                 });
@@ -1407,6 +1448,272 @@
                 container.appendChild(tableWrapper);
             });
         }
+    
+        // ============ PRINT WEEKLY DUAS FOR JUMA PRAYER ============
+        function printWeeklyDuas() {
+            const duas = window.currentDuasForPrint || [];
+            if (duas.length === 0) {
+                alert("Hozircha chop etish uchun duo so'rovlari mavjud emas.");
+                return;
+            }
+
+            const printWin = window.open('', '_blank', 'width=900,height=700');
+            if (!printWin) {
+                alert("Iltimos, brauzerda oyna (pop-up) ochishga ruxsat bering.");
+                return;
+            }
+
+            let rowsHtml = '';
+            duas.forEach((d, idx) => {
+                const dateObj = new Date(d.timestamp);
+                const dateStr = dateObj.toLocaleDateString('uz-UZ') + ' ' + dateObj.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+                rowsHtml += `
+                    <tr style="border-bottom: 1px solid #ccc;">
+                        <td style="padding: 10px 8px; text-align: center; font-weight: bold; font-size: 13pt; width: 40px;">${idx + 1}</td>
+                        <td style="padding: 10px 8px; font-weight: bold; font-size: 13pt; width: 180px; color: #064e3b;">${d.name || 'Яширин'}</td>
+                        <td style="padding: 10px 8px; font-size: 12.5pt; line-height: 1.4; color: #111;">${d.message || d.text || d.msg || '-'}</td>
+                        <td style="padding: 10px 8px; text-align: center; font-size: 10pt; color: #555; width: 110px;">${dateStr}</td>
+                    </tr>
+                `;
+            });
+
+            const docHtml = `
+                <!DOCTYPE html>
+                <html lang="uz">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Жамоат Дуо Сўровлари | Ғойиб Ёронлар Жоме Масжиди</title>
+                    <style>
+                        @page { size: A4 portrait; margin: 12mm 12mm 12mm 12mm; }
+                        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; color: #000; background: #fff; margin: 0; padding: 10px; }
+                        .header { text-align: center; border-bottom: 3px double #064e3b; padding-bottom: 12px; margin-bottom: 15px; }
+                        .header h1 { margin: 0 0 4px 0; font-size: 18pt; color: #064e3b; text-transform: uppercase; letter-spacing: 0.5px; }
+                        .header h2 { margin: 0 0 6px 0; font-size: 14pt; color: #333; font-weight: 600; }
+                        .header .meta { font-size: 10.5pt; color: #666; font-style: italic; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                        th { background-color: #064e3b; color: #fff; padding: 10px 8px; font-size: 11.5pt; text-align: left; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        th.center { text-align: center; }
+                        tr:nth-child(even) { background-color: #f9f9f9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        .footer { margin-top: 25px; padding-top: 10px; border-top: 1px solid #ccc; display: flex; justify-content: space-between; font-size: 10pt; color: #555; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>ҒОЙИБ ЁРОНЛАР ЖОМЕ МАСЖИДИ</h1>
+                        <h2>ЖАМОАТНИНГ ДУО СЎРОВЛАРИ РЎЙХАТИ (Жума намози учун)</h2>
+                        <div class="meta">Чоп этилган сана: ${new Date().toLocaleDateString('uz-UZ')} ${new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' })} &bull; Тўда қишлоғи, Поп тумани</div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="center" style="width: 40px;">№</th>
+                                <th style="width: 180px;">Исм (Мурожаатчи)</th>
+                                <th>Дуо мазмуни ва илтимоси</th>
+                                <th class="center" style="width: 110px;">Сана</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <span>Жами дуо сўровлари: <strong>${duas.length} та</strong></span>
+                        <span>Имом-хатиб ва масжид маъмурияти</span>
+                    </div>
+
+                    <script>window.onload = function() { window.print(); };<\/script>
+                </body>
+                </html>
+            `;
+
+            printWin.document.open();
+            printWin.document.write(docHtml);
+            printWin.document.close();
+        }
+
+        window.printWeeklyDuas = printWeeklyDuas;
+
+        // ============ SUBSCRIPTIONS MANAGEMENT ============
+        let allSubscriptions = {};
+
+        function loadSubscriptions() {
+            if (!fbReady || !db) return;
+            db.ref('subscriptions').on('value', snapshot => {
+                allSubscriptions = snapshot.val() || {};
+                renderSubscriptionsTable();
+            });
+        }
+
+        window.loadSubscriptions = loadSubscriptions;
+
+        function renderSubscriptionsTable() {
+            const tbody = document.getElementById('subscriptions-tbody');
+            const badge = document.getElementById('sub-badge');
+            if (!tbody) return;
+
+            const keys = Object.keys(allSubscriptions);
+            let pendingCount = 0;
+
+            if (keys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">Hozircha arizalar mavjud emas.</td></tr>';
+                if (badge) badge.style.display = 'none';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            keys.reverse().forEach(key => {
+                const item = allSubscriptions[key];
+                if (item.status === 'pending') pendingCount++;
+
+                const isDone = item.status === 'confirmed';
+                const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('uz-UZ') : '-';
+                const pubs = Array.isArray(item.publications) ? item.publications.join(', ') : (item.publications || '-');
+                const price = item.total_price ? item.total_price.toLocaleString() + " so'm" : '-';
+
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                tr.innerHTML = `
+                    <td style="padding:12px 10px; color:var(--muted); font-size:0.75rem;">${dateStr}</td>
+                    <td style="padding:12px 10px; font-weight:600; color:var(--text);">${item.name || '-'}</td>
+                    <td style="padding:12px 10px;">
+                        <a href="tel:${item.phone}" style="color:var(--gold); text-decoration:none; font-weight:600;"><i class="fas fa-phone-alt"></i> ${item.phone || '-'}</a>
+                    </td>
+                    <td style="padding:12px 10px; max-width:200px;">${pubs}</td>
+                    <td style="padding:12px 10px; font-weight:700; color:#10b981;">${price}</td>
+                    <td style="padding:12px 10px; font-size:0.8rem; color:var(--muted);">
+                        <div><strong>${item.delivery_method || '-'}</strong></div>
+                        <div>${item.address || ''}</div>
+                    </td>
+                    <td style="padding:12px 10px;">
+                        <span style="font-size:0.75rem; padding:4px 8px; border-radius:6px; font-weight:600; background:${isDone ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}; color:${isDone ? '#10b981' : '#f59e0b'};">
+                            ${isDone ? 'Tasdiqlandi' : 'Kutilmoqda'}
+                        </span>
+                    </td>
+                    <td style="padding:12px 10px; text-align:center;">
+                        <button onclick="toggleSubStatus('${key}', '${item.status}')" title="${isDone ? 'Kutilmoqdaga qaytarish' : 'Tasdiqlash'}" style="background:transparent; border:1px solid ${isDone ? '#10b981' : 'var(--border)'}; color:${isDone ? '#10b981' : 'var(--gold)'}; padding:6px 10px; border-radius:6px; cursor:pointer; margin-right:4px;">
+                            <i class="fas fa-${isDone ? 'check-double' : 'check'}"></i>
+                        </button>
+                        <button onclick="deleteSubscription('${key}')" title="O'chirish" style="background:transparent; border:1px solid rgba(239,68,68,0.4); color:#ef4444; padding:6px 10px; border-radius:6px; cursor:pointer;">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (badge) {
+                if (pendingCount > 0) {
+                    badge.textContent = pendingCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        window.renderSubscriptionsTable = renderSubscriptionsTable;
+
+        async function toggleSubStatus(id, curStatus) {
+            if (!db) return;
+            const newStatus = curStatus === 'confirmed' ? 'pending' : 'confirmed';
+            await db.ref('subscriptions/' + id).update({ status: newStatus });
+        }
+
+        window.toggleSubStatus = toggleSubStatus;
+
+        async function deleteSubscription(id) {
+            if (!confirm("Haqiqatan ham bu arizani o'chirmoqchimisiz?")) return;
+            if (!db) return;
+            await db.ref('subscriptions/' + id).remove();
+        }
+
+        window.deleteSubscription = deleteSubscription;
+
+        function printSubscriptions() {
+            const keys = Object.keys(allSubscriptions);
+            if (keys.length === 0) {
+                alert("Hozircha chop etish uchun obuna arizalari mavjud emas.");
+                return;
+            }
+
+            const printWin = window.open('', '_blank', 'width=950,height=750');
+            if (!printWin) {
+                alert("Iltimos, brauzerda pop-up ochishga ruxsat bering.");
+                return;
+            }
+
+            let rowsHtml = '';
+            keys.forEach((k, idx) => {
+                const item = allSubscriptions[k];
+                const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('uz-UZ') : '-';
+                const pubs = Array.isArray(item.publications) ? item.publications.join(', ') : (item.publications || '-');
+                const price = item.total_price ? item.total_price.toLocaleString() + " so'm" : '-';
+                const statusStr = item.status === 'confirmed' ? 'Tasdiqlandi' : 'Kutilmoqda';
+
+                rowsHtml += `
+                    <tr style="border-bottom: 1px solid #ccc;">
+                        <td style="padding: 8px; text-align: center;">${idx + 1}</td>
+                        <td style="padding: 8px; font-weight: bold;">${item.name || '-'}</td>
+                        <td style="padding: 8px;">${item.phone || '-'}</td>
+                        <td style="padding: 8px;">${pubs}</td>
+                        <td style="padding: 8px; font-weight: bold;">${price}</td>
+                        <td style="padding: 8px;">${item.delivery_method || ''} (${item.address || ''})</td>
+                        <td style="padding: 8px; text-align: center;">${statusStr}</td>
+                        <td style="padding: 8px; text-align: center;">${dateStr}</td>
+                    </tr>
+                `;
+            });
+
+            const docHtml = `
+                <!DOCTYPE html>
+                <html lang="uz">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Диний матбуотга обуначилар рўйхати | Ғойиб Ёронлар Жоме Масжиди</title>
+                    <style>
+                        @page { size: A4 landscape; margin: 10mm; }
+                        body { font-family: 'Segoe UI', Arial, sans-serif; color: #000; background: #fff; margin: 0; padding: 10px; }
+                        h1 { color: #064e3b; margin: 0 0 5px 0; font-size: 16pt; text-align: center; }
+                        h2 { color: #333; margin: 0 0 10px 0; font-size: 12pt; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; }
+                        th { background: #064e3b; color: #fff; padding: 8px; text-align: left; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        tr:nth-child(even) { background: #f9f9f9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                    </style>
+                </head>
+                <body>
+                    <h1>ҒОЙИБ ЁРОНЛАР ЖОМЕ МАСЖИДИ</h1>
+                    <h2>2026 ЙИЛГИ ДИНИЙ МАТБУОТГА ОНЛАЙН ОБУНАЛАР РЎЙХАТИ</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Обуначи</th>
+                                <th>Телефон</th>
+                                <th>Нашрлар</th>
+                                <th>Сумма</th>
+                                <th>Манзил & Етказиш</th>
+                                <th>Ҳолати</th>
+                                <th>Сана</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                    <script>window.onload = function() { window.print(); };<\/script>
+                </body>
+                </html>
+            `;
+
+            printWin.document.open();
+            printWin.document.write(docHtml);
+            printWin.document.close();
+        }
+
+        window.printSubscriptions = printSubscriptions;
+
     </script>
 </body>
 
