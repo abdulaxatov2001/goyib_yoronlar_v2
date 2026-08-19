@@ -79,6 +79,7 @@ const translations = {
     electric_note_title: "Qanday to'lash kerak?",
     electric_note_desc: "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
     gallery_title: "Foto galereya",
+    gallery_subtitle: "Masjid hayoti va go'zalligidan fotolavhalar",
     dua_title: "Jamoatdan duo olish",
     dua_warning_note: "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
     dua_blocked: "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
@@ -104,7 +105,9 @@ const translations = {
     no_sponsors: "Hozircha ma'lumot kiritilmagan.",
     no_team: "Hozircha jamoa a'zolari kiritilmagan...",
     no_gallery: "Hozircha rasmlar kiritilmagan...",
-    updated_prefix: "YANGILANDI:"
+    updated_prefix: "YANGILANDI:",
+    prev_page: "‹ Oldingi",
+    next_page: "Keyingi ›"
   },
   uz_cy: {
     bomdod: "БОМДОД",
@@ -156,6 +159,7 @@ const translations = {
     electric_note_title: "Қандай тўлаш керак?",
     electric_note_desc: "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
     gallery_title: "Фото галерея",
+    gallery_subtitle: "Масжид ҳаёти ва гўзаллигидан фотолавҳалар",
     dua_title: "Жамоатдан дуо олиш",
     dua_warning_note: "Эслатма: Жума куни соат 12:40 дан 13:00 гача дуо юбориш вақтинча тўхтатилади.",
     dua_blocked: "Ҳозир Жума намози вақти (12:40 - 13:00). Дуолар қабул қилинмайди.",
@@ -181,7 +185,9 @@ const translations = {
     no_sponsors: "Ҳозирча маълумот киритилмаган.",
     no_team: "Ҳозирча жамоа аъзолари киритилмаган...",
     no_gallery: "Ҳозирча расмлар киритилмаган...",
-    updated_prefix: "ЯНГИЛАНДИ:"
+    updated_prefix: "ЯНГИЛАНДИ:",
+    prev_page: "‹ Олдинги",
+    next_page: "Кейинги ›"
   },
   ru: {
     bomdod: "ФАДЖР",
@@ -233,6 +239,7 @@ const translations = {
     electric_note_title: "Как оплатить?",
     electric_note_desc: "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
     gallery_title: "Фотогалерея",
+    gallery_subtitle: "Фотохроника жизни и красоты мечети",
     dua_title: "Получить молитву от джамаата",
     dua_warning_note: "Примечание: По пятницам с 12:40 до 13:00 приём молитв приостанавливается.",
     dua_blocked: "Сейчас время Пятничного намаза (12:40 - 13:00). Молитвы не принимаются.",
@@ -258,7 +265,9 @@ const translations = {
     no_sponsors: "Данных пока нет.",
     no_team: "Данных пока нет...",
     no_gallery: "Фотографий пока нет...",
-    updated_prefix: "ОБНОВЛЕНО:"
+    updated_prefix: "ОБНОВЛЕНО:",
+    prev_page: "‹ Назад",
+    next_page: "Вперед ›"
   },
   en: {
     bomdod: "FAJR",
@@ -310,6 +319,7 @@ const translations = {
     electric_note_title: "How to pay?",
     electric_note_desc: "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
     gallery_title: "Photo gallery",
+    gallery_subtitle: "Photographic chronicle of mosque life and beauty",
     dua_title: "Prayer request",
     dua_warning_note: "Note: On Fridays from 12:40 to 13:00, prayer requests are temporarily suspended.",
     dua_blocked: "It is currently Friday prayer time (12:40 - 13:00). Requests not accepted.",
@@ -335,7 +345,9 @@ const translations = {
     no_sponsors: "No information yet.",
     no_team: "No team members yet...",
     no_gallery: "No images yet...",
-    updated_prefix: "UPDATED:"
+    updated_prefix: "UPDATED:",
+    prev_page: "‹ Previous",
+    next_page: "Next ›"
   }
 };
 
@@ -1233,27 +1245,106 @@ function loadCharity() {
   });
 }
 
-// ============ GALLERY ============
+// ============ GALLERY WITH PAGINATION ============
 let allGallery = [];
+let galleryCurrentPage = 1;
+const galleryItemsPerPage = 8;
 let lightboxIdx = 0;
 
 function renderGallery() {
   const container = document.getElementById('gallery-grid');
+  const paginationContainer = document.getElementById('gallery-pagination');
+  const countBadge = document.getElementById('gallery-count-badge');
   if (!container) return;
   container.innerHTML = '';
 
-  if (allGallery.length === 0) {
-    container.innerHTML = `<p class="text-on-surface-variant text-sm col-span-full py-4 text-center">${translations[currentLang]?.no_gallery || "Hozircha rasmlar kiritilmagan..."}</p>`;
+  const total = allGallery.length;
+  if (countBadge) {
+    if (currentLang === 'uz_cy') countBadge.textContent = `${total} та фотосурат`;
+    else if (currentLang === 'ru') countBadge.textContent = `${total} фото`;
+    else if (currentLang === 'en') countBadge.textContent = `${total} photos`;
+    else countBadge.textContent = `${total} ta fotosurat`;
+  }
+
+  if (total === 0) {
+    container.innerHTML = `<p class="text-on-surface-variant text-sm col-span-full py-6 text-center">${translations[currentLang]?.no_gallery || "Hozircha rasmlar kiritilmagan..."}</p>`;
+    if (paginationContainer) paginationContainer.classList.add('hidden');
     return;
   }
 
-  allGallery.forEach((img, idx) => {
+  const totalPages = Math.ceil(total / galleryItemsPerPage);
+  if (galleryCurrentPage > totalPages) galleryCurrentPage = totalPages;
+  if (galleryCurrentPage < 1) galleryCurrentPage = 1;
+
+  const startIndex = (galleryCurrentPage - 1) * galleryItemsPerPage;
+  const endIndex = Math.min(startIndex + galleryItemsPerPage, total);
+  const currentImages = allGallery.slice(startIndex, endIndex);
+
+  currentImages.forEach((img, indexInPage) => {
+    const globalIdx = startIndex + indexInPage;
     const item = document.createElement('div');
-    item.className = 'aspect-square rounded-2xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer transition-all group';
-    item.onclick = () => openLightbox(idx);
-    item.innerHTML = `<img src="${img.url}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>`;
+    item.className = 'aspect-square rounded-2xl overflow-hidden cursor-pointer border border-surface-container-high shadow-sm hover:border-gold-shimmer hover:shadow-md transition-all group relative bg-surface-container-low';
+    item.onclick = () => openLightbox(globalIdx);
+    item.innerHTML = `
+      <img src="${img.url}" alt="Masjid galereya" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
+      <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-[26px] drop-shadow-md">zoom_in</span>
+      </div>
+    `;
     container.appendChild(item);
   });
+
+  // Render pagination
+  if (paginationContainer) {
+    if (totalPages > 1) {
+      paginationContainer.classList.remove('hidden');
+      paginationContainer.innerHTML = '';
+
+      // Prev Button
+      const prevBtn = document.createElement('button');
+      prevBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === 1 ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-sm'}`;
+      prevBtn.innerHTML = translations[currentLang]?.prev_page || '‹ Oldingi';
+      prevBtn.disabled = galleryCurrentPage === 1;
+      prevBtn.onclick = () => {
+        if (galleryCurrentPage > 1) {
+          galleryCurrentPage--;
+          renderGallery();
+          document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      paginationContainer.appendChild(prevBtn);
+
+      // Page numbers
+      for (let p = 1; p <= totalPages; p++) {
+        const pageBtn = document.createElement('button');
+        const isCur = p === galleryCurrentPage;
+        pageBtn.className = `w-8 h-8 rounded-xl font-label-caps text-xs font-bold transition-all ${isCur ? 'bg-primary text-white shadow-sm' : 'bg-surface-container hover:bg-surface-container-high text-on-surface border border-surface-variant'}`;
+        pageBtn.textContent = p;
+        pageBtn.onclick = () => {
+          galleryCurrentPage = p;
+          renderGallery();
+          document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
+        };
+        paginationContainer.appendChild(pageBtn);
+      }
+
+      // Next Button
+      const nextBtn = document.createElement('button');
+      nextBtn.className = `px-3.5 py-1.5 rounded-xl border border-surface-variant text-xs font-bold transition-all ${galleryCurrentPage === totalPages ? 'opacity-40 cursor-not-allowed bg-surface-container-low text-on-surface-variant' : 'bg-surface-container hover:bg-surface-container-high text-primary active:scale-95 shadow-sm'}`;
+      nextBtn.innerHTML = translations[currentLang]?.next_page || 'Keyingi ›';
+      nextBtn.disabled = galleryCurrentPage === totalPages;
+      nextBtn.onclick = () => {
+        if (galleryCurrentPage < totalPages) {
+          galleryCurrentPage++;
+          renderGallery();
+          document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      paginationContainer.appendChild(nextBtn);
+    } else {
+      paginationContainer.classList.add('hidden');
+    }
+  }
 }
 
 function loadGallery() {
@@ -1273,7 +1364,10 @@ window.openLightbox = function(idx) {
   lightboxIdx = idx;
   const modal = document.getElementById('lightbox-modal');
   const img = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  
   img.src = allGallery[idx].url;
+  if (counter) counter.textContent = `${lightboxIdx + 1} / ${allGallery.length}`;
   modal.classList.remove('hidden');
   modal.classList.add('flex');
   document.body.style.overflow = 'hidden';
@@ -1293,6 +1387,8 @@ function closeLightbox() {
 function changeLightbox(dir) {
   lightboxIdx = (lightboxIdx + dir + allGallery.length) % allGallery.length;
   document.getElementById('lightbox-img').src = allGallery[lightboxIdx].url;
+  const counter = document.getElementById('lightbox-counter');
+  if (counter) counter.textContent = `${lightboxIdx + 1} / ${allGallery.length}`;
 }
 
 document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
@@ -1306,6 +1402,20 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') changeLightbox(-1);
   if (e.key === 'ArrowRight') changeLightbox(1);
 });
+
+// Touch Swipe navigation for Lightbox
+let touchStartX = 0;
+let touchEndX = 0;
+const lightboxModal = document.getElementById('lightbox-modal');
+lightboxModal?.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+lightboxModal?.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  if (touchEndX < touchStartX - 50) changeLightbox(1);
+  if (touchEndX > touchStartX + 50) changeLightbox(-1);
+}, { passive: true });
+
 
 // ============ DUA REQUEST FORM + TELEGRAM BOT ============
 document.getElementById('dua-form')?.addEventListener('submit', async (e) => {

@@ -552,11 +552,18 @@
 
   <!-- Gallery Section -->
   <section id="gallery" class="w-full px-margin-mobile md:px-0">
-    <div class="mb-3">
-      <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="gallery_title">Foto galereya</h2>
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="gallery_title">Foto galereya</h2>
+        <p class="text-xs text-on-surface-variant" data-i18n="gallery_subtitle">Masjid hayoti va go'zalligidan fotolavhalar</p>
+      </div>
+      <span id="gallery-count-badge" class="font-label-caps text-[10px] font-bold bg-primary/10 text-emerald-deep dark:text-emerald-light px-3 py-1 rounded-full border border-primary/20"></span>
     </div>
-    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
       <!-- Loaded dynamically via Firebase -->
+    </div>
+    <div id="gallery-pagination" class="mt-5 flex items-center justify-center gap-2 hidden">
+      <!-- Pagination buttons generated dynamically -->
     </div>
   </section>
 
@@ -680,11 +687,14 @@
 </div>
 
 <!-- Lightbox Modal -->
-<div id="lightbox-modal" class="fixed inset-0 z-[2000] bg-black/95 hidden items-center justify-center">
-  <button id="lightbox-close" class="absolute top-4 right-4 text-white text-3xl hover:opacity-70 z-10">✕</button>
-  <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl z-10">‹</button>
-  <img id="lightbox-img" src="" alt="" class="max-w-[90%] max-h-[85vh] rounded-xl object-contain shadow-2xl"/>
-  <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl z-10">›</button>
+<div id="lightbox-modal" class="fixed inset-0 z-[2000] bg-black/95 backdrop-blur-md hidden items-center justify-center p-2 md:p-6">
+  <button id="lightbox-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xl font-bold z-20 transition-colors">✕</button>
+  <div id="lightbox-counter" class="absolute top-4 left-4 font-label-caps text-xs font-bold text-white/80 bg-black/50 px-3 py-1.5 rounded-full border border-white/20 z-20">1 / 1</div>
+  <button id="lightbox-prev" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/10 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl z-20 transition-all active:scale-90">‹</button>
+  <div class="relative max-w-[92vw] max-h-[85vh] flex items-center justify-center">
+    <img id="lightbox-img" src="" alt="Galereya fotosurati" class="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl transition-transform duration-200"/>
+  </div>
+  <button id="lightbox-next" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/10 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl z-20 transition-all active:scale-90">›</button>
 </div>
 
 <!-- Main Script -->
