@@ -1385,13 +1385,22 @@ function renderGallery() {
 }
 
 function loadGallery() {
-  if (!db) return;
+  if (!db) {
+    console.warn('loadGallery: db ulanmagan, 200ms kutib qayta urinilmoqda...');
+    return setTimeout(loadGallery, 200);
+  }
   db.ref('gallery').on('value', snap => {
     allGallery = [];
     if (snap.exists()) {
-      snap.forEach(child => allGallery.push({ id: child.key, ...child.val() }));
+      snap.forEach(child => {
+        const val = child.val();
+        if (val) {
+          allGallery.push({ id: child.key, ...val });
+        }
+      });
       allGallery.reverse();
     }
+    console.log('📸 Firebase-dan yuklangan jami galereya rasmlari:', allGallery.length, allGallery);
     renderGallery();
   });
 }

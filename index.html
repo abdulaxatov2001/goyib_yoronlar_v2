@@ -713,6 +713,13 @@
 </div>
 
 <!-- Main Script -->
-<script src="main.js?v=1787121004291"></script>
+<script>
+      (function() {
+        var s = document.createElement('script');
+        s.src = 'main.js?v=' + Date.now();
+        s.defer = true;
+        document.head.appendChild(s);
+      })();
+    </script>
 </body>
 </html>
