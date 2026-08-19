@@ -152,6 +152,158 @@
 
   .nav-link.active { color: #003527; background-color: #efeeea; font-weight: 700; }
   .dark .nav-link.active { color: #95d3ba; background-color: #1d201e; }
+
+  /* ================= PRINT STYLES (A4 Single Page) ================= */
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 8mm 8mm 8mm 8mm;
+    }
+
+    /* Hide the entire website by default */
+    body {
+      background: #fff !important;
+      color: #000 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    body * {
+      visibility: hidden !important;
+    }
+
+    /* Make ONLY the monthly calendar modal and its table visible */
+    #monthly-calendar-modal,
+    #monthly-calendar-modal * {
+      visibility: visible !important;
+    }
+
+    #monthly-calendar-modal {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      background: #fff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: block !important;
+      overflow: visible !important;
+      z-index: 999999 !important;
+    }
+
+    #monthly-calendar-modal > div {
+      max-width: 100% !important;
+      max-height: none !important;
+      width: 100% !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      color: #000 !important;
+      overflow: visible !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Hide modal buttons and interactive controls */
+    #cal-prev-month,
+    #cal-next-month,
+    #cal-print-btn,
+    #cal-close-btn,
+    #theme-toggle,
+    .btn-donate,
+    nav,
+    header,
+    footer {
+      display: none !important;
+    }
+
+    /* Header styling in print */
+    #monthly-calendar-modal .p-4,
+    #monthly-calendar-modal .p-5 {
+      padding: 4px 0 8px 0 !important;
+      border-bottom: 2px solid #064e3b !important;
+      background: transparent !important;
+    }
+
+    #monthly-calendar-modal h3 {
+      font-size: 16pt !important;
+      color: #064e3b !important;
+      margin-bottom: 2px !important;
+    }
+
+    #cal-current-month-display {
+      font-size: 14pt !important;
+      color: #064e3b !important;
+      border: none !important;
+      background: transparent !important;
+    }
+
+    /* Table Container */
+    #monthly-calendar-table-container {
+      padding: 6px 0 !important;
+      overflow: visible !important;
+    }
+
+    #monthly-calendar-table-container > div {
+      min-width: 100% !important;
+    }
+
+    /* Table Compact Styling to fit strictly on 1 A4 Page */
+    #monthly-calendar-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      font-size: 8.2pt !important;
+      line-height: 1.15 !important;
+      color: #000 !important;
+    }
+
+    #monthly-calendar-table thead tr {
+      background-color: #064e3b !important;
+      color: #fff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    #monthly-calendar-table thead th {
+      padding: 4px 3px !important;
+      color: #fff !important;
+      font-weight: bold !important;
+      border: 1px solid #04382a !important;
+      font-size: 8pt !important;
+      text-align: center !important;
+    }
+
+    #monthly-calendar-table td {
+      padding: 2.8px 3px !important;
+      border: 1px solid #bbb !important;
+      color: #000 !important;
+      background: transparent !important;
+      text-align: center !important;
+    }
+
+    #monthly-calendar-table tbody tr {
+      page-break-inside: avoid !important;
+    }
+
+    #monthly-calendar-table tbody tr:nth-child(even) {
+      background-color: #f7f7f5 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Footer note in print */
+    #monthly-calendar-modal .border-t {
+      padding: 6px 0 0 0 !important;
+      font-size: 7.5pt !important;
+      border-top: 1px solid #ccc !important;
+      background: transparent !important;
+    }
+  }
+
 </style>
 </head>
 <body class="antialiased min-h-screen relative flex flex-col items-center w-full selection:bg-gold-shimmer selection:text-white transition-colors duration-200">
