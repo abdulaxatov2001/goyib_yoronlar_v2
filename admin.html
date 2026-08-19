@@ -735,50 +735,19 @@
 
         <!-- Charity Tab -->
         <div id="tab-charity" class="tab-content">
-            <h2>Xayriya va Ehson ma'lumotlari</h2>
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: var(--gold);">Asosiy Ehson Kartasi</h3>
+            <div style="margin-bottom:20px;">
+                <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Xayriya va Ehson ma'lumotlari</h2>
+                <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">Masjidning asosiy ehson kartasi va kommunal to'lov rekvizitlarini boshqarish.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.04); padding: 22px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: var(--gold); font-size: 1.1rem; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-credit-card"></i> Asosiy Ehson Kartasi
+                </h3>
                 <div class="form-group">
                     <label>Karta Raqami</label>
                     <input type="text" id="charity-card" placeholder="Masalan: 8600 0000 0000 0000">
                 </div>
-
-        <!-- OBUNALAR TAB -->
-        <div id="tab-subscriptions" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-                <div>
-                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Diniy Matbuotga Obunalar</h2>
-                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">«Hidoyat», «Mo'minalar» jurnallari va «Islom nuri» gazetasiga kelib tushgan arizalar.</p>
-                </div>
-                <div style="display:flex; gap:10px;">
-                    <button onclick="printSubscriptions()" style="background:rgba(255,255,255,0.08); border:1px solid var(--border); color:var(--text); padding:8px 14px; border-radius:8px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; gap:6px;">
-                        <i class="fas fa-print"></i> Ro'yxatni chop etish
-                    </button>
-                </div>
-            </div>
-
-            <div style="overflow-x:auto; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:4px;">
-                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem; color:var(--text);">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--border); background:rgba(6,78,59,0.3); color:var(--gold);">
-                            <th style="padding:12px 10px;">Sana</th>
-                            <th style="padding:12px 10px;">Obunachi</th>
-                            <th style="padding:12px 10px;">Telefon</th>
-                            <th style="padding:12px 10px;">Nashrlar</th>
-                            <th style="padding:12px 10px;">Summa</th>
-                            <th style="padding:12px 10px;">Yetkazish & Manzil</th>
-                            <th style="padding:12px 10px;">Holati</th>
-                            <th style="padding:12px 10px; text-align:center;">Amallar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="subscriptions-tbody">
-                        <tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);"><i class="fas fa-spinner fa-spin"></i> Yuklanmoqda...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
                 <div class="form-group">
                     <label>Karta Egasi</label>
                     <input type="text" id="charity-owner" placeholder="Masalan: G'oyib Yoronlar Jome Masjidi">
@@ -789,8 +758,10 @@
                 </div>
             </div>
 
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: var(--gold);">Kommunal To'lovlar</h3>
+            <div style="background: rgba(255,255,255,0.04); padding: 22px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: var(--gold); font-size: 1.1rem; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-bolt"></i> Kommunal To'lovlar (Yuridik hisob raqamlar)
+                </h3>
                 <div class="form-group">
                     <label>Elektr energiyasi (Hisob raqam)</label>
                     <input type="text" id="charity-elec">
@@ -816,8 +787,69 @@
             <div class="msg success" id="charity-ok">Muvaqqiyatli saqlandi!</div>
         </div>
 
-    </div>
+        <!-- OBUNALAR TAB (DINIY MATBUOTGA ARIZALAR) -->
+        <div id="tab-subscriptions" class="tab-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700; display:flex; align-items:center; gap:8px;">
+                        <i class="fas fa-book-open" style="color:var(--gold);"></i> Diniy Matbuotga Obunalar (2026-yil)
+                    </h2>
+                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">«Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига онлайн келиб тушган аризалар.</p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button type="button" onclick="printSubscriptions()" style="background:var(--gold); color:#000; font-weight:700; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; font-size:0.85rem; display:inline-flex; align-items:center; gap:8px; box-shadow:0 2px 8px rgba(212,160,23,0.3); transition:all 0.2s;">
+                        <i class="fas fa-print"></i> Ro'yxatni chop etish
+                    </button>
+                    <button type="button" onclick="loadSubscriptions()" style="background:rgba(255,255,255,0.08); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer; font-size:0.85rem; display:inline-flex; align-items:center; gap:6px;">
+                        <i class="fas fa-sync-alt"></i> Yangilash
+                    </button>
+                </div>
+            </div>
 
+            <!-- Stats Summary Bar for Subscriptions -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
+                <div style="background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Jami arizalar</div>
+                    <div id="sub-stat-total" style="font-size:1.5rem; font-weight:700; color:var(--gold); margin-top:2px;">0 ta</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:14px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Kutilmoqda</div>
+                    <div id="sub-stat-pending" style="font-size:1.5rem; font-weight:700; color:#f59e0b; margin-top:2px;">0 ta</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:14px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Tasdiqlandi</div>
+                    <div id="sub-stat-confirmed" style="font-size:1.5rem; font-weight:700; color:#10b981; margin-top:2px;">0 ta</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(6,78,59,0.5); border-radius:12px; padding:14px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Jami summa</div>
+                    <div id="sub-stat-sum" style="font-size:1.5rem; font-weight:700; color:#34d399; margin-top:2px;">0 so'm</div>
+                </div>
+            </div>
+
+            <!-- Subscriptions Table -->
+            <div style="overflow-x:auto; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:14px; padding:4px;">
+                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem; color:var(--text); min-width:750px;">
+                    <thead>
+                        <tr style="border-bottom:1px solid var(--border); background:rgba(6,78,59,0.4); color:var(--gold);">
+                            <th style="padding:14px 12px; width:40px; text-align:center;">№</th>
+                            <th style="padding:14px 12px; width:100px;">Sana</th>
+                            <th style="padding:14px 12px;">Obunachi</th>
+                            <th style="padding:14px 12px;">Telefon</th>
+                            <th style="padding:14px 12px;">Nashrlar</th>
+                            <th style="padding:14px 12px;">Summa</th>
+                            <th style="padding:14px 12px;">Yetkazish & Manzil</th>
+                            <th style="padding:14px 12px; text-align:center;">Holati</th>
+                            <th style="padding:14px 12px; text-align:center;">Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subscriptions-tbody">
+                        <tr><td colspan="9" style="text-align:center; padding:35px; color:var(--muted);"><i class="fas fa-spinner fa-spin"></i> Arizalar yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
     <script>
         function getFormattedDate() {
             const d = new Date();
@@ -1670,53 +1702,72 @@
 
             const keys = Object.keys(allSubscriptions);
             let pendingCount = 0;
+            let confirmedCount = 0;
+            let totalMoney = 0;
 
             if (keys.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">Hozircha arizalar mavjud emas.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:35px; color:var(--muted);">Hozircha obuna arizalari kelib tushmagan.</td></tr>';
                 if (badge) badge.style.display = 'none';
+                const elTotal = document.getElementById('sub-stat-total'); if (elTotal) elTotal.textContent = '0 ta';
+                const elPend = document.getElementById('sub-stat-pending'); if (elPend) elPend.textContent = '0 ta';
+                const elConf = document.getElementById('sub-stat-confirmed'); if (elConf) elConf.textContent = '0 ta';
+                const elSum = document.getElementById('sub-stat-sum'); if (elSum) elSum.textContent = '0 so\'m';
                 return;
             }
 
             tbody.innerHTML = '';
-            keys.reverse().forEach(key => {
+            keys.reverse().forEach((key, idx) => {
                 const item = allSubscriptions[key];
                 if (item.status === 'pending') pendingCount++;
+                if (item.status === 'confirmed') confirmedCount++;
+                totalMoney += (item.total_price || 0);
 
                 const isDone = item.status === 'confirmed';
                 const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('uz-UZ') : '-';
-                const pubs = Array.isArray(item.publications) ? item.publications.join(', ') : (item.publications || '-');
+                const pubs = Array.isArray(item.publications) ? item.publications.join('<br>• ') : (item.publications || '-');
                 const price = item.total_price ? item.total_price.toLocaleString() + " so'm" : '-';
 
                 const tr = document.createElement('tr');
-                tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+                tr.style.transition = 'background 0.2s';
+                tr.onmouseover = () => tr.style.background = 'rgba(255,255,255,0.03)';
+                tr.onmouseout = () => tr.style.background = 'transparent';
+
                 tr.innerHTML = `
+                    <td style="padding:12px 10px; text-align:center; color:var(--muted); font-weight:bold;">${idx + 1}</td>
                     <td style="padding:12px 10px; color:var(--muted); font-size:0.75rem;">${dateStr}</td>
-                    <td style="padding:12px 10px; font-weight:600; color:var(--text);">${item.name || '-'}</td>
+                    <td style="padding:12px 10px; font-weight:700; color:var(--text);">${item.name || '-'}</td>
                     <td style="padding:12px 10px;">
-                        <a href="tel:${item.phone}" style="color:var(--gold); text-decoration:none; font-weight:600;"><i class="fas fa-phone-alt"></i> ${item.phone || '-'}</a>
+                        <a href="tel:${item.phone}" style="color:var(--gold); text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:5px;"><i class="fas fa-phone-alt" style="font-size:0.8rem;"></i> ${item.phone || '-'}</a>
                     </td>
-                    <td style="padding:12px 10px; max-width:200px;">${pubs}</td>
-                    <td style="padding:12px 10px; font-weight:700; color:#10b981;">${price}</td>
-                    <td style="padding:12px 10px; font-size:0.8rem; color:var(--muted);">
-                        <div><strong>${item.delivery_method || '-'}</strong></div>
+                    <td style="padding:12px 10px; line-height:1.4; color:var(--text); font-size:0.8rem;">• ${pubs}</td>
+                    <td style="padding:12px 10px; font-weight:700; color:#10b981; font-size:0.9rem;">${price}</td>
+                    <td style="padding:12px 10px; font-size:0.8rem; color:var(--muted); line-height:1.3;">
+                        <div style="color:var(--gold); font-weight:600;">${item.delivery_method || '-'}</div>
                         <div>${item.address || ''}</div>
                     </td>
-                    <td style="padding:12px 10px;">
-                        <span style="font-size:0.75rem; padding:4px 8px; border-radius:6px; font-weight:600; background:${isDone ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}; color:${isDone ? '#10b981' : '#f59e0b'};">
-                            ${isDone ? 'Tasdiqlandi' : 'Kutilmoqda'}
+                    <td style="padding:12px 10px; text-align:center;">
+                        <span style="font-size:0.75rem; padding:4px 10px; border-radius:20px; font-weight:700; display:inline-block; background:${isDone ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'}; color:${isDone ? '#10b981' : '#f59e0b'}; border:1px solid ${isDone ? 'rgba(16,185,129,0.4)' : 'rgba(245,158,11,0.4)'};">
+                            ${isDone ? '✓ Tasdiqlandi' : '⏳ Kutilmoqda'}
                         </span>
                     </td>
-                    <td style="padding:12px 10px; text-align:center;">
-                        <button onclick="toggleSubStatus('${key}', '${item.status}')" title="${isDone ? 'Kutilmoqdaga qaytarish' : 'Tasdiqlash'}" style="background:transparent; border:1px solid ${isDone ? '#10b981' : 'var(--border)'}; color:${isDone ? '#10b981' : 'var(--gold)'}; padding:6px 10px; border-radius:6px; cursor:pointer; margin-right:4px;">
-                            <i class="fas fa-${isDone ? 'check-double' : 'check'}"></i>
+                    <td style="padding:12px 10px; text-align:center; white-space:nowrap;">
+                        <button onclick="toggleSubStatus('${key}', '${item.status}')" title="${isDone ? 'Kutilmoqdaga qaytarish' : 'Tasdiqlash'}" style="background:${isDone ? 'rgba(16,185,129,0.15)' : 'rgba(212,160,23,0.15)'}; border:1px solid ${isDone ? '#10b981' : 'var(--border)'}; color:${isDone ? '#10b981' : 'var(--gold)'}; padding:7px 12px; border-radius:8px; cursor:pointer; margin-right:6px; font-weight:600; transition:all 0.2s;">
+                            <i class="fas fa-${isDone ? 'undo' : 'check'}"></i> ${isDone ? 'Bekor' : 'Tasdiqlash'}
                         </button>
-                        <button onclick="deleteSubscription('${key}')" title="O'chirish" style="background:transparent; border:1px solid rgba(239,68,68,0.4); color:#ef4444; padding:6px 10px; border-radius:6px; cursor:pointer;">
+                        <button onclick="deleteSubscription('${key}')" title="O'chirish" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#ef4444; padding:7px 10px; border-radius:8px; cursor:pointer; transition:all 0.2s;">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
+
+            // Update Summary Badges
+            const elTotal = document.getElementById('sub-stat-total'); if (elTotal) elTotal.textContent = `${keys.length} ta`;
+            const elPend = document.getElementById('sub-stat-pending'); if (elPend) elPend.textContent = `${pendingCount} ta`;
+            const elConf = document.getElementById('sub-stat-confirmed'); if (elConf) elConf.textContent = `${confirmedCount} ta`;
+            const elSum = document.getElementById('sub-stat-sum'); if (elSum) elSum.textContent = `${totalMoney.toLocaleString()} so'm`;
 
             if (badge) {
                 if (pendingCount > 0) {
