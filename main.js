@@ -358,10 +358,10 @@ const langMeta = {
   en: { flag: "🇺🇸", name: "English", code: "En" }
 };
 
-let currentLang = localStorage.getItem('selected_language') || 'uz_lt';
+let currentLang = localStorage.getItem('selected_language') || 'uz_cy';
 
 function setLanguage(lang) {
-  if (!translations[lang]) lang = 'uz_lt';
+  if (!translations[lang]) lang = 'uz_cy';
   currentLang = lang;
   localStorage.setItem('selected_language', lang);
 
@@ -397,9 +397,19 @@ function setLanguage(lang) {
   renderNews();
   renderTeam();
   renderSponsors();
+  renderGallery();
   if (window.lastCharityData) renderCharity(window.lastCharityData);
+  updateLastUpdatedText();
   updateClock();
   highlightActivePrayer();
+}
+
+function updateLastUpdatedText() {
+  const lastUpdated = document.getElementById('last-updated');
+  if (!lastUpdated) return;
+  const prefix = translations[currentLang]?.updated_prefix || (currentLang === 'uz_cy' ? "ЯНГИЛАНДИ:" : "YANGILANDI:");
+  const timeVal = lastUpdated.dataset.timestamp || "2026-08-07 08:14";
+  lastUpdated.textContent = `${prefix} ${timeVal}`;
 }
 
 // Custom Language & Font Dropdown Handlers
@@ -698,18 +708,19 @@ function renderMasjidTimes(data) {
 
   const lastUpdated = document.getElementById('last-updated');
   if (lastUpdated) {
-    const prefix = translations[currentLang]?.updated_prefix || "YANGILANDI:";
-    if (data.updated_at) {
-      lastUpdated.textContent = `${prefix} ${data.updated_at}`;
-    } else {
+    let timeStr = data.updated_at || (data.last_update ? data.last_update.replace('T', ' ').substring(0, 16) : '');
+    if (!timeStr) {
       const now = new Date();
       const yr = now.getFullYear();
       const mo = String(now.getMonth() + 1).padStart(2, '0');
       const da = String(now.getDate()).padStart(2, '0');
       const ho = String(now.getHours()).padStart(2, '0');
       const mi = String(now.getMinutes()).padStart(2, '0');
-      lastUpdated.textContent = `${prefix} ${yr}-${mo}-${da} ${ho}:${mi}`;
+      timeStr = `${yr}-${mo}-${da} ${ho}:${mi}`;
     }
+    lastUpdated.dataset.timestamp = timeStr;
+    const prefix = translations[currentLang]?.updated_prefix || (currentLang === 'uz_cy' ? "ЯНГИЛАНДИ:" : "YANGILANDI:");
+    lastUpdated.textContent = `${prefix} ${timeStr}`;
   }
 
   highlightActivePrayer();
