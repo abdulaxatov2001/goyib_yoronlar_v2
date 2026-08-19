@@ -412,18 +412,6 @@
         <span class="material-symbols-outlined text-[16px]">volunteer_activism</span>
         <span data-i18n="nav_donate">Эҳсон</span>
       </a>
-
-      <!-- Telegram Button -->
-      <a href="https://t.me/goyibyoronlar" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#24A1DE] hover:bg-[#1E8BC0] text-white font-label-caps text-xs font-bold shadow-sm hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" title="Telegram kanalimiz">
-        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-        <span>Telegram</span>
-      </a>
-
-      <!-- Admin Panel Button -->
-      <a href="admin.html" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gold-shimmer/15 hover:bg-gold-shimmer/25 border border-gold-shimmer text-primary font-label-caps text-xs font-bold shadow-sm hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" title="Masjid Admin Paneli">
-        <span class="material-symbols-outlined text-[17px] text-gold-shimmer">admin_panel_settings</span>
-        <span>Admin</span>
-      </a>
     </div>
   </div>
 </header>
@@ -501,12 +489,9 @@
     </div>
     
     <!-- Theme toggle for mobile -->
-    <button id="theme-toggle" class="w-8 h-8 rounded-full border border-gold-metallic/60 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" title="Tungi / Kunduzgi rejim">
+    <button id="theme-toggle" class="w-8 h-8 rounded-full border border-gold-metallic/60 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors cursor-pointer" title="Tungi / Kunduzgi rejim">
       <span class="material-symbols-outlined text-[17px] text-gold-shimmer" id="theme-icon">light_mode</span>
     </button>
-    <a href="admin.html" class="w-8 h-8 rounded-full border border-surface-variant bg-surface-container flex items-center justify-center text-on-surface hover:text-gold-shimmer transition-colors" title="Admin Panel">
-      <span class="material-symbols-outlined text-[17px] text-gold-shimmer">admin_panel_settings</span>
-    </a>
   </div>
 </header>
 
@@ -962,6 +947,45 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer with Telegram and Admin Buttons -->
+  <footer class="w-full mt-12 pt-8 pb-12 border-t border-surface-container-high bg-surface-container-lowest/70">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-0 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Left: Mosque Branding -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-emerald-deep flex items-center justify-center text-white shadow-sm">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mosque</span>
+        </div>
+        <div>
+          <div class="font-headline-md text-base text-primary font-bold leading-tight" data-i18n="site_subheading">Ғойиб Ёронлар Жоме Масжиди</div>
+          <div class="text-xs text-on-surface-variant" data-i18n="hero_subtitle">Наманган вилояти, Поп тумани, Тўда қишлоғи</div>
+        </div>
+      </div>
+
+      <!-- Right: Action Buttons (Telegram & Admin) -->
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- Telegram Button -->
+        <a href="https://t.me/goyibyoronlar" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#24A1DE] hover:bg-[#1E8BC0] text-white font-bold text-xs shadow-sm hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" title="Telegram kanalimiz">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+          <span>Telegram kanal</span>
+        </a>
+
+        <!-- Admin Panel Button -->
+        <a href="admin.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-surface-variant hover:border-gold-shimmer text-primary font-bold text-xs shadow-xs hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" title="Masjid Admin Paneli">
+          <span class="material-symbols-outlined text-[18px] text-gold-shimmer">admin_panel_settings</span>
+          <span>Admin Panel</span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-0 mt-6 pt-4 border-t border-surface-container text-center text-xs text-on-surface-variant">
+      © 2026 Ғойиб Ёронлар Жоме Масжиди. Барча ҳуқуқлар ҳимояланган.
+    </div>
+  </footer>
+
+
 
 
   <!-- Monthly Prayer Calendar Modal -->
