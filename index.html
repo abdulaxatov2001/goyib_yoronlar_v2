@@ -707,150 +707,184 @@
     </div>
   </section>
 
-  <!-- Gallery Section -->
-    <!-- Gallery Section (Stitch Redesign) -->
-  
   <!-- Diniy Matbuotga Obuna Section -->
   <section id="subscription" class="w-full px-margin-mobile md:px-0 scroll-mt-24">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 gap-2">
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-gold-shimmer text-2xl">auto_stories</span>
-          <h2 class="font-headline-md text-headline-md text-primary font-bold" data-i18n="sub_title">Диний матбуотга онлайн обуна</h2>
+    <div class="bg-surface-container-lowest dark:bg-[#121815] border border-surface-container-high rounded-2xl p-5 md:p-6 shadow-xs transition-all">
+      <!-- Header / Preview Card Area -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex-grow">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="material-symbols-outlined text-gold-shimmer text-2xl">auto_stories</span>
+            <h2 class="font-headline-md text-base sm:text-lg md:text-xl text-primary font-bold" data-i18n="sub_title">Диний матбуотга онлайн обуна</h2>
+          </div>
+          <p class="font-body-md text-xs sm:text-sm text-slate-gray max-w-2xl leading-relaxed" data-i18n="sub_subtitle">Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.</p>
+          
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="font-label-caps text-[10px] sm:text-[11px] font-bold bg-primary/10 text-emerald-deep dark:text-emerald-light px-3 py-1 rounded-full border border-primary/20" data-i18n="sub_year_badge">2026 ЙИЛГИ ОБУНА</span>
+          </div>
         </div>
-        <p class="font-body-md text-sm text-slate-gray mt-1 max-w-2xl" data-i18n="sub_subtitle">Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.</p>
+
+        <!-- "Obuna bo'lish" Toggle Button -->
+        <div class="flex-shrink-0 self-start md:self-center">
+          <button type="button" id="sub-toggle-btn" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-deep hover:opacity-90 text-white font-bold text-xs sm:text-sm shadow-sm active:scale-95 transition-all cursor-pointer group">
+            <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">edit_document</span>
+            <span id="sub-toggle-btn-text" data-i18n="sub_toggle_btn">Обуна бўлиш</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300" id="sub-toggle-icon">expand_more</span>
+          </button>
+        </div>
       </div>
-      <span class="font-label-caps text-[11px] font-bold bg-primary/10 text-emerald-deep dark:text-emerald-light px-3 py-1 rounded-full border border-primary/20 self-start md:self-auto" data-i18n="sub_year_badge">2026 ЙИЛГИ ОБУНА</span>
+
+      <!-- Expandable / Collapsible Detailed Information & Form -->
+      <div id="sub-details-container" class="hidden mt-6 pt-6 border-t border-surface-container-high space-y-6">
+        
+        <!-- 3 Publication Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          
+          <!-- 1. Hidoyat -->
+          <div class="bg-surface-container-low dark:bg-[#161f1b] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-10 h-10 rounded-xl bg-emerald-deep/10 text-emerald-deep flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-xl text-emerald-deep">menu_book</span>
+                </span>
+                <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-emerald-deep/10 text-emerald-deep rounded-full" data-i18n="sub_card_issues_12">12 ТА СОН</span>
+              </div>
+              <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_hidoyat_name">«Ҳидоят» журнали</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_hidoyat_desc">Диний-маърифий, илмий-адабий ва ижтимоий бош нашр. Оила ва жамият тарбияси учун зарур қўлланма.</p>
+            </div>
+            <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
+              <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
+              <span class="font-bold text-primary text-base font-prayer-time-display">186 000 <span data-i18n="sub_currency">сўм</span></span>
+            </div>
+          </div>
+
+          <!-- 2. Mo'minalar -->
+          <div class="bg-surface-container-low dark:bg-[#161f1b] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-700 flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-xl text-purple-600">spa</span>
+                </span>
+                <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-purple-500/10 text-purple-700 rounded-full" data-i18n="sub_card_issues_12">12 ТА СОН</span>
+              </div>
+              <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_mominalar_name">«Мўминалар» журнали</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_mominalar_desc">Хотин-қизлар ва оила маънавияти, фарзанд тарбияси ва миллий-диний қадриятlar учун махсус журнал.</p>
+            </div>
+            <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
+              <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
+              <span class="font-bold text-primary text-base font-prayer-time-display">186 000 <span data-i18n="sub_currency">сўм</span></span>
+            </div>
+          </div>
+
+          <!-- 3. Islom Nuri -->
+          <div class="bg-surface-container-low dark:bg-[#161f1b] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-xl text-amber-600">newspaper</span>
+                </span>
+                <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-amber-500/10 text-amber-700 rounded-full" data-i18n="sub_card_issues_24">24 ТА СОН</span>
+              </div>
+              <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_islomnuri_name">«Ислом нури» газетаси</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_islomnuri_desc">Долзарб диний мақолалар, савол-жавоблар, фатволар ва муҳим ҳаётий мавзулар ҳақида маълумотлар.</p>
+            </div>
+            <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
+              <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
+              <span class="font-bold text-primary text-base font-prayer-time-display">162 000 <span data-i18n="sub_currency">сўм</span></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Subscription Application Form Box -->
+        <div class="bg-surface-container-low dark:bg-[#161f1b] border border-surface-container-high rounded-2xl p-5 md:p-7 shadow-xs">
+          <h3 class="font-headline-md text-base md:text-lg font-bold text-primary mb-2" data-i18n="sub_form_title">Обуна бўлиш учун ариза қолдириш</h3>
+          <p class="text-xs text-on-surface-variant mb-5" data-i18n="sub_form_desc">Қуйидаги формани тўлдиринг. Масжид маъмурияти сиз билан боғланиб, обунани расмийлаштириб беради.</p>
+
+          <form id="subscription-form" class="space-y-4">
+            <!-- Publication Select Checkboxes -->
+            <div>
+              <label class="block text-xs font-bold text-on-surface mb-2" data-i18n="sub_choose_label">Обуна бўлмоқчи бўлган нашр(лар)ни танланг:</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-lowest dark:bg-[#121815] cursor-pointer select-none transition-all">
+                  <input type="checkbox" name="sub_item" value="sub_hidoyat_name" data-price="186000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" checked onchange="calcSubTotal()">
+                  <div class="text-xs">
+                    <div class="font-bold text-primary" data-i18n="sub_hidoyat_name">«Ҳидоят» журнали</div>
+                    <div class="text-[11px] text-on-surface-variant">186 000 <span data-i18n="sub_currency">сўм</span></div>
+                  </div>
+                </label>
+
+                <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-lowest dark:bg-[#121815] cursor-pointer select-none transition-all">
+                  <input type="checkbox" name="sub_item" value="sub_mominalar_name" data-price="186000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" onchange="calcSubTotal()">
+                  <div class="text-xs">
+                    <div class="font-bold text-primary" data-i18n="sub_mominalar_name">«Мўминалар» журнали</div>
+                    <div class="text-[11px] text-on-surface-variant">186 000 <span data-i18n="sub_currency">сўм</span></div>
+                  </div>
+                </label>
+
+                <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-lowest dark:bg-[#121815] cursor-pointer select-none transition-all">
+                  <input type="checkbox" name="sub_item" value="sub_islomnuri_name" data-price="162000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" onchange="calcSubTotal()">
+                  <div class="text-xs">
+                    <div class="font-bold text-primary" data-i18n="sub_islomnuri_name">«Ислом нури» газетаси</div>
+                    <div class="text-[11px] text-on-surface-variant">162 000 <span data-i18n="sub_currency">сўм</span></div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <!-- Name -->
+              <div>
+                <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_name_label">Исм-фамилиянгиз *</label>
+                <input type="text" id="sub-name" required placeholder="Масалан: Абдуллоҳ Каримов" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_phone_label">Телефон рақамингиз *</label>
+                <input type="tel" id="sub-phone" required placeholder="+998 90 123 45 67" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <!-- Delivery Method -->
+              <div>
+                <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_delivery_label">Етказиб бериш усули</label>
+                <select id="sub-delivery" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
+                  <option value="home_delivery" data-i18n="sub_delivery_opt1">Тўда қишлоғидаги хонадонга етказиш</option>
+                  <option value="mosque_pickup" data-i18n="sub_delivery_opt2">Ғойиб Ёронлар масжидидан олиб кетиш</option>
+                </select>
+              </div>
+
+              <!-- Address -->
+              <div>
+                <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_address_label">Манзил / Мўлжал</label>
+                <input type="text" id="sub-address" placeholder="Масалан: Тўда қ., Истиқлол кўчаси 15-уй" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
+              </div>
+            </div>
+
+            <!-- Total Calculation & Submit -->
+            <div class="pt-3 border-t border-surface-container-high flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-on-surface-variant font-medium" data-i18n="sub_total_label">Жами тўлов:</span>
+                <span id="sub-total-display" class="font-bold text-lg text-primary font-prayer-time-display">186 000 сўм</span>
+              </div>
+
+              <button type="submit" id="sub-submit-btn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-deep text-white font-bold text-xs shadow-sm hover:opacity-90 active:scale-95 transition-all cursor-pointer">
+                <span class="material-symbols-outlined text-base">send</span>
+                <span data-i18n="sub_submit_btn">Обунага ёзилиш</span>
+              </button>
+            </div>
+
+            <div id="sub-success-msg" class="hidden p-3.5 rounded-xl bg-emerald-deep/10 text-emerald-deep dark:text-emerald-light text-xs font-medium text-center border border-emerald-deep/20" data-i18n="sub_success">
+              ✅ Сизнинг аризангиз қабул қилинди! Масжид маъмурияти тез орада сиз билан боғланади.
+            </div>
+          </form>
+        </div>
+
+      </div>
     </div>
-
-    <!-- 3 Publication Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-      
-      <!-- 1. Hidoyat -->
-      <div class="bg-surface-container-lowest dark:bg-[#121815] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="w-10 h-10 rounded-xl bg-emerald-deep/10 text-emerald-deep flex items-center justify-center font-bold">
-              <span class="material-symbols-outlined text-xl text-emerald-deep">menu_book</span>
-            </span>
-            <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-emerald-deep/10 text-emerald-deep rounded-full" data-i18n="sub_card_issues_12">12 ТА СОН</span>
-          </div>
-          <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_hidoyat_name">«Ҳидоят» журнали</h3>
-          <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_hidoyat_desc">Диний-маърифий, илмий-адабий ва ижтимоий бош нашр. Оила ва жамият тарбияси учун зарур қўлланма.</p>
-        </div>
-        <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
-          <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
-          <span class="font-bold text-primary text-base font-prayer-time-display">186 000 <span data-i18n="sub_currency">сўм</span></span>
-        </div>
-      </div>
-
-      <!-- 2. Mo'minalar -->
-      <div class="bg-surface-container-lowest dark:bg-[#121815] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-700 flex items-center justify-center font-bold">
-              <span class="material-symbols-outlined text-xl text-purple-600">spa</span>
-            </span>
-            <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-purple-500/10 text-purple-700 rounded-full" data-i18n="sub_card_issues_12">12 ТА СОН</span>
-          </div>
-          <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_mominalar_name">«Мўминалар» журнали</h3>
-          <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_mominalar_desc">Хотин-қизлар ва оила маънавияти, фарзанд тарбияси ва миллий-диний қадриятlar учун махсус журнал.</p>
-        </div>
-        <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
-          <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
-          <span class="font-bold text-primary text-base font-prayer-time-display">186 000 <span data-i18n="sub_currency">сўм</span></span>
-        </div>
-      </div>
-
-      <!-- 3. Islom Nuri -->
-      <div class="bg-surface-container-lowest dark:bg-[#121815] border border-surface-container-high rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:border-gold-shimmer hover:shadow-md transition-all group">
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold">
-              <span class="material-symbols-outlined text-xl text-amber-600">newspaper</span>
-            </span>
-            <span class="font-label-caps text-[10px] font-bold px-2 py-0.5 bg-amber-500/10 text-amber-700 rounded-full" data-i18n="sub_card_issues_24">24 ТА СОН</span>
-          </div>
-          <h3 class="font-bold text-base text-primary mb-1" data-i18n="sub_islomnuri_name">«Ислом нури» газетаси</h3>
-          <p class="text-xs text-on-surface-variant leading-relaxed mb-3" data-i18n="sub_islomnuri_desc">Долзарб диний мақолалар, савол-жавоблар, фатволар ва муҳим ҳаётий мавзулар ҳақида маълумотлар.</p>
-        </div>
-        <div class="pt-3 border-t border-surface-container-high flex items-baseline justify-between">
-          <span class="text-xs text-on-surface-variant" data-i18n="sub_yearly_label">Йиллик:</span>
-          <span class="font-bold text-primary text-base font-prayer-time-display">162 000 <span data-i18n="sub_currency">сўм</span></span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Subscription Application Form Box -->
-    <div class="bg-surface-container-lowest dark:bg-[#121815] border border-surface-container-high rounded-2xl p-5 md:p-7 shadow-xs">
-      <h3 class="font-headline-md text-base md:text-lg font-bold text-primary mb-2" data-i18n="sub_form_title">Обуна бўлиш учун ариза қолдириш</h3>
-      <p class="text-xs text-on-surface-variant mb-5" data-i18n="sub_form_desc">Қуйидаги формани тўлдиринг. Масжид маъмурияти сиз билан боғланиб, обунани расмийлаштириб беради.</p>
-
-      <form id="subscription-form" class="space-y-4">
-        <!-- Publication Select Checkboxes -->
-        <div>
-          <label class="block text-xs font-bold text-on-surface mb-2" data-i18n="sub_choose_label">Обуна бўлмоқчи бўлган нашр(лар)ни танланг:</label>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-low/50 cursor-pointer select-none transition-all">
-              <input type="checkbox" name="sub_item" value="sub_hidoyat_name" data-price="186000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" checked onchange="calcSubTotal()">
-              <div class="text-xs">
-                <div class="font-bold text-primary" data-i18n="sub_hidoyat_name">«Ҳидоят» журнали</div>
-                <div class="text-[11px] text-on-surface-variant">186 000 <span data-i18n="sub_currency">сўм</span></div>
-              </div>
-            </label>
-
-            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-low/50 cursor-pointer select-none transition-all">
-              <input type="checkbox" name="sub_item" value="sub_mominalar_name" data-price="186000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" onchange="calcSubTotal()">
-              <div class="text-xs">
-                <div class="font-bold text-primary" data-i18n="sub_mominalar_name">«Мўминалар» журнали</div>
-                <div class="text-[11px] text-on-surface-variant">186 000 <span data-i18n="sub_currency">сўм</span></div>
-              </div>
-            </label>
-
-            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-surface-container-high hover:border-gold-shimmer bg-surface-container-low/50 cursor-pointer select-none transition-all">
-              <input type="checkbox" name="sub_item" value="sub_islomnuri_name" data-price="162000" class="sub-checkbox rounded text-emerald-deep focus:ring-emerald-deep w-4 h-4 cursor-pointer" onchange="calcSubTotal()">
-              <div class="text-xs">
-                <div class="font-bold text-primary" data-i18n="sub_islomnuri_name">«Ислом нури» газетаси</div>
-                <div class="text-[11px] text-on-surface-variant">162 000 <span data-i18n="sub_currency">сўм</span></div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          <!-- Name -->
-          <div>
-            <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_name_label">Исм-фамилиянгиз *</label>
-            <input type="text" id="sub-name" required placeholder="Масалан: Абдуллоҳ Каримов" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
-          </div>
-
-          <!-- Phone -->
-          <div>
-            <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_phone_label">Телефон рақамингиз *</label>
-            <input type="tel" id="sub-phone" required placeholder="+998 90 123 45 67" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          <!-- Delivery Method -->
-          <div>
-            <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_delivery_label">Етказиб бериш усули</label>
-            <select id="sub-delivery" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
-              <option value="home_delivery" data-i18n="sub_delivery_opt1">Тўда қишлоғидаги хонадонга етказиш</option>
-              <option value="mosque_pickup" data-i18n="sub_delivery_opt2">Ғойиб Ёронлар масжидидан олиб кетиш</option>
-            </select>
-          </div>
-
-          <!-- Address -->
-          <div>
-            <label class="block text-xs font-bold text-on-surface mb-1.5" data-i18n="sub_address_label">Манзил / Мўлжал</label>
-            <input type="text" id="sub-address" placeholder="Масалан: Тўда қ., Истиқлол кўчаси 15-уй" class="w-full bg-surface-container border border-surface-variant rounded-xl px-3.5 py-2.5 text-xs text-on-surface focus:outline-none focus:border-gold-shimmer">
-          </div>
-        </div>
-
-        <!-- Total Calculation & Submit -->
-        <div class="pt-3 border-t border-surface-container-high flex flex-col sm:flex-row items-center justify-between gap-3">
+  </section>iner-high flex flex-col sm:flex-row items-center justify-between gap-3">
           <div class="flex items-baseline gap-2">
             <span class="text-xs text-on-surface-variant font-medium" data-i18n="sub_total_label">Жами тўлов:</span>
             <span id="sub-total-display" class="font-bold text-lg text-primary font-prayer-time-display">186 000 сўм</span>

@@ -84,6 +84,8 @@ const translations = {
     "sub_title": "Диний матбуотга онлайн обуна",
     "sub_subtitle": "Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.",
     "sub_year_badge": "2026 ЙИЛГИ ОБУНА",
+    "sub_toggle_btn": "Обуна бўлиш",
+    "sub_btn_close": "Ёпиш",
     "sub_card_issues_12": "12 ТА СОН",
     "sub_card_issues_24": "24 ТА СОН",
     "sub_hidoyat_name": "«Ҳидоят» журнали",
@@ -208,6 +210,8 @@ const translations = {
     "sub_title": "Diniy matbuotga onlayn obuna",
     "sub_subtitle": "O'zbekiston musulmonlari idorasining «Hidoyat», «Mo'minalar» jurnallari va «Islom nuri» gazetasiga masjid orqali oson obuna bo'ling.",
     "sub_year_badge": "2026-YILGI OBUNA",
+    "sub_toggle_btn": "Obuna bo'lish",
+    "sub_btn_close": "Yopish",
     "sub_card_issues_12": "12 TA SON",
     "sub_card_issues_24": "24 TA SON",
     "sub_hidoyat_name": "«Hidoyat» jurnali",
@@ -332,6 +336,8 @@ const translations = {
     "sub_title": "Онлайн-подписка на религиозные издания",
     "sub_subtitle": "Оформите подписку на журналы «Хидаят», «Муминалар» и газету «Ислам нури» Управления мусульман Узбекистана через мечеть.",
     "sub_year_badge": "ПОДПИСКА НА 2026 ГОД",
+    "sub_toggle_btn": "Оформить подписку",
+    "sub_btn_close": "Скрыть",
     "sub_card_issues_12": "12 НОМЕРОВ",
     "sub_card_issues_24": "24 НОМЕРА",
     "sub_hidoyat_name": "Журнал «Хидаят»",
@@ -456,6 +462,8 @@ const translations = {
     "sub_title": "Online Subscription to Islamic Publications",
     "sub_subtitle": "Easily subscribe to 'Hidoyat', 'Mo'minalar' magazines and 'Islom Nuri' newspaper via the mosque.",
     "sub_year_badge": "2026 SUBSCRIPTION",
+    "sub_toggle_btn": "Subscribe now",
+    "sub_btn_close": "Close",
     "sub_card_issues_12": "12 ISSUES",
     "sub_card_issues_24": "24 ISSUES",
     "sub_hidoyat_name": "'Hidoyat' Magazine",
@@ -602,6 +610,16 @@ function setLanguage(lang) {
   if (subDelivery && subDelivery.options) {
     if (subDelivery.options[0] && translations[lang].sub_delivery_opt1) subDelivery.options[0].text = translations[lang].sub_delivery_opt1;
     if (subDelivery.options[1] && translations[lang].sub_delivery_opt2) subDelivery.options[1].text = translations[lang].sub_delivery_opt2;
+  }
+
+  // Update subscription toggle button text based on open/closed state
+  const subToggleBtnText = document.getElementById('sub-toggle-btn-text');
+  const subDetails = document.getElementById('sub-details-container');
+  if (subToggleBtnText && subDetails) {
+    const isOpen = !subDetails.classList.contains('hidden');
+    subToggleBtnText.textContent = isOpen 
+      ? (translations[lang]?.sub_btn_close || 'Ёпиш') 
+      : (translations[lang]?.sub_toggle_btn || 'Обуна бўлиш');
   }
 
   // Recalculate subscription total to update currency
@@ -2187,6 +2205,47 @@ document.getElementById('cal-print-btn')?.addEventListener('click', printBeautif
 
 
 // ============ ONLINE SUBSCRIPTION LOGIC ============
+// ============ SUBSCRIPTION TOGGLE & FORM ============
+const subToggleBtn = document.getElementById('sub-toggle-btn');
+const subDetailsContainer = document.getElementById('sub-details-container');
+const subToggleIcon = document.getElementById('sub-toggle-icon');
+const subToggleBtnText = document.getElementById('sub-toggle-btn-text');
+
+if (subToggleBtn && subDetailsContainer) {
+  subToggleBtn.addEventListener('click', () => {
+    const isHidden = subDetailsContainer.classList.contains('hidden');
+    if (isHidden) {
+      subDetailsContainer.classList.remove('hidden');
+      if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
+      if (subToggleBtnText) {
+        subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || 'Ёпиш';
+      }
+      setTimeout(() => {
+        subDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    } else {
+      subDetailsContainer.classList.add('hidden');
+      if (subToggleIcon) subToggleIcon.style.transform = 'rotate(0deg)';
+      if (subToggleBtnText) {
+        subToggleBtnText.textContent = translations[currentLang]?.sub_toggle_btn || 'Обуна бўлиш';
+      }
+    }
+  });
+
+  // Auto-expand if clicked from header nav
+  document.querySelectorAll('a[href="#subscription"]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (subDetailsContainer.classList.contains('hidden')) {
+        subDetailsContainer.classList.remove('hidden');
+        if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
+        if (subToggleBtnText) {
+          subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || 'Ёпиш';
+        }
+      }
+    });
+  });
+}
+
 function calcSubTotal() {
   const checkboxes = document.querySelectorAll('.sub-checkbox:checked');
   let total = 0;
