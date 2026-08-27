@@ -568,16 +568,21 @@ let currentLang = localStorage.getItem('selected_language') || 'uz_cy';
 function setLanguage(lang) {
   if (!translations[lang]) lang = 'uz_cy';
   currentLang = lang;
-  localStorage.setItem('selected_language', lang);
+  try {
+    localStorage.setItem('selected_language', lang);
+  } catch (e) {}
 
   // Update language dropdown labels
-  document.querySelectorAll('.lang-current-flag').forEach(el => el.textContent = langMeta[lang].flag);
-  document.querySelectorAll('.lang-current-name').forEach(el => el.textContent = langMeta[lang].name);
-  document.querySelectorAll('.lang-current-code').forEach(el => el.textContent = langMeta[lang].code);
+  if (langMeta[lang]) {
+    document.querySelectorAll('.lang-current-flag').forEach(el => el.textContent = langMeta[lang].flag);
+    document.querySelectorAll('.lang-current-name').forEach(el => el.textContent = langMeta[lang].name);
+    document.querySelectorAll('.lang-current-code').forEach(el => el.textContent = langMeta[lang].code);
+  }
 
   // Update checkmarks in language menu
   document.querySelectorAll('.lang-menu button').forEach(btn => {
-    const isCur = btn.dataset.lang === lang;
+    const btnLang = btn.getAttribute('data-lang') || btn.dataset.lang;
+    const isCur = btnLang === lang;
     const check = btn.querySelector('.check-icon');
     if (check) check.classList.toggle('hidden', !isCur);
     btn.classList.toggle('bg-surface-container', isCur);
@@ -594,22 +599,22 @@ function setLanguage(lang) {
 
   // Placeholders for Dua & Subscription forms
   const duaName = document.getElementById('dua-name');
-  if (duaName && translations[lang].dua_name_ph) duaName.placeholder = translations[lang].dua_name_ph;
+  if (duaName && translations[lang]?.dua_name_ph) duaName.placeholder = translations[lang].dua_name_ph;
   const duaText = document.getElementById('dua-text');
-  if (duaText && translations[lang].dua_msg_ph) duaText.placeholder = translations[lang].dua_msg_ph;
+  if (duaText && translations[lang]?.dua_msg_ph) duaText.placeholder = translations[lang].dua_msg_ph;
   
   const subName = document.getElementById('sub-name');
-  if (subName && translations[lang].sub_name_ph) subName.placeholder = translations[lang].sub_name_ph;
+  if (subName && translations[lang]?.sub_name_ph) subName.placeholder = translations[lang].sub_name_ph;
   const subPhone = document.getElementById('sub-phone');
-  if (subPhone && translations[lang].sub_phone_ph) subPhone.placeholder = translations[lang].sub_phone_ph;
+  if (subPhone && translations[lang]?.sub_phone_ph) subPhone.placeholder = translations[lang].sub_phone_ph;
   const subAddress = document.getElementById('sub-address');
-  if (subAddress && translations[lang].sub_address_ph) subAddress.placeholder = translations[lang].sub_address_ph;
+  if (subAddress && translations[lang]?.sub_address_ph) subAddress.placeholder = translations[lang].sub_address_ph;
 
   // Delivery select options
   const subDelivery = document.getElementById('sub-delivery');
   if (subDelivery && subDelivery.options) {
-    if (subDelivery.options[0] && translations[lang].sub_delivery_opt1) subDelivery.options[0].text = translations[lang].sub_delivery_opt1;
-    if (subDelivery.options[1] && translations[lang].sub_delivery_opt2) subDelivery.options[1].text = translations[lang].sub_delivery_opt2;
+    if (subDelivery.options[0] && translations[lang]?.sub_delivery_opt1) subDelivery.options[0].text = translations[lang].sub_delivery_opt1;
+    if (subDelivery.options[1] && translations[lang]?.sub_delivery_opt2) subDelivery.options[1].text = translations[lang].sub_delivery_opt2;
   }
 
   // Update subscription toggle button text based on open/closed state
@@ -624,19 +629,25 @@ function setLanguage(lang) {
 
   // Recalculate subscription total to update currency
   if (typeof calcSubTotal === 'function') {
-    calcSubTotal();
+    try { calcSubTotal(); } catch (e) {}
   }
 
-  // Re-render dynamic components with new translations
-  renderNews();
-  renderTeam();
-  renderSponsors();
-  renderGallery();
-  if (window.lastCharityData) renderCharity(window.lastCharityData);
-  updateLastUpdatedText();
-  updateClock();
-  highlightActivePrayer();
+  // Re-render dynamic components with new translations safely
+  try { if (typeof renderNews === 'function') renderNews(); } catch (e) { console.warn('renderNews:', e); }
+  try { if (typeof renderTeam === 'function') renderTeam(); } catch (e) { console.warn('renderTeam:', e); }
+  try { if (typeof renderSponsors === 'function') renderSponsors(); } catch (e) { console.warn('renderSponsors:', e); }
+  try { if (typeof renderGallery === 'function') renderGallery(); } catch (e) { console.warn('renderGallery:', e); }
+  try { if (window.lastCharityData && typeof renderCharity === 'function') renderCharity(window.lastCharityData); } catch (e) { console.warn('renderCharity:', e); }
+  try { updateLastUpdatedText(); } catch (e) {}
+  try { updateClock(); } catch (e) {}
+  try { highlightActivePrayer(); } catch (e) {}
 }
+
+window.setLanguage = setLanguage;
+window.changeLanguage = function(lang) {
+  setLanguage(lang);
+  closeAllDropdowns();
+};
 
 function updateLastUpdatedText() {
   const lastUpdated = document.getElementById('last-updated');
@@ -647,9 +658,38 @@ function updateLastUpdatedText() {
 }
 
 // Custom Language & Font Dropdown Handlers
+window.toggleLangMenu = function(triggerEl, e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  const dropdown = triggerEl.closest('.custom-lang-dropdown');
+  const menu = dropdown?.querySelector('.lang-menu');
+  if (!menu) return;
+  const isHidden = menu.classList.contains('hidden');
+  closeAllDropdowns();
+  if (isHidden) menu.classList.remove('hidden');
+};
+
+window.toggleFontMenu = function(triggerEl, e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  const dropdown = triggerEl.closest('.custom-font-dropdown');
+  const menu = dropdown?.querySelector('.font-menu');
+  if (!menu) return;
+  const isHidden = menu.classList.contains('hidden');
+  closeAllDropdowns();
+  if (isHidden) menu.classList.remove('hidden');
+};
+
 function initCustomDropdowns() {
   // Language dropdowns
   document.querySelectorAll('.custom-lang-dropdown').forEach(dropdown => {
+    if (dropdown._hasInit) return;
+    dropdown._hasInit = true;
+
     const trigger = dropdown.querySelector('.lang-dropdown-trigger');
     const menu = dropdown.querySelector('.lang-menu');
 
@@ -663,14 +703,18 @@ function initCustomDropdowns() {
     menu?.querySelectorAll('button[data-lang]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        setLanguage(btn.dataset.lang);
-        menu.classList.add('hidden');
+        const l = btn.getAttribute('data-lang') || btn.dataset.lang;
+        setLanguage(l);
+        closeAllDropdowns();
       });
     });
   });
 
   // Font Size dropdowns (Select kabi)
   document.querySelectorAll('.custom-font-dropdown').forEach(dropdown => {
+    if (dropdown._hasInit) return;
+    dropdown._hasInit = true;
+
     const trigger = dropdown.querySelector('.font-dropdown-trigger');
     const menu = dropdown.querySelector('.font-menu');
 
@@ -684,19 +728,24 @@ function initCustomDropdowns() {
     menu?.querySelectorAll('button[data-size]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        setFontSize(btn.dataset.size);
-        menu.classList.add('hidden');
+        const s = btn.getAttribute('data-size') || btn.dataset.size;
+        setFontSize(s);
+        closeAllDropdowns();
       });
     });
   });
 
   // Close when clicked outside
-  document.addEventListener('click', closeAllDropdowns);
+  if (!window._hasDropdownGlobalClick) {
+    window._hasDropdownGlobalClick = true;
+    document.addEventListener('click', closeAllDropdowns);
+  }
 }
 
 function closeAllDropdowns() {
   document.querySelectorAll('.lang-menu, .font-menu').forEach(m => m.classList.add('hidden'));
 }
+window.closeAllDropdowns = closeAllDropdowns;
 initCustomDropdowns();
 
 // ============ FONT SIZE SCALING (SELECT FORMAT) ============
@@ -711,7 +760,9 @@ function setFontSize(size) {
   document.documentElement.classList.remove('font-scale-lg', 'font-scale-xl');
   if (size === 'lg') document.documentElement.classList.add('font-scale-lg');
   if (size === 'xl') document.documentElement.classList.add('font-scale-xl');
-  localStorage.setItem('selected_font_size', size);
+  try {
+    localStorage.setItem('selected_font_size', size);
+  } catch (e) {}
 
   // Update label on triggers
   document.querySelectorAll('.font-current-label').forEach(el => {
@@ -720,13 +771,15 @@ function setFontSize(size) {
 
   // Update checkmarks in font menu
   document.querySelectorAll('.font-menu button[data-size]').forEach(btn => {
-    const isCur = btn.dataset.size === size;
+    const s = btn.getAttribute('data-size') || btn.dataset.size;
+    const isCur = s === size;
     const check = btn.querySelector('.font-check');
     if (check) check.classList.toggle('hidden', !isCur);
     btn.classList.toggle('bg-surface-container', isCur);
     btn.classList.toggle('font-bold', isCur);
   });
 }
+window.setFontSize = setFontSize;
 
 const savedFontSize = localStorage.getItem('selected_font_size') || 'norm';
 setFontSize(savedFontSize);

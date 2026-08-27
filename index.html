@@ -354,21 +354,21 @@
     <div class="flex items-center gap-2.5">
       <!-- Desktop Custom Font Sizer Dropdown (Select kabi) -->
       <div class="relative custom-font-dropdown">
-        <button type="button" class="font-dropdown-trigger flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high border border-surface-variant px-2.5 py-1.5 rounded-xl text-xs font-semibold text-on-surface transition-colors shadow-sm" title="Матн ҳажми">
+        <button type="button" onclick="window.toggleFontMenu(this, event)" class="font-dropdown-trigger flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high border border-surface-variant px-2.5 py-1.5 rounded-xl text-xs font-semibold text-on-surface transition-colors shadow-sm cursor-pointer" title="Матн ҳажми">
           <span class="material-symbols-outlined text-[16px] text-gold-shimmer">format_size</span>
           <span class="font-current-label text-xs font-bold">100%</span>
           <span class="material-symbols-outlined text-[15px] opacity-70">expand_more</span>
         </button>
         <div class="font-menu absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest/95 dark:bg-[#1d201e]/95 backdrop-blur-2xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50 animate-fadeIn">
-          <button data-size="norm" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-norm">
+          <button data-size="norm" onclick="window.setFontSize('norm')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-norm cursor-pointer">
             <span data-i18n="font_norm">Одатий (100%)</span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
           </button>
-          <button data-size="lg" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-lg">
+          <button data-size="lg" onclick="window.setFontSize('lg')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-lg cursor-pointer">
             <span data-i18n="font_lg">Катта (115%)</span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
           </button>
-          <button data-size="xl" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-xl">
+          <button data-size="xl" onclick="window.setFontSize('xl')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-xl cursor-pointer">
             <span data-i18n="font_xl">Жуда катта (130%)</span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
           </button>
@@ -377,25 +377,25 @@
 
       <!-- Desktop Custom Language Dropdown (Select kabi) -->
       <div class="relative custom-lang-dropdown">
-        <button type="button" class="lang-dropdown-trigger flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high border border-surface-variant px-3 py-1.5 rounded-xl text-xs font-semibold text-on-surface transition-colors shadow-sm">
+        <button type="button" onclick="window.toggleLangMenu(this, event)" class="lang-dropdown-trigger flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high border border-surface-variant px-3 py-1.5 rounded-xl text-xs font-semibold text-on-surface transition-colors shadow-sm cursor-pointer">
           <span class="lang-current-flag text-sm">🇺🇿</span>
           <span class="lang-current-name font-medium">Ўзбекча</span>
           <span class="material-symbols-outlined text-[16px] opacity-70">expand_more</span>
         </button>
         <div class="lang-menu absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest/95 dark:bg-[#1d201e]/95 backdrop-blur-2xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50 animate-fadeIn">
-          <button data-lang="uz_cy" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+          <button data-lang="uz_cy" onclick="window.changeLanguage('uz_cy')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
             <span class="flex items-center gap-2"><span>🇺🇿</span><span>Ўзбекча (Кирилл)</span></span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
           </button>
-          <button data-lang="uz_lt" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+          <button data-lang="uz_lt" onclick="window.changeLanguage('uz_lt')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
             <span class="flex items-center gap-2"><span>🇺🇿</span><span>O'zbekcha (Lotin)</span></span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
           </button>
-          <button data-lang="ru" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+          <button data-lang="ru" onclick="window.changeLanguage('ru')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
             <span class="flex items-center gap-2"><span>🇷🇺</span><span>Русский</span></span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
           </button>
-          <button data-lang="en" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left">
+          <button data-lang="en" onclick="window.changeLanguage('en')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
             <span class="flex items-center gap-2"><span>🇺🇸</span><span>English</span></span>
             <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
           </button>
@@ -428,21 +428,21 @@
   <div class="flex items-center gap-2">
     <!-- Mobile Font Size Dropdown (Select kabi) -->
     <div class="relative custom-font-dropdown">
-      <button type="button" class="font-dropdown-trigger flex items-center gap-1 bg-surface-container border border-surface-variant rounded-xl px-2 py-1.5 text-xs font-bold text-on-surface shadow-sm active:scale-95 transition-transform" title="Матн ҳажми">
+      <button type="button" onclick="window.toggleFontMenu(this, event)" class="font-dropdown-trigger flex items-center gap-1 bg-surface-container border border-surface-variant rounded-xl px-2 py-1.5 text-xs font-bold text-on-surface shadow-sm active:scale-95 transition-transform cursor-pointer" title="Матн ҳажми">
         <span class="material-symbols-outlined text-[15px] text-gold-shimmer">format_size</span>
         <span class="font-current-label text-[11px]">100%</span>
         <span class="material-symbols-outlined text-[13px] opacity-70">expand_more</span>
       </button>
       <div class="font-menu absolute right-0 top-full mt-2 w-44 bg-surface-container-lowest/95 dark:bg-[#1d201e]/95 backdrop-blur-2xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50 animate-fadeIn">
-        <button data-size="norm" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-norm">
+        <button data-size="norm" onclick="window.setFontSize('norm')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-norm cursor-pointer">
           <span data-i18n="font_norm">Одатий (100%)</span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
         </button>
-        <button data-size="lg" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-lg">
+        <button data-size="lg" onclick="window.setFontSize('lg')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-lg cursor-pointer">
           <span data-i18n="font_lg">Катта (115%)</span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
         </button>
-        <button data-size="xl" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-xl">
+        <button data-size="xl" onclick="window.setFontSize('xl')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-on-surface hover:bg-surface-container transition-colors text-left font-opt-xl cursor-pointer">
           <span data-i18n="font_xl">Жуда катта (130%)</span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep font-check hidden">check</span>
         </button>
@@ -451,34 +451,34 @@
 
     <!-- Mobile Custom Floating Language Dropdown (Select kabi) -->
     <div class="relative custom-lang-dropdown">
-      <button type="button" class="lang-dropdown-trigger flex items-center gap-1 bg-surface-container border border-surface-variant rounded-xl px-2.5 py-1.5 text-xs font-bold text-on-surface shadow-sm active:scale-95 transition-transform">
+      <button type="button" onclick="window.toggleLangMenu(this, event)" class="lang-dropdown-trigger flex items-center gap-1 bg-surface-container border border-surface-variant rounded-xl px-2.5 py-1.5 text-xs font-bold text-on-surface shadow-sm active:scale-95 transition-transform cursor-pointer">
         <span class="lang-current-flag text-sm">🇺🇿</span>
         <span class="lang-current-code text-[11px] uppercase font-bold">Ўз</span>
         <span class="material-symbols-outlined text-[14px] opacity-70">expand_more</span>
       </button>
       <div class="lang-menu absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest/95 dark:bg-[#1d201e]/95 backdrop-blur-2xl border border-surface-container-high shadow-2xl rounded-2xl p-1.5 hidden z-50 animate-fadeIn">
-        <button data-lang="uz_cy" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+        <button data-lang="uz_cy" onclick="window.changeLanguage('uz_cy')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
           <span class="flex items-center gap-2.5">
             <span class="text-base">🇺🇿</span>
             <span>Ўзбекча (Кирилл)</span>
           </span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
         </button>
-        <button data-lang="uz_lt" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+        <button data-lang="uz_lt" onclick="window.changeLanguage('uz_lt')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
           <span class="flex items-center gap-2.5">
             <span class="text-base">🇺🇿</span>
             <span>O'zbekcha (Lotin)</span>
           </span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
         </button>
-        <button data-lang="ru" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+        <button data-lang="ru" onclick="window.changeLanguage('ru')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
           <span class="flex items-center gap-2.5">
             <span class="text-base">🇷🇺</span>
             <span>Русский</span>
           </span>
           <span class="material-symbols-outlined text-[16px] text-emerald-deep check-icon hidden">check</span>
         </button>
-        <button data-lang="en" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left">
+        <button data-lang="en" onclick="window.changeLanguage('en')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors text-left cursor-pointer">
           <span class="flex items-center gap-2.5">
             <span class="text-base">🇺🇸</span>
             <span>English</span>
@@ -1075,23 +1075,23 @@
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 pb-safe bg-surface shadow-lg shadow-[0_-4px_12px_rgba(180,83,9,0.05)] rounded-t-2xl border-t border-surface-container" id="bottom-nav">
   <a class="bottom-nav-item flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 min-w-[60px] active:scale-90 transition-transform duration-150 group" href="#home" data-section="home">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
-    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_home">BOSH</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_home">БОШ</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#prayers" data-section="prayers">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">schedule</span>
-    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_prayers">NAMOZ</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_prayers">НАМОЗ</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#charity" data-section="charity">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">volunteer_activism</span>
-    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_charity">XAYRIYA</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_charity">ХАЙРИЯ</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#gallery" data-section="gallery">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">photo_library</span>
-    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_gallery">GALEREYA</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_gallery">ГАЛЕРЕЯ</span>
   </a>
   <a class="bottom-nav-item flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded-full p-2 min-w-[60px] transition-colors active:scale-90" href="#dua" data-section="dua">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">prayer_times</span>
-    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_dua">DUO</span>
+    <span class="font-label-caps text-[9px] mt-0.5" data-i18n="bottom_nav_dua">ДУО</span>
   </a>
 </nav>
 
