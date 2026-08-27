@@ -1835,8 +1835,10 @@ document.getElementById('dua-form')?.addEventListener('submit', async (e) => {
 });
 
 // ============ STARTUP ============
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   setLanguage(currentLang);
+  initCustomDropdowns();
+  if (typeof initSubscriptionNav === 'function') initSubscriptionNav();
   loadFirebasePrayerTimes();
   loadAladhanApiTimes();
   loadNews();
@@ -1844,7 +1846,13 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSponsors();
   loadCharity();
   loadGallery();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 
 // ============ MONTHLY PRAYER CALENDAR (LOCALIZED & SINGLE-PAGE PRINT) ============
@@ -2206,45 +2214,63 @@ document.getElementById('cal-print-btn')?.addEventListener('click', printBeautif
 
 // ============ ONLINE SUBSCRIPTION LOGIC ============
 // ============ SUBSCRIPTION TOGGLE & FORM ============
-const subToggleBtn = document.getElementById('sub-toggle-btn');
-const subDetailsContainer = document.getElementById('sub-details-container');
-const subToggleIcon = document.getElementById('sub-toggle-icon');
-const subToggleBtnText = document.getElementById('sub-toggle-btn-text');
+function toggleSubscriptionDetails() {
+  const subDetailsContainer = document.getElementById('sub-details-container');
+  const subToggleIcon = document.getElementById('sub-toggle-icon');
+  const subToggleBtnText = document.getElementById('sub-toggle-btn-text');
+  if (!subDetailsContainer) return;
 
-if (subToggleBtn && subDetailsContainer) {
-  subToggleBtn.addEventListener('click', () => {
-    const isHidden = subDetailsContainer.classList.contains('hidden');
-    if (isHidden) {
-      subDetailsContainer.classList.remove('hidden');
-      if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
-      if (subToggleBtnText) {
-        subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || 'Ёпиш';
-      }
-      setTimeout(() => {
-        subDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    } else {
-      subDetailsContainer.classList.add('hidden');
-      if (subToggleIcon) subToggleIcon.style.transform = 'rotate(0deg)';
-      if (subToggleBtnText) {
-        subToggleBtnText.textContent = translations[currentLang]?.sub_toggle_btn || 'Обуна бўлиш';
-      }
+  const isHidden = subDetailsContainer.classList.contains('hidden');
+  if (isHidden) {
+    subDetailsContainer.classList.remove('hidden');
+    if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
+    if (subToggleBtnText) {
+      subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || (currentLang === 'uz_lt' ? 'Yopish' : (currentLang === 'ru' ? 'Скрыть' : (currentLang === 'en' ? 'Close' : 'Ёпиш')));
     }
-  });
+    setTimeout(() => {
+      subDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  } else {
+    subDetailsContainer.classList.add('hidden');
+    if (subToggleIcon) subToggleIcon.style.transform = 'rotate(0deg)';
+    if (subToggleBtnText) {
+      subToggleBtnText.textContent = translations[currentLang]?.sub_toggle_btn || (currentLang === 'uz_lt' ? "Obuna bo'lish" : (currentLang === 'ru' ? 'Оформить подписку' : (currentLang === 'en' ? 'Subscribe now' : 'Обуна бўлиш')));
+    }
+  }
+}
+window.toggleSubscriptionDetails = toggleSubscriptionDetails;
+
+function initSubscriptionNav() {
+  const subToggleBtn = document.getElementById('sub-toggle-btn');
+  if (subToggleBtn && !subToggleBtn._hasClickEvent) {
+    subToggleBtn._hasClickEvent = true;
+    subToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleSubscriptionDetails();
+    });
+  }
 
   // Auto-expand if clicked from header nav
   document.querySelectorAll('a[href="#subscription"]').forEach(link => {
-    link.addEventListener('click', () => {
-      if (subDetailsContainer.classList.contains('hidden')) {
-        subDetailsContainer.classList.remove('hidden');
-        if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
-        if (subToggleBtnText) {
-          subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || 'Ёпиш';
+    if (!link._hasSubEvent) {
+      link._hasSubEvent = true;
+      link.addEventListener('click', () => {
+        const subDetailsContainer = document.getElementById('sub-details-container');
+        const subToggleIcon = document.getElementById('sub-toggle-icon');
+        const subToggleBtnText = document.getElementById('sub-toggle-btn-text');
+        if (subDetailsContainer && subDetailsContainer.classList.contains('hidden')) {
+          subDetailsContainer.classList.remove('hidden');
+          if (subToggleIcon) subToggleIcon.style.transform = 'rotate(180deg)';
+          if (subToggleBtnText) {
+            subToggleBtnText.textContent = translations[currentLang]?.sub_btn_close || 'Ёпиш';
+          }
         }
-      }
-    });
+      });
+    }
   });
 }
+window.initSubscriptionNav = initSubscriptionNav;
+initSubscriptionNav();
 
 function calcSubTotal() {
   const checkboxes = document.querySelectorAll('.sub-checkbox:checked');
