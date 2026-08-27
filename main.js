@@ -29,122 +29,7 @@ function parseMarkdown(text) {
 
 // ============ TRANSLATIONS (100% PURE & COMPLETE) ============
 const translations = {
-  "uz_lt": {
-    "bomdod": "BOMDOD",
-    "quyosh": "QUYOSH",
-    "peshin": "PESHIN",
-    "asr": "ASR",
-    "shom": "SHOM",
-    "xufton": "XUFTON",
-    "official_site_tag": "G'oyib Yoronlar Jome Masjidi Rasmiy Sayti",
-    "site_subheading": "Jome Masjidi",
-    "hero_mosque_tag": "Jome Masjidi",
-    "nav_home": "Bosh sahifa",
-    "nav_prayers": "Namoz",
-    "nav_about": "Namoz",
-    "nav_team": "Jamoa",
-    "nav_news": "Yangiliklar",
-    "nav_sponsors": "Faxriylar",
-    "nav_gallery": "Galereya",
-    "nav_dua": "Duo",
-    "nav_contact": "Aloqa",
-    "nav_donate": "Ehson",
-    "hero_title": "Xush kelibsiz",
-    "hero_title_inline": "G'OYIB YORONLAR",
-    "hero_subtitle": "Namangan viloyati, Pop tumani, To'da qishlog'i",
-    "next_prayer_in": "Keyingi namozga:",
-    "prayers_heading": "Namoz Vaqtlari",
-    "masjid_time_label": "Masjidda o'qilish vaqti",
-    "api_time_label": "Azon",
-    "sunrise_label": "Chiqishi",
-    "location_name": "To'da",
-    "about_title": "Biz haqimizda",
-    "about_text": "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
-    "team_title": "Masjid Jamoasi",
-    "team_subtitle": "Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)",
-    "sponsors_title": "Faxriylar va homiylar",
-    "sponsor_role": "Faxriy / Homiy",
-    "news_title": "Yangiliklar",
-    "charity_title": "Xayriya va ehson",
-    "charity_general": "Umumiy ehson",
-    "charity_general_desc": "Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.",
-    "charity_card_info": "Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.",
-    "charity_utility": "Kommunal to'lovlar",
-    "charity_utility_desc": "Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.",
-    "util_elec_label": "Elektr (yuridik)",
-    "util_water_label": "Suv",
-    "util_wifi_label": "Wi-Fi (Internet)",
-    "util_gas_label": "Gaz",
-    "domo_btn": "domo.uz orqali kommunal to'lash",
-    "electric_note_title": "Qanday to'lash kerak?",
-    "electric_note_desc": "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
-    "gallery_title": "Foto galereya",
-    "gallery_subtitle": "Masjidimizning go'zal me'moriy ko'rinishlari va jamoat tadbirlaridan olingan yorqin lahzalar bilan tanishing.",
-    "dua_title": "Jamoatdan duo olish",
-    "dua_warning_note": "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
-    "dua_blocked": "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
-    "dua_name_ph": "Ismingiz (ixtiyoriy)",
-    "dua_msg_ph": "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
-    "dua_submit": "Yuborish",
-    "dua_success": "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
-    "contact_title": "Biz bilan aloqa",
-    "contact_address_label": "Manzil",
-    "contact_address_val": "Namangan viloyati, Pop tumani, To'da qishlog'i",
-    "contact_tg_label": "Telegram kanal",
-    "read_more": "O'qish",
-    "card_profile_btn": "Profil",
-    "font_norm": "Odatiy (100%)",
-    "font_lg": "Katta (115%)",
-    "font_xl": "Juda katta (130%)",
-    "bottom_nav_home": "BOSH",
-    "bottom_nav_prayers": "NAMOZ",
-    "bottom_nav_charity": "XAYRIYA",
-    "bottom_nav_gallery": "GALEREYA",
-    "bottom_nav_dua": "DUO",
-    "no_news": "Hozircha yangiliklar yo'q...",
-    "no_sponsors": "Hozircha ma'lumot kiritilmagan.",
-    "no_team": "Hozircha jamoa a'zolari kiritilmagan...",
-    "no_gallery": "Hozircha rasmlar kiritilmagan...",
-    "updated_prefix": "YANGILANDI:",
-    "prev_page": "‹ Oldingi",
-    "next_page": "Keyingi ›",
-    "monthly_calendar_btn": "Oylik taqvim",
-    "monthly_calendar_title": "Oylik namoz taqvimi",
-    "monthly_calendar_sub": "G'oyib Yoronlar Jome Masjidi (To'da qishlog'i, Pop tumani)",
-    "th_day": "Kun",
-    "th_weekday": "Hafta kuni",
-    "th_hijri": "Hijriy",
-    "th_shom_iftor": "Shom (Iftor)",
-    "print_btn": "Chop etish",
-    "calendar_coords_note": "Pop tumani, To'da qishlog'i (40.8642° N, 71.2271° E) hisobi bo'yicha.",
-    "hanafi_method": "Hanafiy mazhabi bo'yicha",
-    "today_badge": "Bugun"
-  },
   "uz_cy": {
-    "nav_subscription": "Обуна",
-    "sub_title": "Диний матбуотга онлайн обуна",
-    "sub_subtitle": "Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.",
-    "sub_year_badge": "2026 ЙИЛГИ ОБУНА",
-    "sub_card_issues_12": "12 ТА СОН",
-    "sub_card_issues_24": "24 ТА СОН",
-    "sub_hidoyat_name": "«Ҳидоят» журнали",
-    "sub_hidoyat_desc": "Диний-маърифий, илмий-адабий ва ижтимоий бош нашр. Оила ва жамият тарбияси учун зарур қўлланма.",
-    "sub_mominalar_name": "«Мўминалар» журнали",
-    "sub_mominalar_desc": "Хотин-қизлар ва оила маънавияти, фарзанд тарбияси ва миллий-диний қадриятлар учун махсус журнал.",
-    "sub_islomnuri_name": "«Ислом нури» газетаси",
-    "sub_islomnuri_desc": "Долзарб диний мақолалар, савол-жавоблар, фатволар ва муҳим ҳаётий мавзулар ҳақида маълумотлар.",
-    "sub_yearly_label": "Йиллик:",
-    "sub_form_title": "Обуна бўлиш учун ариза қолдириш",
-    "sub_form_desc": "Қуйидаги формани тўлдиринг. Масжид маъмурияти сиз билан боғланиб, обунани расмийлаштириб беради.",
-    "sub_choose_label": "Обуна бўлмоқчи бўлган нашр(лар)ни танланг:",
-    "sub_name_label": "Исм-фамилиянгиз *",
-    "sub_phone_label": "Телефон рақамингиз *",
-    "sub_delivery_label": "Етказиб бериш усули",
-    "sub_address_label": "Манзил / Мўлжал",
-    "sub_total_label": "Жами тўлов:",
-    "sub_submit_btn": "Обунага ёзилиш",
-    "sub_success": "✅ Сизнинг аризангиз қабул қилинди! Масжид маъмурияти тез орада сиз билан боғланади.",
-    "sub_select_err": "Илтимос, камида битта нашрни танланг!",
     "bomdod": "БОМДОД",
     "quyosh": "ҚУЁШ",
     "peshin": "ПЕШИН",
@@ -156,10 +41,12 @@ const translations = {
     "hero_mosque_tag": "Жоме Масжиди",
     "nav_home": "Бош саҳифа",
     "nav_prayers": "Намоз",
-    "nav_about": "Намоз",
+    "nav_about": "Биз ҳақимизда",
     "nav_team": "Жамоа",
     "nav_news": "Янгиликлар",
     "nav_sponsors": "Фахрийлар",
+    "nav_charity": "Хайрия",
+    "nav_subscription": "Обуна",
     "nav_gallery": "Галерея",
     "nav_dua": "Дуо",
     "nav_contact": "Алоқа",
@@ -173,6 +60,7 @@ const translations = {
     "api_time_label": "Азон",
     "sunrise_label": "Чиқиши",
     "location_name": "Тўда",
+    "hijri_prefix": "Ҳижрий",
     "about_title": "Биз ҳақимизда",
     "about_text": "Ғойиб Ёронлар жоме масжиди Наманган вилояти Поп тумани Тўда қишлоғида жойлашган маскандир. Масжид маҳаллий аҳоли учун нафақат ибодатхона, балки маънавий тарбия ўчоғи ҳам ҳисобланади.",
     "team_title": "Масжид Жамоаси",
@@ -193,6 +81,36 @@ const translations = {
     "domo_btn": "domo.uz орқали коммунал тўлаш",
     "electric_note_title": "Қандай тўлаш керак?",
     "electric_note_desc": "Бу — <strong>юридик ҳисоб рақам</strong>. Payme ёки Click иловасидан тўлаш учун:<br/><strong>Коммунал тўловлар</strong> → <strong>Электр энергияси (юридик)</strong> → ҳисоб рақамни киритинг.",
+    "sub_title": "Диний матбуотга онлайн обуна",
+    "sub_subtitle": "Ўзбекистон мусулмонлари идорасининг «Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига масжид орқали осон обуна бўлинг.",
+    "sub_year_badge": "2026 ЙИЛГИ ОБУНА",
+    "sub_card_issues_12": "12 ТА СОН",
+    "sub_card_issues_24": "24 ТА СОН",
+    "sub_hidoyat_name": "«Ҳидоят» журнали",
+    "sub_hidoyat_desc": "Диний-маърифий, илмий-адабий ва ижтимоий бош нашр. Оила ва жамият тарбияси учун зарур қўлланма.",
+    "sub_mominalar_name": "«Мўминалар» журнали",
+    "sub_mominalar_desc": "Хотин-қизлар ва оила маънавияти, фарзанд тарбияси ва миллий-диний қадриятлар учун махсус журнал.",
+    "sub_islomnuri_name": "«Ислом нури» газетаси",
+    "sub_islomnuri_desc": "Долзарб диний мақолалар, савол-жавоблар, фатволар ва муҳим ҳаётий мавзулар ҳақида маълумотлар.",
+    "sub_yearly_label": "Йиллик:",
+    "sub_form_title": "Обуна бўлиш учун ариза қолдириш",
+    "sub_form_desc": "Қуйидаги формани тўлдиринг. Масжид маъмурияти сиз билан боғланиб, обунани расмийлаштириб беради.",
+    "sub_choose_label": "Обуна бўлмоқчи бўлган нашр(лар)ни танланг:",
+    "sub_name_label": "Исм-фамилиянгиз *",
+    "sub_name_ph": "Масалан: Абдуллоҳ Каримов",
+    "sub_phone_label": "Телефон рақамингиз *",
+    "sub_phone_ph": "+998 90 123 45 67",
+    "sub_delivery_label": "Етказиб бериш усули",
+    "sub_delivery_opt1": "Тўда қишлоғидаги хонадонга етказиш",
+    "sub_delivery_opt2": "Ғойиб Ёронлар масжидидан олиб кетиш",
+    "sub_address_label": "Манзил / Мўлжал",
+    "sub_address_ph": "Масалан: Тўда қ., Истиқлол кўчаси 15-уй",
+    "sub_total_label": "Жами тўлов:",
+    "sub_currency": "сўм",
+    "sub_submit_btn": "Обунага ёзилиш",
+    "sub_sending": "Юборилмоқда...",
+    "sub_success": "✅ Сизнинг аризангиз қабул қилинди! Масжид маъмурияти тез орада сиз билан боғланади.",
+    "sub_select_err": "Илтимос, камида битта нашрни танланг!",
     "gallery_title": "Фото галерея",
     "gallery_subtitle": "Масжидимизнинг гўзал меъморий кўринишлари ва жамоат тадбирларидан олинган ёрқин лаҳзалар билан танишинг.",
     "dua_title": "Жамоатдан дуо олиш",
@@ -235,6 +153,130 @@ const translations = {
     "hanafi_method": "Ҳанафий мазҳаби бўйича",
     "today_badge": "Бугун"
   },
+  "uz_lt": {
+    "bomdod": "BOMDOD",
+    "quyosh": "QUYOSH",
+    "peshin": "PESHIN",
+    "asr": "ASR",
+    "shom": "SHOM",
+    "xufton": "XUFTON",
+    "official_site_tag": "G'oyib Yoronlar Jome Masjidi Rasmiy Sayti",
+    "site_subheading": "Jome Masjidi",
+    "hero_mosque_tag": "Jome Masjidi",
+    "nav_home": "Bosh sahifa",
+    "nav_prayers": "Namoz",
+    "nav_about": "Biz haqimizda",
+    "nav_team": "Jamoa",
+    "nav_news": "Yangiliklar",
+    "nav_sponsors": "Faxriylar",
+    "nav_charity": "Xayriya",
+    "nav_subscription": "Obuna",
+    "nav_gallery": "Galereya",
+    "nav_dua": "Duo",
+    "nav_contact": "Aloqa",
+    "nav_donate": "Ehson",
+    "hero_title": "Xush kelibsiz",
+    "hero_title_inline": "G'OYIB YORONLAR",
+    "hero_subtitle": "Namangan viloyati, Pop tumani, To'da qishlog'i",
+    "next_prayer_in": "Keyingi namozga:",
+    "prayers_heading": "Namoz Vaqtlari",
+    "masjid_time_label": "Masjidda o'qilish vaqti",
+    "api_time_label": "Azon",
+    "sunrise_label": "Chiqishi",
+    "location_name": "To'da",
+    "hijri_prefix": "Hijriy",
+    "about_title": "Biz haqimizda",
+    "about_text": "G'oyib Yoronlar jome masjidi Namangan viloyati Pop tumani To'da qishlog'ida joylashgan maskandir. Masjid mahalliy aholi uchun nafaqat ibodatxona, balki ma'naviy tarbiya o'chog'i ham hisoblanadi.",
+    "team_title": "Masjid Jamoasi",
+    "team_subtitle": "Barcha xodimlar va imom-xatiblar (batafsil ko'rish uchun bosing)",
+    "sponsors_title": "Faxriylar va homiylar",
+    "sponsor_role": "Faxriy / Homiy",
+    "news_title": "Yangiliklar",
+    "charity_title": "Xayriya va ehson",
+    "charity_general": "Umumiy ehson",
+    "charity_general_desc": "Masjid ta'mirlash, tozalik va umumiy ehtiyojlari uchun ehson qiling.",
+    "charity_card_info": "Karta raqamidan nusxa olib, Payme yoki Click ilovalari orqali to'lashingiz mumkin.",
+    "charity_utility": "Kommunal to'lovlar",
+    "charity_utility_desc": "Masjidning oylik kommunal to'lovlarini to'lashda ishtirok eting.",
+    "util_elec_label": "Elektr (yuridik)",
+    "util_water_label": "Suv",
+    "util_wifi_label": "Wi-Fi (Internet)",
+    "util_gas_label": "Gaz",
+    "domo_btn": "domo.uz orqali kommunal to'lash",
+    "electric_note_title": "Qanday to'lash kerak?",
+    "electric_note_desc": "Bu — <strong>yuridik hisob raqam</strong>. Payme yoki Click ilovasidan to'lash uchun:<br/><strong>Kommunal to'lovlar</strong> → <strong>Elektr energiyasi (yuridik)</strong> → hisob raqamni kiriting.",
+    "sub_title": "Diniy matbuotga onlayn obuna",
+    "sub_subtitle": "O'zbekiston musulmonlari idorasining «Hidoyat», «Mo'minalar» jurnallari va «Islom nuri» gazetasiga masjid orqali oson obuna bo'ling.",
+    "sub_year_badge": "2026-YILGI OBUNA",
+    "sub_card_issues_12": "12 TA SON",
+    "sub_card_issues_24": "24 TA SON",
+    "sub_hidoyat_name": "«Hidoyat» jurnali",
+    "sub_hidoyat_desc": "Diniy-ma'rifiy, ilmiy-adabiy va ijtimoiy bosh nashr. Oila va jamiyat tarbiyasi uchun zarur qo'llanma.",
+    "sub_mominalar_name": "«Mo'minalar» jurnali",
+    "sub_mominalar_desc": "Xotin-qizlar va oila ma'naviyati, farzand tarbiyasi va milliy-diniy qadriyatlar uchun maxsus jurnal.",
+    "sub_islomnuri_name": "«Islom nuri» gazetasi",
+    "sub_islomnuri_desc": "Dolzarb diniy maqolalar, savol-javoblar, fatvolar va muhim hayotiy mavzular haqida ma'lumotlar.",
+    "sub_yearly_label": "Yillik:",
+    "sub_form_title": "Obuna bo'lish uchun ariza qoldirish",
+    "sub_form_desc": "Quyidagi shaklni to'ldiring. Masjid ma'muriyati siz bilan bog'lanib, obunani rasmiylashtirib beradi.",
+    "sub_choose_label": "Obuna bo'lmoqchi bo'lgan nashr(lar)ni tanlang:",
+    "sub_name_label": "Ism-familiyangiz *",
+    "sub_name_ph": "Masalan: Abdulloh Karimov",
+    "sub_phone_label": "Telefon raqamingiz *",
+    "sub_phone_ph": "+998 90 123 45 67",
+    "sub_delivery_label": "Yetkazib berish usuli",
+    "sub_delivery_opt1": "To'da qishlog'idagi xonadonga yetkazish",
+    "sub_delivery_opt2": "G'oyib Yoronlar masjididan olib ketish",
+    "sub_address_label": "Manzil / Mo'ljal",
+    "sub_address_ph": "Masalan: To'da q., Istiqlol ko'chasi 15-uy",
+    "sub_total_label": "Jami to'lov:",
+    "sub_currency": "so'm",
+    "sub_submit_btn": "Obunaga yozilish",
+    "sub_sending": "Yuborilmoqda...",
+    "sub_success": "✅ Sizning arizangiz qabul qilindi! Masjid ma'muriyati tez orada siz bilan bog'lanadi.",
+    "sub_select_err": "Iltimos, kamida bitta nashrni tanlang!",
+    "gallery_title": "Foto galereya",
+    "gallery_subtitle": "Masjidimizning go'zal me'moriy ko'rinishlari va jamoat tadbirlaridan olingan yorqin lahzalar bilan tanishing.",
+    "dua_title": "Jamoatdan duo olish",
+    "dua_warning_note": "Eslatma: Juma kuni soat 12:40 dan 13:00 gacha duo yuborish vaqtincha to'xtatiladi.",
+    "dua_blocked": "Hozir Juma namozi vaqti (12:40 - 13:00). Duolar qabul qilinmaydi.",
+    "dua_name_ph": "Ismingiz (ixtiyoriy)",
+    "dua_msg_ph": "Duo mazmuni (Masalan: Bemorman, shifo so'rab duo qilishlarini so'rayman)",
+    "dua_submit": "Yuborish",
+    "dua_success": "Xabaringiz yuborildi. Kelayotgan juma namozida yetkaziladi!",
+    "contact_title": "Biz bilan aloqa",
+    "contact_address_label": "Manzil",
+    "contact_address_val": "Namangan viloyati, Pop tumani, To'da qishlog'i",
+    "contact_tg_label": "Telegram kanal",
+    "read_more": "O'qish",
+    "card_profile_btn": "Profil",
+    "font_norm": "Odatiy (100%)",
+    "font_lg": "Katta (115%)",
+    "font_xl": "Juda katta (130%)",
+    "bottom_nav_home": "BOSH",
+    "bottom_nav_prayers": "NAMOZ",
+    "bottom_nav_charity": "XAYRIYA",
+    "bottom_nav_gallery": "GALEREYA",
+    "bottom_nav_dua": "DUO",
+    "no_news": "Hozircha yangiliklar yo'q...",
+    "no_sponsors": "Hozircha ma'lumot kiritilmagan.",
+    "no_team": "Hozircha jamoa a'zolari kiritilmagan...",
+    "no_gallery": "Hozircha rasmlar kiritilmagan...",
+    "updated_prefix": "YANGILANDI:",
+    "prev_page": "‹ Oldingi",
+    "next_page": "Keyingi ›",
+    "monthly_calendar_btn": "Oylik taqvim",
+    "monthly_calendar_title": "Oylik namoz taqvimi",
+    "monthly_calendar_sub": "G'oyib Yoronlar Jome Masjidi (To'da qishlog'i, Pop tumani)",
+    "th_day": "Kun",
+    "th_weekday": "Hafta kuni",
+    "th_hijri": "Hijriy",
+    "th_shom_iftor": "Shom (Iftor)",
+    "print_btn": "Chop etish",
+    "calendar_coords_note": "Pop tumani, To'da qishlog'i (40.8642° N, 71.2271° E) hisobi bo'yicha.",
+    "hanafi_method": "Hanafiy mazhabi bo'yicha",
+    "today_badge": "Bugun"
+  },
   "ru": {
     "bomdod": "ФАДЖР",
     "quyosh": "ВОСХОД",
@@ -247,10 +289,12 @@ const translations = {
     "hero_mosque_tag": "Соборная Мечеть",
     "nav_home": "Главная",
     "nav_prayers": "Намаз",
-    "nav_about": "Намаз",
+    "nav_about": "О нас",
     "nav_team": "Команда",
     "nav_news": "Новости",
     "nav_sponsors": "Ветераны",
+    "nav_charity": "Благотворительность",
+    "nav_subscription": "Подписка",
     "nav_gallery": "Галерея",
     "nav_dua": "Молитва",
     "nav_contact": "Контакты",
@@ -264,6 +308,7 @@ const translations = {
     "api_time_label": "Азан",
     "sunrise_label": "Восход",
     "location_name": "Туда",
+    "hijri_prefix": "Хиджра",
     "about_title": "О нас",
     "about_text": "Соборная мечеть «Гойиб Ёронлар» расположена в селе Туда Папского района Наманганской области. Мечеть является для местных жителей местом поклонения и духовного воспитания.",
     "team_title": "Команда мечети",
@@ -284,6 +329,36 @@ const translations = {
     "domo_btn": "Оплата коммунальных через domo.uz",
     "electric_note_title": "Как оплатить?",
     "electric_note_desc": "Это — <strong>юридический счёт</strong>. Для оплаты через Payme или Click:<br/><strong>Коммунальные платежи</strong> → <strong>Электроэнергия (юридический)</strong> → введите номер счёта.",
+    "sub_title": "Онлайн-подписка на религиозные издания",
+    "sub_subtitle": "Оформите подписку на журналы «Хидаят», «Муминалар» и газету «Ислам нури» Управления мусульман Узбекистана через мечеть.",
+    "sub_year_badge": "ПОДПИСКА НА 2026 ГОД",
+    "sub_card_issues_12": "12 НОМЕРОВ",
+    "sub_card_issues_24": "24 НОМЕРА",
+    "sub_hidoyat_name": "Журнал «Хидаят»",
+    "sub_hidoyat_desc": "Главное духовно-просветительское, научно-литературное издание. Руководство для воспитания семьи и общества.",
+    "sub_mominalar_name": "Журнал «Муминалар»",
+    "sub_mominalar_desc": "Специальный журнал о духовности женщин и семьи, воспитании детей и национально-религиозных ценностях.",
+    "sub_islomnuri_name": "Газета «Ислам нури»",
+    "sub_islomnuri_desc": "Актуальные религиозные статьи, вопросы и ответы, фетвы и важные жизненные темы.",
+    "sub_yearly_label": "Годовая:",
+    "sub_form_title": "Подать заявку на подписку",
+    "sub_form_desc": "Заполните форму ниже. Администрация мечети свяжется с вами для оформления подписки.",
+    "sub_choose_label": "Выберите издание(я) для подписки:",
+    "sub_name_label": "Ваше имя и фамилия *",
+    "sub_name_ph": "Например: Абдулла Каримов",
+    "sub_phone_label": "Номер телефона *",
+    "sub_phone_ph": "+998 90 123 45 67",
+    "sub_delivery_label": "Способ доставки",
+    "sub_delivery_opt1": "Доставка на дом в селе Туда",
+    "sub_delivery_opt2": "Самовывоз из мечети Гойиб Ёронлар",
+    "sub_address_label": "Адрес / Ориентир",
+    "sub_address_ph": "Например: с. Туда, ул. Истиклол, дом 15",
+    "sub_total_label": "Итого к оплате:",
+    "sub_currency": "сум",
+    "sub_submit_btn": "Оформить подписку",
+    "sub_sending": "Отправка...",
+    "sub_success": "✅ Ваша заявка принята! Администрация мечети свяжется с вами в ближайшее время.",
+    "sub_select_err": "Пожалуйста, выберите хотя бы одно издание!",
     "gallery_title": "Фотогалерея",
     "gallery_subtitle": "Фотохроника жизни и красоты мечети",
     "dua_title": "Получить молитву от джамаата",
@@ -338,10 +413,12 @@ const translations = {
     "hero_mosque_tag": "Jome Mosque",
     "nav_home": "Home",
     "nav_prayers": "Prayers",
-    "nav_about": "Prayers",
+    "nav_about": "About Us",
     "nav_team": "Team",
     "nav_news": "News",
     "nav_sponsors": "Sponsors",
+    "nav_charity": "Charity",
+    "nav_subscription": "Subscription",
     "nav_gallery": "Gallery",
     "nav_dua": "Dua",
     "nav_contact": "Contact",
@@ -355,6 +432,7 @@ const translations = {
     "api_time_label": "Adhan",
     "sunrise_label": "Sunrise",
     "location_name": "Tuda",
+    "hijri_prefix": "Hijri",
     "about_title": "About Us",
     "about_text": "G'oyib Yoronlar Mosque is located in Tuda village, Pop district, Namangan region. It serves the local community as both a place of worship and a spiritual center.",
     "team_title": "Mosque Team",
@@ -375,6 +453,36 @@ const translations = {
     "domo_btn": "Pay utilities via domo.uz",
     "electric_note_title": "How to pay?",
     "electric_note_desc": "This is a <strong>legal account number</strong>. To pay via Payme or Click:<br/><strong>Utility payments</strong> → <strong>Electricity (legal)</strong> → enter the account number.",
+    "sub_title": "Online Subscription to Islamic Publications",
+    "sub_subtitle": "Easily subscribe to 'Hidoyat', 'Mo'minalar' magazines and 'Islom Nuri' newspaper via the mosque.",
+    "sub_year_badge": "2026 SUBSCRIPTION",
+    "sub_card_issues_12": "12 ISSUES",
+    "sub_card_issues_24": "24 ISSUES",
+    "sub_hidoyat_name": "'Hidoyat' Magazine",
+    "sub_hidoyat_desc": "Main religious, educational and cultural magazine. An essential guide for family and spiritual life.",
+    "sub_mominalar_name": "'Mo'minalar' Magazine",
+    "sub_mominalar_desc": "Special magazine focusing on women, family values, child upbringing and spiritual development.",
+    "sub_islomnuri_name": "'Islom Nuri' Newspaper",
+    "sub_islomnuri_desc": "Timely religious articles, Q&A, fatwas and crucial discussions on everyday spiritual life.",
+    "sub_yearly_label": "Yearly:",
+    "sub_form_title": "Apply for Subscription",
+    "sub_form_desc": "Fill out the form below. The mosque administration will contact you to finalize your subscription.",
+    "sub_choose_label": "Select publication(s) to subscribe:",
+    "sub_name_label": "Full Name *",
+    "sub_name_ph": "E.g. Abdulloh Karimov",
+    "sub_phone_label": "Phone Number *",
+    "sub_phone_ph": "+998 90 123 45 67",
+    "sub_delivery_label": "Delivery Method",
+    "sub_delivery_opt1": "Home delivery in Tuda village",
+    "sub_delivery_opt2": "Pick up from G'oyib Yoronlar Mosque",
+    "sub_address_label": "Address / Landmark",
+    "sub_address_ph": "E.g. Tuda village, Istiqlol street, house 15",
+    "sub_total_label": "Total Amount:",
+    "sub_currency": "UZS",
+    "sub_submit_btn": "Submit Subscription",
+    "sub_sending": "Submitting...",
+    "sub_success": "✅ Your application has been received! The mosque administration will contact you soon.",
+    "sub_select_err": "Please select at least one publication!",
     "gallery_title": "Photo gallery",
     "gallery_subtitle": "Photographic chronicle of mosque life and beauty",
     "dua_title": "Prayer request",
@@ -420,10 +528,31 @@ const translations = {
 };
 
 const langMeta = {
-  uz_lt: { flag: "🇺🇿", name: "O'zbekcha", code: "O'z" },
   uz_cy: { flag: "🇺🇿", name: "Ўзбекча", code: "Ўз" },
+  uz_lt: { flag: "🇺🇿", name: "O'zbekcha", code: "O'z" },
   ru: { flag: "🇷🇺", name: "Русский", code: "Ру" },
   en: { flag: "🇺🇸", name: "English", code: "En" }
+};
+
+const calMonthNames = {
+  uz_cy: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  uz_lt: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
+  ru: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+};
+
+const calWeekdayNames = {
+  uz_cy: ["Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"],
+  uz_lt: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
+  ru: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+};
+
+const calHijriMonthNames = {
+  uz_cy: ["Муҳаррам", "Сафар", "Рабиул-аввал", "Рабиус-соний", "Жамодиул-аввал", "Жамодиус-соний", "Ражаб", "Шаъбон", "Рамазон", "Шаввол", "Зулқаъда", "Зулҳижжа"],
+  uz_lt: ["Muharram", "Safar", "Rabiul-avval", "Rabius-soniy", "Jamodiul-avval", "Jamodius-soniy", "Rajab", "Sha'bon", "Ramazon", "Shavvol", "Zulqa'da", "Zulhijja"],
+  ru: ["Мухаррам", "Сафар", "Раби аль-авваль", "Раби ас-сани", "Джумада аль-уля", "Джумада ас-сания", "Раджаб", "Шаабан", "Рамадан", "Шавваль", "Зуль-каада", "Зуль-хиджа"],
+  en: ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"]
 };
 
 let currentLang = localStorage.getItem('selected_language') || 'uz_cy';
@@ -455,11 +584,30 @@ function setLanguage(lang) {
     }
   });
 
-  // Placeholders
-  const nameInput = document.getElementById('dua-name');
-  if (nameInput && translations[lang].dua_name_ph) nameInput.placeholder = translations[lang].dua_name_ph;
-  const textInput = document.getElementById('dua-text');
-  if (textInput && translations[lang].dua_msg_ph) textInput.placeholder = translations[lang].dua_msg_ph;
+  // Placeholders for Dua & Subscription forms
+  const duaName = document.getElementById('dua-name');
+  if (duaName && translations[lang].dua_name_ph) duaName.placeholder = translations[lang].dua_name_ph;
+  const duaText = document.getElementById('dua-text');
+  if (duaText && translations[lang].dua_msg_ph) duaText.placeholder = translations[lang].dua_msg_ph;
+  
+  const subName = document.getElementById('sub-name');
+  if (subName && translations[lang].sub_name_ph) subName.placeholder = translations[lang].sub_name_ph;
+  const subPhone = document.getElementById('sub-phone');
+  if (subPhone && translations[lang].sub_phone_ph) subPhone.placeholder = translations[lang].sub_phone_ph;
+  const subAddress = document.getElementById('sub-address');
+  if (subAddress && translations[lang].sub_address_ph) subAddress.placeholder = translations[lang].sub_address_ph;
+
+  // Delivery select options
+  const subDelivery = document.getElementById('sub-delivery');
+  if (subDelivery && subDelivery.options) {
+    if (subDelivery.options[0] && translations[lang].sub_delivery_opt1) subDelivery.options[0].text = translations[lang].sub_delivery_opt1;
+    if (subDelivery.options[1] && translations[lang].sub_delivery_opt2) subDelivery.options[1].text = translations[lang].sub_delivery_opt2;
+  }
+
+  // Recalculate subscription total to update currency
+  if (typeof calcSubTotal === 'function') {
+    calcSubTotal();
+  }
 
   // Re-render dynamic components with new translations
   renderNews();
@@ -475,7 +623,7 @@ function setLanguage(lang) {
 function updateLastUpdatedText() {
   const lastUpdated = document.getElementById('last-updated');
   if (!lastUpdated) return;
-  const prefix = translations[currentLang]?.updated_prefix || (currentLang === 'uz_cy' ? "ЯНГИЛАНДИ:" : "YANGILANDI:");
+  const prefix = translations[currentLang]?.updated_prefix || (currentLang === 'uz_cy' ? "ЯНГИЛАНДИ:" : (currentLang === 'ru' ? "ОБНОВЛЕНО:" : (currentLang === 'en' ? "UPDATED:" : "YANGILANDI:")));
   const timeVal = lastUpdated.dataset.timestamp || "2026-08-07 08:14";
   lastUpdated.textContent = `${prefix} ${timeVal}`;
 }
@@ -605,24 +753,59 @@ function updateClock() {
 
   const dateEl = document.getElementById('current-date');
   if (dateEl) {
-    const localeMap = { uz_lt: 'uz-UZ', uz_cy: 'uz-Cyrl-UZ', ru: 'ru-RU', en: 'en-US' };
-    const loc = localeMap[currentLang] || 'uz-UZ';
-    dateEl.textContent = now.toLocaleDateString(loc, {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
+    const day = now.getDate();
+    const mIdx = now.getMonth();
+    const wIdx = now.getDay();
+    const mNames = calMonthNames[currentLang] || calMonthNames.uz_cy;
+    const wNames = calWeekdayNames[currentLang] || calWeekdayNames.uz_cy;
+
+    if (currentLang === 'uz_cy') {
+      dateEl.textContent = `${now.getFullYear()} йил ${day} ${mNames[mIdx].toLowerCase()}, ${wNames[wIdx]}`;
+    } else if (currentLang === 'uz_lt') {
+      dateEl.textContent = `${now.getFullYear()}-yil ${day}-${mNames[mIdx].toLowerCase()}, ${wNames[wIdx]}`;
+    } else if (currentLang === 'ru') {
+      dateEl.textContent = `${day} ${mNames[mIdx].toLowerCase()} ${now.getFullYear()} г., ${wNames[wIdx]}`;
+    } else {
+      dateEl.textContent = `${wNames[wIdx]}, ${mNames[mIdx]} ${day}, ${now.getFullYear()}`;
+    }
   }
 
-  // Hijri date
+  // Hijri date with pure localized month names & clear readable structure
   try {
     const hijriEl = document.getElementById('hijri-date');
     if (hijriEl) {
-      const loc = currentLang === 'uz_cy' ? 'uz-Cyrl-UZ-u-ca-islamic' : (currentLang === 'ru' ? 'ru-RU-u-ca-islamic' : (currentLang === 'en' ? 'en-US-u-ca-islamic' : 'uz-UZ-u-ca-islamic'));
-      const hijri = new Intl.DateTimeFormat(loc, {
-        day: 'numeric', month: 'long', year: 'numeric'
-      }).format(now);
-      hijriEl.textContent = hijri.toUpperCase();
+      const hFormatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+      });
+      const parts = hFormatter.formatToParts(now);
+      let hDay = '', hMonthNum = 1, hYear = '';
+      parts.forEach(p => {
+        if (p.type === 'day') hDay = p.value;
+        if (p.type === 'month') hMonthNum = parseInt(p.value, 10) || 1;
+        if (p.type === 'year') hYear = p.value.replace(/[^0-9]/g, '');
+      });
+
+      const hNames = calHijriMonthNames[currentLang] || calHijriMonthNames.uz_cy;
+      const hMonthName = hNames[hMonthNum - 1] || 'Рабиул-аввал';
+
+      let hijriText = '';
+      if (currentLang === 'uz_cy') {
+        hijriText = `Ҳижрий: ${hDay}-${hMonthName}, ${hYear} йил`;
+      } else if (currentLang === 'uz_lt') {
+        hijriText = `Hijriy: ${hDay}-${hMonthName}, ${hYear}-yil`;
+      } else if (currentLang === 'ru') {
+        hijriText = `Хиджра: ${hDay} ${hMonthName}, ${hYear} г.`;
+      } else {
+        hijriText = `Hijri: ${hDay} ${hMonthName}, ${hYear} AH`;
+      }
+
+      hijriEl.textContent = hijriText;
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error("Hijri date format error:", e);
+  }
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -1651,27 +1834,6 @@ let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth() + 1; // 1-12
 let calDataCache = {};
 
-const calMonthNames = {
-  uz_cy: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-  uz_lt: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
-  ru: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-};
-
-const calWeekdayNames = {
-  uz_cy: ["Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"],
-  uz_lt: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
-  ru: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
-  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-};
-
-const calHijriMonthNames = {
-  uz_cy: ["Муҳаррам", "Сафар", "Рабиул-аввал", "Рабиус-соний", "Жамодиул-аввал", "Жамодиус-соний", "Ражаб", "Шаъбон", "Рамазон", "Шаввол", "Зулқаъда", "Зулҳижжа"],
-  uz_lt: ["Muharram", "Safar", "Rabiul-avval", "Rabius-soniy", "Jamodiul-avval", "Jamodius-soniy", "Rajab", "Sha'bon", "Ramazon", "Shavvol", "Zulqa'da", "Zulhijja"],
-  ru: ["Мухаррам", "Сафар", "Раби аль-авваль", "Раби ас-сани", "Джумада аль-уля", "Джумада ас-сания", "Раджаб", "Шаабан", "Рамадан", "Шавваль", "Зуль-каада", "Зуль-хиджа"],
-  en: ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"]
-};
-
 function cleanTime(tStr) {
   if (!tStr) return '--:--';
   return tStr.split(' ')[0];
@@ -2054,13 +2216,16 @@ document.getElementById('subscription-form')?.addEventListener('submit', async (
   const selectedTitles = [];
   let totalSum = 0;
   checkboxes.forEach(cb => {
-    selectedTitles.push(cb.value);
+    const valKey = cb.value;
+    const title = translations[currentLang]?.[valKey] || translations['uz_cy']?.[valKey] || valKey;
+    selectedTitles.push(title);
     totalSum += parseInt(cb.dataset.price, 10) || 0;
   });
 
   const name = document.getElementById('sub-name')?.value.trim();
   const phone = document.getElementById('sub-phone')?.value.trim();
-  const delivery = document.getElementById('sub-delivery')?.value;
+  const deliverySelect = document.getElementById('sub-delivery');
+  const delivery = deliverySelect?.options[deliverySelect.selectedIndex]?.text || deliverySelect?.value || 'Кўрсатилмаган';
   const address = document.getElementById('sub-address')?.value.trim() || 'Кўрсатилмаган';
 
   if (!name || !phone) return;
@@ -2069,7 +2234,7 @@ document.getElementById('subscription-form')?.addEventListener('submit', async (
   const successMsg = document.getElementById('sub-success-msg');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner inline-block mr-2"></span> Юборилмоқда...';
+    btn.innerHTML = `<span class="spinner inline-block mr-2"></span> ${translations[currentLang]?.sub_sending || 'Юборилмоқда...'}`;
   }
 
   const subData = {
@@ -2095,7 +2260,7 @@ document.getElementById('subscription-form')?.addEventListener('submit', async (
         `👤 <b>Ism:</b> ${name}\n` +
         `📞 <b>Telefon:</b> ${phone}\n` +
         `📚 <b>Nashrlar:</b> ${selectedTitles.join(', ')}\n` +
-        `💰 <b>Umumiy summa:</b> ${totalSum.toLocaleString()} so'm\n` +
+        `💰 <b>Umumiy summa:</b> ${totalSum.toLocaleString('ru-RU')} so'm\n` +
         `🚚 <b>Yetkazish:</b> ${delivery}\n` +
         `📍 <b>Manzil:</b> ${address}\n` +
         `⏱ <b>Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}`
@@ -2122,7 +2287,7 @@ document.getElementById('subscription-form')?.addEventListener('submit', async (
 
   } catch (err) {
     console.error("Subscription error:", err);
-    alert(currentLang === 'uz_cy' ? "Хатолик юз берди. Қайта уриниб кўринг." : "Xatolik yuz berdi. Qayta urinib ko'ring.");
+    alert(currentLang === 'uz_cy' ? "Хатолик юз берди. Қайта уриниб кўринг." : (currentLang === 'ru' ? "Произошла ошибка. Пожалуйста, попробуйте еще раз." : "Xatolik yuz berdi. Qayta urinib ko'ring."));
   } finally {
     if (btn) {
       btn.disabled = false;
