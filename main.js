@@ -658,17 +658,24 @@ function updateLastUpdatedText() {
 }
 
 // Custom Language & Font Dropdown Handlers
+function closeAllDropdowns() {
+  document.querySelectorAll('.lang-menu, .font-menu').forEach(m => m.classList.add('hidden'));
+}
+window.closeAllDropdowns = closeAllDropdowns;
+
 window.toggleLangMenu = function(triggerEl, e) {
   if (e) {
     e.preventDefault();
     e.stopPropagation();
   }
-  const dropdown = triggerEl.closest('.custom-lang-dropdown');
+  const dropdown = triggerEl ? triggerEl.closest('.custom-lang-dropdown') : null;
   const menu = dropdown?.querySelector('.lang-menu');
   if (!menu) return;
   const isHidden = menu.classList.contains('hidden');
   closeAllDropdowns();
-  if (isHidden) menu.classList.remove('hidden');
+  if (isHidden) {
+    menu.classList.remove('hidden');
+  }
 };
 
 window.toggleFontMenu = function(triggerEl, e) {
@@ -676,76 +683,27 @@ window.toggleFontMenu = function(triggerEl, e) {
     e.preventDefault();
     e.stopPropagation();
   }
-  const dropdown = triggerEl.closest('.custom-font-dropdown');
+  const dropdown = triggerEl ? triggerEl.closest('.custom-font-dropdown') : null;
   const menu = dropdown?.querySelector('.font-menu');
   if (!menu) return;
   const isHidden = menu.classList.contains('hidden');
   closeAllDropdowns();
-  if (isHidden) menu.classList.remove('hidden');
+  if (isHidden) {
+    menu.classList.remove('hidden');
+  }
 };
 
 function initCustomDropdowns() {
-  // Language dropdowns
-  document.querySelectorAll('.custom-lang-dropdown').forEach(dropdown => {
-    if (dropdown._hasInit) return;
-    dropdown._hasInit = true;
-
-    const trigger = dropdown.querySelector('.lang-dropdown-trigger');
-    const menu = dropdown.querySelector('.lang-menu');
-
-    trigger?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = !menu.classList.contains('hidden');
-      closeAllDropdowns();
-      if (!isOpen) menu.classList.remove('hidden');
-    });
-
-    menu?.querySelectorAll('button[data-lang]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const l = btn.getAttribute('data-lang') || btn.dataset.lang;
-        setLanguage(l);
-        closeAllDropdowns();
-      });
-    });
-  });
-
-  // Font Size dropdowns (Select kabi)
-  document.querySelectorAll('.custom-font-dropdown').forEach(dropdown => {
-    if (dropdown._hasInit) return;
-    dropdown._hasInit = true;
-
-    const trigger = dropdown.querySelector('.font-dropdown-trigger');
-    const menu = dropdown.querySelector('.font-menu');
-
-    trigger?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = !menu.classList.contains('hidden');
-      closeAllDropdowns();
-      if (!isOpen) menu.classList.remove('hidden');
-    });
-
-    menu?.querySelectorAll('button[data-size]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const s = btn.getAttribute('data-size') || btn.dataset.size;
-        setFontSize(s);
-        closeAllDropdowns();
-      });
-    });
-  });
-
-  // Close when clicked outside
+  // Global click outside listener to close open menus
   if (!window._hasDropdownGlobalClick) {
     window._hasDropdownGlobalClick = true;
-    document.addEventListener('click', closeAllDropdowns);
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.custom-lang-dropdown') && !e.target.closest('.custom-font-dropdown')) {
+        closeAllDropdowns();
+      }
+    });
   }
 }
-
-function closeAllDropdowns() {
-  document.querySelectorAll('.lang-menu, .font-menu').forEach(m => m.classList.add('hidden'));
-}
-window.closeAllDropdowns = closeAllDropdowns;
 initCustomDropdowns();
 
 // ============ FONT SIZE SCALING (SELECT FORMAT) ============
@@ -2294,15 +2252,6 @@ function toggleSubscriptionDetails() {
 window.toggleSubscriptionDetails = toggleSubscriptionDetails;
 
 function initSubscriptionNav() {
-  const subToggleBtn = document.getElementById('sub-toggle-btn');
-  if (subToggleBtn && !subToggleBtn._hasClickEvent) {
-    subToggleBtn._hasClickEvent = true;
-    subToggleBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleSubscriptionDetails();
-    });
-  }
-
   // Auto-expand if clicked from header nav
   document.querySelectorAll('a[href="#subscription"]').forEach(link => {
     if (!link._hasSubEvent) {
