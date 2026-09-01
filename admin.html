@@ -1072,19 +1072,25 @@
         // --- STATISTIKA (Analytics) funksiyasi ---
         function loadStats() {
             if (!db) return;
-            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
             const statsRef = db.ref('statistics');
             
-            statsRef.once('value').then(snapshot => {
+            statsRef.on('value', snapshot => {
+                const elTotal = document.getElementById('stat-total');
+                const elToday = document.getElementById('stat-today');
                 if (snapshot.exists()) {
-                    const data = snapshot.val();
+                    const data = snapshot.val() || {};
                     const total = data.total_visits || 0;
-                    const todays = data.daily_visits && data.daily_visits[today] ? data.daily_visits[today] : 0;
+                    const todays = (data.daily_visits && data.daily_visits[today]) ? data.daily_visits[today] : 0;
                     
-                    document.getElementById('stat-total').textContent = total;
-                    document.getElementById('stat-today').textContent = todays;
+                    if (elTotal) elTotal.textContent = total.toLocaleString('ru-RU').replace(/,/g, ' ');
+                    if (elToday) elToday.textContent = todays.toLocaleString('ru-RU').replace(/,/g, ' ');
+                } else {
+                    if (elTotal) elTotal.textContent = '0';
+                    if (elToday) elToday.textContent = '0';
                 }
-            }).catch(e => console.error("Stats load err:", e));
+            });
         }
 
         function doLogout() { 

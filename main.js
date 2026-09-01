@@ -940,6 +940,9 @@ function initFirebaseClient(retries = 20) {
     db = firebase.database();
     console.log('✅ Firebase muvaffaqiyatli ulandi va ma\x27lumotlar yuklanmoqda...');
     
+    // Tashriflar statistikasini yozish
+    recordVisitorHit();
+
     // Barcha ma'lumotlarni yuklash
     loadFirebasePrayerTimes();
     loadNews();
@@ -949,6 +952,31 @@ function initFirebaseClient(retries = 20) {
     loadGallery();
   } catch (e) {
     console.warn('Firebase init xatosi:', e);
+  }
+}
+
+// ============ VISITOR ANALYTICS TRACKING ============
+function recordVisitorHit() {
+  if (!db) return;
+  try {
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const sessionKey = 'gv_visited_session_' + today;
+    
+    if (!sessionStorage.getItem(sessionKey)) {
+      sessionStorage.setItem(sessionKey, '1');
+      
+      // Increment total visits
+      db.ref('statistics/total_visits').transaction(cur => (cur || 0) + 1);
+      
+      // Increment daily visits
+      db.ref(`statistics/daily_visits/${today}`).transaction(cur => (cur || 0) + 1);
+      
+      // Record last visit timestamp
+      db.ref('statistics/last_visit').set(Date.now());
+    }
+  } catch (err) {
+    console.warn('Analytics tracking error:', err);
   }
 }
 
