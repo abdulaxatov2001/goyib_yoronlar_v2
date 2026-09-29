@@ -1599,6 +1599,14 @@ function loadCharity() {
   if (!db) return;
   db.ref('charity_info').on('value', snap => {
     const data = snap.val() || {};
+    const charSec = document.getElementById('charity');
+    if (charSec) {
+      if (data.show_utilities === false) {
+        charSec.style.display = 'none';
+      } else {
+        charSec.style.display = 'block';
+      }
+    }
     renderCharity(data);
   });
 }
