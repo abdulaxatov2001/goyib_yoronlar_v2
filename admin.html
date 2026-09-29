@@ -43,7 +43,12 @@
         
         .sidebar-item { transition: all 0.2s; }
         .sidebar-item.active { background-color: #064e3b; color: #d4a017; font-weight: 600; border-left: 4px solid #d4a017; }
+        @media (max-width: 768px) {
+            .sidebar-item.active { border-left: none; border-bottom: 3px solid #d4a017; }
+        }
         .sidebar-item:hover:not(.active) { background-color: #e5e7eb; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         
         .msg { display: none; padding: 12px; border-radius: 8px; margin-top: 12px; font-weight: 500; }
         .msg.show { display: flex; align-items: center; gap: 8px; }
@@ -65,10 +70,10 @@
         .toggle-checkbox:checked + .toggle-label { background-color: #064e3b; }
     </style>
 </head>
-<body class="antialiased min-h-screen flex items-center justify-center p-4">
+<body class="antialiased min-h-screen flex items-center justify-center md:p-4 bg-gray-100">
 
     <!-- LOGIN SECTION -->
-    <div id="login-card" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div id="login-card" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden m-4 hidden">
         <div class="bg-brand-green p-6 text-center">
             <i class="fas fa-mosque text-brand-gold text-4xl mb-3"></i>
             <h1 class="text-white text-xl font-bold">Admin Panel</h1>
@@ -103,33 +108,39 @@
     </div>
 
     <!-- ADMIN SECTION -->
-    <div id="admin-card" class="w-full h-[95vh] max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden hidden flex-col md:flex-row">
+    <div id="admin-card" class="w-full h-screen md:h-[95vh] max-w-6xl bg-white md:rounded-2xl shadow-2xl overflow-hidden hidden flex-col md:flex-row">
         
         <!-- Sidebar -->
-        <aside class="w-full md:w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
-            <div class="p-5 border-b border-gray-200 text-center bg-white">
-                <i class="fas fa-mosque text-brand-gold text-3xl mb-2"></i>
-                <h2 class="text-brand-green font-bold text-lg">Boshqaruv</h2>
+        <aside class="w-full md:w-64 bg-gray-50 border-b md:border-r border-gray-200 flex flex-col flex-shrink-0">
+            <div class="p-3 md:p-5 border-b border-gray-200 text-center bg-white flex justify-between md:justify-center items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-mosque text-brand-gold text-2xl md:text-3xl"></i>
+                    <h2 class="text-brand-green font-bold text-lg hidden md:block">Boshqaruv</h2>
+                </div>
+                <button onclick="doLogout()" class="md:hidden flex items-center justify-center gap-2 text-red-600 hover:bg-red-50 px-3 py-1 rounded-lg transition-colors font-medium text-sm">
+                    <i class="fas fa-sign-out-alt"></i> Chiqish
+                </button>
             </div>
-            <nav class="flex-1 overflow-y-auto py-4">
-                <ul class="space-y-1">
-                    <li><a href="#" onclick="switchTab('tab-prayer', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700 active"><i class="fas fa-clock w-5 text-center"></i> Namoz Vaqtlari</a></li>
-                    <li><a href="#" onclick="switchTab('tab-charity', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-credit-card w-5 text-center"></i> Karta & Kommunal</a></li>
+            <nav class="overflow-x-auto md:overflow-y-auto md:flex-1 p-2 md:py-4 scrollbar-hide border-b md:border-0 border-gray-200 bg-gray-100 md:bg-gray-50">
+                <ul class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-1">
+                    <li><a href="#" onclick="switchTab('tab-prayer', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 active whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-clock w-5 text-center"></i> <span class="text-sm md:text-base">Namoz Vaqtlari</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-charity', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-credit-card w-5 text-center"></i> <span class="text-sm md:text-base">Karta & Kommunal</span></a></li>
                     <li>
-                        <a href="#" onclick="switchTab('tab-subscriptions', this)" class="sidebar-item flex items-center justify-between px-6 py-3 text-gray-700">
-                            <span class="flex items-center gap-3"><i class="fas fa-book-open w-5 text-center"></i> Obunalar</span>
-                            <span id="sub-badge" class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                        <a href="#" onclick="switchTab('tab-subscriptions', this)" class="sidebar-item flex items-center justify-between px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none">
+                            <span class="flex items-center gap-2 md:gap-3"><i class="fas fa-book-open w-5 text-center"></i> <span class="text-sm md:text-base">Obunalar</span></span>
+                            <span id="sub-badge" class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden ml-2">0</span>
                         </a>
                     </li>
-                    <li><a href="#" onclick="switchTab('tab-dua', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-hands-praying w-5 text-center"></i> Duo So'rovlari</a></li>
-                    <li><a href="#" onclick="switchTab('tab-news', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-newspaper w-5 text-center"></i> Yangiliklar</a></li>
-                    <li><a href="#" onclick="switchTab('tab-sponsors', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-hand-holding-heart w-5 text-center"></i> Homiylar</a></li>
-                    <li><a href="#" onclick="switchTab('tab-team', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-users w-5 text-center"></i> Jamoat</a></li>
-                    <li><a href="#" onclick="switchTab('tab-gallery', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-images w-5 text-center"></i> Galereya</a></li>
-                    <li><a href="#" onclick="switchTab('tab-stats', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-chart-line w-5 text-center"></i> Statistika</a></li>
+                    <li><a href="#" onclick="switchTab('tab-dua', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-hands-praying w-5 text-center"></i> <span class="text-sm md:text-base">Duo So'rovlari</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-news', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-newspaper w-5 text-center"></i> <span class="text-sm md:text-base">Yangiliklar</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-sponsors', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-hand-holding-heart w-5 text-center"></i> <span class="text-sm md:text-base">Homiylar</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-team', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-users w-5 text-center"></i> <span class="text-sm md:text-base">Jamoat</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-gallery', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-images w-5 text-center"></i> <span class="text-sm md:text-base">Galereya</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-stats', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-chart-line w-5 text-center"></i> <span class="text-sm md:text-base">Statistika</span></a></li>
+                    <li id="menu-admins" class="hidden"><a href="#" onclick="switchTab('tab-admins', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-user-shield w-5 text-center"></i> <span class="text-sm md:text-base">Adminlar</span></a></li>
                 </ul>
             </nav>
-            <div class="p-4 border-t border-gray-200">
+            <div class="hidden md:block p-4 border-t border-gray-200">
                 <button onclick="doLogout()" class="w-full flex items-center justify-center gap-2 text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors font-medium">
                     <i class="fas fa-sign-out-alt"></i> Chiqish
                 </button>
@@ -137,18 +148,53 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto bg-white p-6 relative">
+        <main class="flex-1 overflow-y-auto bg-white p-4 md:p-6 relative pb-20 md:pb-6">
             <div id="admin-fb-status" class="mb-4 text-sm text-red-600 font-medium hidden"></div>
+
+            <!-- TAB: ADMINS (Only for azizbek) -->
+            <div id="tab-admins" class="tab-content max-w-4xl">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Adminlarni Boshqarish</h2>
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="font-bold text-brand-green mb-3">Yangi Admin Qo'shish</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Username</label>
+                            <input type="text" id="new-admin-username" placeholder="Masalan: eldorbek">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Telegram Chat ID</label>
+                            <input type="number" id="new-admin-chatid" placeholder="Masalan: 123456789">
+                        </div>
+                    </div>
+                    <button class="mt-4 bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2 transition" onclick="addAdmin()">
+                        <i class="fas fa-user-plus"></i> Qo'shish
+                    </button>
+                    <div class="msg success" id="admin-add-ok"></div>
+                </div>
+                <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-sm">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200 text-gray-700">
+                                <th class="p-3">Username</th>
+                                <th class="p-3">Chat ID</th>
+                                <th class="p-3 text-center">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admins-tbody" class="divide-y divide-gray-200">
+                            <tr><td colspan="3" class="p-4 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i> Yuklanmoqda...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <!-- TAB: PRAYER TIMES -->
             <div id="tab-prayer" class="tab-content active max-w-3xl">
-                <div class="flex justify-between items-center mb-6">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800">Namoz Vaqtlari</h2>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">Namoz Vaqtlari</h2>
                         <p class="text-gray-500 text-sm mt-1">Masjiddagi jamoat namozlari vaqtini boshqarish.</p>
                     </div>
-                    <!-- Toggle Prayer Visibility -->
-                    <div class="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                    <div class="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 self-start sm:self-auto">
                         <span class="text-sm font-semibold text-gray-700">Saytda ko'rsatish:</span>
                         <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                             <input type="checkbox" name="toggle" id="toggle-prayers" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
@@ -156,10 +202,9 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                     <!-- Bomdod -->
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden group">
+                    <div class="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200 relative overflow-hidden group">
                         <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Bomdod</label>
                         <input type="time" id="t-bomdod">
@@ -168,9 +213,8 @@
                             <button onclick="adjustTime('bomdod', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
                         </div>
                     </div>
-                    
                     <!-- Peshin -->
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                    <div class="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Peshin</label>
                         <input type="time" id="t-peshin">
@@ -179,9 +223,8 @@
                             <button onclick="adjustTime('peshin', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
                         </div>
                     </div>
-
                     <!-- Asr -->
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                    <div class="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-orange-400 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Asr</label>
                         <input type="time" id="t-asr">
@@ -190,9 +233,8 @@
                             <button onclick="adjustTime('asr', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
                         </div>
                     </div>
-
                     <!-- Shom -->
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                    <div class="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-moon"></i></div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Shom</label>
                         <input type="time" id="t-shom">
@@ -201,9 +243,8 @@
                             <button onclick="adjustTime('shom', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
                         </div>
                     </div>
-
                     <!-- Xufton -->
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                    <div class="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-indigo-900 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-star"></i></div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Xufton</label>
                         <input type="time" id="t-xufton">
@@ -213,9 +254,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="mt-8">
-                    <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center gap-2" id="btn-save-prayer" onclick="savePrayers()">
+                <div class="mt-6">
+                    <button class="w-full sm:w-auto bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center justify-center gap-2" id="btn-save-prayer" onclick="savePrayers()">
                         <i class="fas fa-save"></i> Saqlash
                     </button>
                     <div class="msg success" id="prayer-ok"><i class="fas fa-check-circle"></i> Muvaffaqiyatli saqlandi!</div>
@@ -225,35 +265,31 @@
             <!-- TAB: CHARITY & UTILITIES -->
             <div id="tab-charity" class="tab-content max-w-3xl">
                 <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Xayriya va Kommunal To'lovlar</h2>
-                    <p class="text-gray-500 text-sm mt-1">Masjidning asosiy ehson kartasi va kommunal to'lov rekvizitlarini boshqarish.</p>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800">Xayriya va Kommunal To'lovlar</h2>
                 </div>
-
                 <!-- Card -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
                     <h3 class="text-lg font-bold text-brand-green mb-4 flex items-center gap-2"><i class="fas fa-credit-card text-brand-gold"></i> Asosiy Ehson Kartasi</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Karta Raqami</label>
                             <input type="text" id="charity-card" placeholder="Masalan: 8600 0000 0000 0000">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Karta Egasi</label>
-                            <input type="text" id="charity-owner" placeholder="Masalan: G'oyib Yoronlar Jome Masjidi">
+                            <input type="text" id="charity-owner" placeholder="G'oyib Yoronlar...">
                         </div>
-                        <div class="md:col-span-2">
+                        <div class="sm:col-span-2">
                             <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Telefon Raqam</label>
                             <input type="text" id="charity-phone" placeholder="Masalan: +998 90 123 45 67">
                         </div>
                     </div>
                 </div>
-
                 <!-- Utilities -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6 relative">
-                    <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6 relative">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 border-b border-gray-200 pb-4 gap-3">
                         <h3 class="text-lg font-bold text-brand-green flex items-center gap-2"><i class="fas fa-bolt text-brand-gold"></i> Kommunal To'lovlar (Yuridik)</h3>
-                        <!-- Toggle Utilities Visibility -->
-                        <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+                        <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg border border-gray-200 self-start sm:self-auto">
                             <span class="text-sm font-semibold text-gray-700">Saytda ko'rsatish:</span>
                             <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                                 <input type="checkbox" name="toggle" id="toggle-utilities" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
@@ -261,33 +297,31 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Elektr energiyasi (Hisob raqam)</label>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Elektr energiya</label>
                             <input type="text" id="charity-elec">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Suv (Hisob raqam)</label>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Suv</label>
                             <input type="text" id="charity-water">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Gaz (Hisob raqam)</label>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Gaz</label>
                             <input type="text" id="charity-gas">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Chiqindi (Hisob raqam)</label>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Chiqindi</label>
                             <input type="text" id="charity-trash">
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Wi-Fi (Hisob raqam)</label>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Wi-Fi</label>
                             <input type="text" id="charity-wifi">
                         </div>
                     </div>
                 </div>
-
                 <div class="mt-4">
-                    <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center gap-2" id="btn-save-charity" onclick="saveCharity()">
+                    <button class="w-full sm:w-auto bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center justify-center gap-2" id="btn-save-charity" onclick="saveCharity()">
                         <i class="fas fa-save"></i> Saqlash
                     </button>
                     <div class="msg success" id="charity-ok"><i class="fas fa-check-circle"></i> Muvaffaqiyatli saqlandi!</div>
@@ -296,58 +330,52 @@
 
             <!-- TAB: SUBSCRIPTIONS -->
             <div id="tab-subscriptions" class="tab-content">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-800">Obunalar (Diniy Matbuot)</h2>
-                        <p class="text-gray-500 text-sm mt-1">«Hidayat», «Mo'minalar» jurnallari va «Islom nuri» gazetasi arizalari.</p>
-                    </div>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800">Obunalar (Diniy Matbuot)</h2>
                     <div class="flex gap-2">
-                        <button onclick="printSubscriptions()" class="bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm transition">
+                        <button onclick="printSubscriptions()" class="flex-1 md:flex-none bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2 shadow-sm transition">
                             <i class="fas fa-print"></i> Chop etish
                         </button>
-                        <button onclick="loadSubscriptions()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition">
+                        <button onclick="loadSubscriptions()" class="flex-1 md:flex-none bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fas fa-sync-alt"></i> Yangilash
                         </button>
                     </div>
                 </div>
-                
-                <!-- Stats row -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white border border-gray-200 p-4 rounded-xl shadow-sm text-center">
-                        <p class="text-xs text-gray-500 uppercase font-bold">Jami Arizalar</p>
-                        <p id="sub-stat-total" class="text-2xl font-bold text-brand-gold mt-1">0 ta</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <div class="bg-white border border-gray-200 p-3 md:p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase font-bold">Jami</p>
+                        <p id="sub-stat-total" class="text-xl md:text-2xl font-bold text-brand-gold mt-1">0 ta</p>
                     </div>
-                    <div class="bg-white border border-orange-200 p-4 rounded-xl shadow-sm text-center">
-                        <p class="text-xs text-gray-500 uppercase font-bold">Kutilmoqda</p>
-                        <p id="sub-stat-pending" class="text-2xl font-bold text-orange-500 mt-1">0 ta</p>
+                    <div class="bg-white border border-orange-200 p-3 md:p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase font-bold">Kutilmoqda</p>
+                        <p id="sub-stat-pending" class="text-xl md:text-2xl font-bold text-orange-500 mt-1">0 ta</p>
                     </div>
-                    <div class="bg-white border border-green-200 p-4 rounded-xl shadow-sm text-center">
-                        <p class="text-xs text-gray-500 uppercase font-bold">Tasdiqlandi</p>
-                        <p id="sub-stat-confirmed" class="text-2xl font-bold text-green-500 mt-1">0 ta</p>
+                    <div class="bg-white border border-green-200 p-3 md:p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase font-bold">Tasdiqlandi</p>
+                        <p id="sub-stat-confirmed" class="text-xl md:text-2xl font-bold text-green-500 mt-1">0 ta</p>
                     </div>
-                    <div class="bg-brand-green p-4 rounded-xl shadow-sm text-center text-white">
-                        <p class="text-xs text-green-200 uppercase font-bold">Jami Summa</p>
-                        <p id="sub-stat-sum" class="text-2xl font-bold mt-1">0 so'm</p>
+                    <div class="bg-brand-green p-3 md:p-4 rounded-xl shadow-sm text-center text-white">
+                        <p class="text-[10px] md:text-xs text-green-200 uppercase font-bold">Jami Summa</p>
+                        <p id="sub-stat-sum" class="text-xl md:text-2xl font-bold mt-1">0 so'm</p>
                     </div>
                 </div>
-
                 <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-sm">
-                    <table class="w-full text-left border-collapse text-sm">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm whitespace-nowrap md:whitespace-normal">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-200 text-gray-700">
-                                <th class="p-4 text-center w-10">№</th>
-                                <th class="p-4">Sana</th>
-                                <th class="p-4">Obunachi</th>
-                                <th class="p-4">Telefon</th>
-                                <th class="p-4">Nashrlar</th>
-                                <th class="p-4">Summa</th>
-                                <th class="p-4">Manzil</th>
-                                <th class="p-4 text-center">Holati</th>
-                                <th class="p-4 text-center">Amallar</th>
+                                <th class="p-3 text-center w-10">№</th>
+                                <th class="p-3">Sana</th>
+                                <th class="p-3">Obunachi</th>
+                                <th class="p-3">Telefon</th>
+                                <th class="p-3">Nashrlar</th>
+                                <th class="p-3">Summa</th>
+                                <th class="p-3">Manzil</th>
+                                <th class="p-3 text-center">Holati</th>
+                                <th class="p-3 text-center">Amallar</th>
                             </tr>
                         </thead>
                         <tbody id="subscriptions-tbody" class="divide-y divide-gray-200">
-                            <tr><td colspan="9" class="p-8 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i> Yuklanmoqda...</td></tr>
+                            <tr><td colspan="9" class="p-6 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i> Yuklanmoqda...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -356,33 +384,28 @@
             <!-- TAB: DUA REQUESTS -->
             <div id="tab-dua" class="tab-content">
                 <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-800">Jamoat Duo So'rovlari</h2>
-                        <p class="text-gray-500 text-sm mt-1">Juma namozida o'qib beriladigan haftalik duo so'rovlari.</p>
-                    </div>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800">Duo So'rovlari</h2>
                     <button onclick="printWeeklyDuas()" class="bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm transition">
-                        <i class="fas fa-print"></i> Chop etish (Juma)
+                        <i class="fas fa-print"></i> Chop etish
                     </button>
                 </div>
-                <div id="dua-admin-list" class="space-y-6">
-                    <!-- Populated by JS -->
-                </div>
+                <div id="dua-admin-list" class="space-y-4"></div>
             </div>
 
             <!-- TAB: NEWS -->
             <div id="tab-news" class="tab-content max-w-4xl">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Yangiliklar</h2>
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-                    <h3 class="font-bold text-brand-green mb-4">Yangi qo'shish</h3>
-                    <div class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Yangiliklar</h2>
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="font-bold text-brand-green mb-3">Yangi qo'shish</h3>
+                    <div class="space-y-3">
                         <input type="text" id="news-title" placeholder="Yangilik sarlavhasi...">
-                        <textarea id="news-desc" placeholder="Batafsil ma'lumot..." rows="4"></textarea>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <textarea id="news-desc" placeholder="Batafsil ma'lumot..." rows="3"></textarea>
+                        <div class="flex flex-col sm:flex-row gap-3">
                             <input type="file" id="news-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'news-preview')">
                             <input type="text" id="news-url" placeholder="yoki rasm URL'si..." class="flex-1">
                         </div>
                         <div id="news-preview" class="hidden mt-2 text-center"></div>
-                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-news" onclick="addNews()">
+                        <button class="w-full sm:w-auto bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center justify-center gap-2 transition" id="btn-save-news" onclick="addNews()">
                             <i class="fas fa-plus"></i> Qo'shish
                         </button>
                         <div class="msg success" id="news-ok"></div>
@@ -393,41 +416,41 @@
 
             <!-- TAB: SPONSORS -->
             <div id="tab-sponsors" class="tab-content max-w-4xl">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Homiylar</h2>
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-                    <h3 class="font-bold text-brand-green mb-4">Homiy qo'shish</h3>
-                    <div class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Homiylar</h2>
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="font-bold text-brand-green mb-3">Homiy qo'shish</h3>
+                    <div class="space-y-3">
                         <input type="text" id="sponsor-name" placeholder="Homiy nomi / Tashkilot...">
-                        <textarea id="sponsor-desc" placeholder="Batafsil ma'lumot..." rows="3"></textarea>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <textarea id="sponsor-desc" placeholder="Batafsil ma'lumot..." rows="2"></textarea>
+                        <div class="flex flex-col sm:flex-row gap-3">
                             <input type="file" id="sponsor-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'sponsor-preview')">
                             <input type="text" id="sponsor-url" placeholder="yoki logotip URL'si..." class="flex-1">
                         </div>
                         <div id="sponsor-preview" class="hidden mt-2 text-center"></div>
-                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-sponsor" onclick="addSponsor()">
+                        <button class="w-full sm:w-auto bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center justify-center gap-2 transition" id="btn-save-sponsor" onclick="addSponsor()">
                             <i class="fas fa-plus"></i> Qo'shish
                         </button>
                         <div class="msg success" id="sponsor-ok"></div>
                     </div>
                 </div>
-                <div id="sponsors-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                <div id="sponsors-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
             <!-- TAB: TEAM -->
             <div id="tab-team" class="tab-content max-w-4xl">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Jamoat</h2>
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-                    <h3 class="font-bold text-brand-green mb-4">A'zo qo'shish</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Jamoat</h2>
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="font-bold text-brand-green mb-3">A'zo qo'shish</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <input type="text" id="team-name" placeholder="Ism familiya...">
-                        <input type="text" id="team-role" placeholder="Lavozimi (Masalan: Imom xatib)...">
-                        <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="team-role" placeholder="Lavozimi...">
+                        <div class="sm:col-span-2 flex flex-col sm:flex-row gap-3">
                             <input type="file" id="team-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'team-preview')">
                             <input type="text" id="team-url" placeholder="yoki rasm URL'si..." class="flex-1">
                         </div>
                     </div>
                     <div id="team-preview" class="hidden mt-2 text-center"></div>
-                    <button class="mt-4 bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-team" onclick="addTeam()">
+                    <button class="w-full sm:w-auto mt-3 bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center justify-center gap-2 transition" id="btn-save-team" onclick="addTeam()">
                         <i class="fas fa-plus"></i> Qo'shish
                     </button>
                     <div class="msg success" id="team-ok"></div>
@@ -437,15 +460,15 @@
 
             <!-- TAB: GALLERY -->
             <div id="tab-gallery" class="tab-content max-w-5xl">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Galereya</h2>
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-                    <h3 class="font-bold text-brand-green mb-4">Rasm yoki Video qo'shish</h3>
-                    <div class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Galereya</h2>
+                <div class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="font-bold text-brand-green mb-3">Rasm yoki Video qo'shish</h3>
+                    <div class="space-y-3">
                         <select id="gallery-type" onchange="document.getElementById('video-input').style.display = this.value === 'video' ? 'block' : 'none'; document.getElementById('image-input').style.display = this.value === 'image' ? 'block' : 'none';">
                             <option value="image">Rasm qo'shish</option>
                             <option value="video">Video (YouTube URL) qo'shish</option>
                         </select>
-                        <div id="image-input" class="flex flex-col sm:flex-row gap-4">
+                        <div id="image-input" class="flex flex-col sm:flex-row gap-3">
                             <input type="file" id="gallery-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'gallery-preview')">
                             <input type="text" id="gallery-url" placeholder="yoki rasm URL'si..." class="flex-1">
                         </div>
@@ -455,34 +478,35 @@
                         <input type="text" id="gallery-title" placeholder="Qisqacha ta'rif (ixtiyoriy)...">
                         
                         <div id="gallery-preview" class="hidden mt-2 text-center"></div>
-                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-gallery" onclick="addGallery()">
+                        <button class="w-full sm:w-auto bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center justify-center gap-2 transition" id="btn-save-gallery" onclick="addGallery()">
                             <i class="fas fa-plus"></i> Qo'shish
                         </button>
                         <div class="msg success" id="gallery-ok"></div>
                     </div>
                 </div>
-                <div id="gallery-list" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+                <div id="gallery-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
             </div>
 
             <!-- TAB: STATS -->
             <div id="tab-stats" class="tab-content">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Sayt Statistikasi</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-center shadow-sm">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Sayt Statistikasi</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 text-center shadow-sm">
                         <i class="fas fa-users text-4xl text-brand-gold mb-3"></i>
-                        <h3 class="text-gray-500 font-bold uppercase text-sm mb-1">Umumiy Tashriflar</h3>
-                        <p id="stat-total" class="text-4xl font-bold text-brand-green">0</p>
+                        <h3 class="text-gray-500 font-bold uppercase text-xs mb-1">Umumiy Tashriflar</h3>
+                        <p id="stat-total" class="text-3xl font-bold text-brand-green">0</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-center shadow-sm">
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 text-center shadow-sm">
                         <i class="fas fa-calendar-day text-4xl text-blue-500 mb-3"></i>
-                        <h3 class="text-gray-500 font-bold uppercase text-sm mb-1">Bugungi Tashriflar</h3>
-                        <p id="stat-today" class="text-4xl font-bold text-blue-600">0</p>
+                        <h3 class="text-gray-500 font-bold uppercase text-xs mb-1">Bugungi Tashriflar</h3>
+                        <p id="stat-today" class="text-3xl font-bold text-blue-600">0</p>
                     </div>
                 </div>
             </div>
 
         </main>
     </div>
+
 <script>
         function getFormattedDate() {
             const d = new Date();
@@ -492,160 +516,61 @@
             return `${day}.${month}.${year}`;
         }
 
-        // Admin foydalanuvchilar (obfuscated - base64)
         const _au = {
             [atob('YXppemJlaw==')]: atob('ODIyMDMzOTY1'),
             [atob('cmFzdWxqb24=')]: atob('MjkwODAzMzAw'),
             [atob('bydsb3RraXJqb24=')]: atob('ODI0NjM4NDk0Ng==')
         };
-        const ADMIN_USERS = _au;
-        let db = null;
-        // ImgBB kaliti (obfuscated - base64)
-        const IMGBB_API_KEY = atob('MGIzM2Y4MjQ1ODVmMGE0OGY0N2M5NmQ2NzNjZDA5MDc=');
-        let fbReady = false;
-
-        let editingNewsKey = null;
-        let editingTeamKey = null;
-        let editingEventKey = null;
-        let oldImgUrl = null;
-
-        // Firebase Konfiguratsiyasi (Zaxira bilan)
-        const defaultFirebaseConfig = {
-            apiKey: "AIzaSyDjU4_Bt8gzbYTwYvdFz37LSOJ6rAnYxhA",
-            authDomain: "goyib-yoronlar-masjidi.firebaseapp.com",
-            databaseURL: "https://goyib-yoronlar-masjidi-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "goyib-yoronlar-masjidi",
-            storageBucket: "goyib-yoronlar-masjidi.firebasestorage.app",
-            messagingSenderId: "607943091616",
-            appId: "1:607943091616:web:1aa14cb0c530cd78b270c5",
-            measurementId: "G-S4HY09VZSJ"
-        };
-
-        function initFirebaseApp(retries = 20) {
-            try {
-                if (typeof firebase === 'undefined') {
-                    if (retries > 0) {
-                        return setTimeout(() => initFirebaseApp(retries - 1), 100);
-                    }
-                    throw new Error("Firebase SDK yuklanmadi. Internet aloqasini tekshiring.");
-                }
-
-                const cfg = (typeof firebaseConfig !== 'undefined' && firebaseConfig.databaseURL) ? firebaseConfig : defaultFirebaseConfig;
-                
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(cfg);
-                }
-                db = firebase.database();
-                fbReady = true;
-
-                const session = localStorage.getItem('admin_session');
-                if (session) {
-                    const oneDay = 24 * 60 * 60 * 1000;
-                    const parts = session.split('.');
-                    if (parts.length === 2) {
-                        const ts = parseInt(parts[0]);
-                        if (!isNaN(ts) && Date.now() - ts < oneDay) {
-                            document.getElementById('login-card').style.display = 'none';
-                            document.getElementById('admin-card').style.display = 'block';
-                        } else {
-                            localStorage.removeItem('admin_session');
-                        }
-                    } else {
-                        localStorage.removeItem('admin_session');
-                    }
-                }
-                
-                const warn = document.getElementById('admin-fb-status');
-                if (warn) warn.style.display = 'none';
-                
-                loadList('news');
-                loadList('team');
-                loadList('sponsors');
-                loadGallery();
-                loadDuas();
-                loadSubscriptions();
-                loadCharityInfo();
-                loadStats();
-                loadPrayers();
-                console.log("✅ Firebase muvaffaqiyatli ishga tushdi");
-            } catch (err) {
-                console.error("Firebase init xatosi:", err);
-                const warn = document.getElementById('admin-fb-status');
-                if (warn) {
-                    warn.style.display = 'block';
-                    warn.innerText = `Xatolik: ${err.message}. Admin panel ishlamaydi.`;
-                }
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            initFirebaseApp();
-        });
-        window.addEventListener('load', () => {
-            if (!fbReady) initFirebaseApp();
-        });
-
-        function loadCharityInfo() {
-            if (!fbReady) return;
-            db.ref('charity_info').on('value', snap => {
-                if (snap.exists()) {
-                    const data = snap.val();
-                    document.getElementById('charity-card').value = data.general_card || '';
-                    document.getElementById('charity-owner').value = data.general_owner || '';
-                    document.getElementById('charity-phone').value = data.general_phone || '';
-                    document.getElementById('charity-elec').value = data.util_elec || '';
-                    document.getElementById('charity-water').value = data.util_water || '';
-                    document.getElementById('charity-gas').value = data.util_gas || '';
-                    document.getElementById('charity-trash').value = data.util_trash || '';
-                    document.getElementById('charity-wifi').value = data.util_wifi || '';
-                    if(document.getElementById('toggle-utilities')) document.getElementById('toggle-utilities').checked = data.show_utilities !== false;
-                }
-            });
-        }
-
-        async function saveCharity() {
-            const btn = document.getElementById('btn-save-charity');
-            btn.innerHTML = `<span class="spinner"></span> Saqlanmoqda...`;
-            btn.disabled = true;
-
-            const charityData = {
-                general_card: document.getElementById('charity-card').value.trim(),
-                general_owner: document.getElementById('charity-owner').value.trim(),
-                general_phone: document.getElementById('charity-phone').value.trim(),
-                util_elec: document.getElementById('charity-elec').value.trim(),
-                util_water: document.getElementById('charity-water').value.trim(),
-                util_gas: document.getElementById('charity-gas').value.trim(),
-                util_trash: document.getElementById('charity-trash').value.trim(),
-                util_wifi: document.getElementById('charity-wifi').value.trim(),
-                show_utilities: document.getElementById('toggle-utilities') ? document.getElementById('toggle-utilities').checked : true,
-            };
-
-            try {
-                await db.ref('charity_info').set(charityData);
-                const msg = document.getElementById('charity-ok');
-                msg.classList.add('show');
-                setTimeout(() => msg.classList.remove('show'), 3000);
-            } catch (e) {
-                alert("Xatolik: " + e.message);
-            }
-
-            btn.innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Saqlash`;
-            btn.disabled = false;
-        }
-
-        function initAdmin() {
-            loadStats();
-            loadPrayers();
-            loadList("news");
-            loadList("sponsors");
-            loadList("team");
-            loadGallery();
-            loadDuas();
-            loadSubscriptions();
-        }
-
+        
+        let ADMIN_USERS = { ..._au };
+        let currentAdminUser = '';
         let generatedTgCode = null;
         let tgCodeTimeout = null;
+        let db;
+        let fbReady = false;
+
+        // --- FIREBASE INIT BEFORE DOM ---
+        if (typeof firebase !== 'undefined' && firebase.apps) {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(cfg);
+            }
+            db = firebase.database();
+            fbReady = true;
+
+            // Load dynamic admins early
+            db.ref('admin_users').once('value').then(snap => {
+                if (snap.exists()) {
+                    ADMIN_USERS = { ..._au, ...snap.val() };
+                }
+            }).catch(e => console.error("Adminlarni yuklashda xato:", e));
+        }
+
+        window.onload = function() {
+            // Check session
+            const session = localStorage.getItem('admin_session');
+            if (session) {
+                const parts = session.split('.');
+                if (parts.length >= 2) {
+                    const ts = parseInt(parts[0]);
+                    const username = parts[1];
+                    const oneDay = 24 * 60 * 60 * 1000;
+                    if (!isNaN(ts) && Date.now() - ts < oneDay) {
+                        currentAdminUser = username;
+                        document.getElementById('login-card').style.display = 'none';
+                        document.getElementById('admin-card').style.display = 'flex';
+                        initAdmin();
+                    } else {
+                        localStorage.removeItem('admin_session');
+                        document.getElementById('login-card').style.display = 'block';
+                    }
+                } else {
+                    localStorage.removeItem('admin_session');
+                    document.getElementById('login-card').style.display = 'block';
+                }
+            } else {
+                document.getElementById('login-card').style.display = 'block';
+            }
+        };
 
         function doLogin() {
             const usernameInput = document.getElementById('username').value.trim();
@@ -666,7 +591,7 @@
                 if (tgCodeTimeout) clearTimeout(tgCodeTimeout);
                 tgCodeTimeout = setTimeout(() => {
                     generatedTgCode = null;
-                    alert("Kodning amal qilish muddati (2 daqiqa) tugadi! Iltimos, boshqatdan kiring.");
+                    alert("Kodning amal qilish muddati tugadi! Iltimos, boshqatdan kiring.");
                     document.getElementById('step2').style.display = 'none';
                     document.getElementById('step1').style.display = 'block';
                     document.getElementById('username').value = '';
@@ -689,66 +614,124 @@
                 return;
             }
 
-            if (document.getElementById('tgcode').value === generatedTgCode) {
+            const codeInput = document.getElementById('tgcode').value;
+            if (codeInput === generatedTgCode) {
                 if (tgCodeTimeout) clearTimeout(tgCodeTimeout);
                 generatedTgCode = null;
-                // Sessiya: timestamp.randomHex format bilan saqlash
-                const sessionToken = Date.now() + '.' + Math.random().toString(36).substring(2, 10);
+                const usernameInput = document.getElementById('username').value.trim();
+                currentAdminUser = usernameInput;
+                const sessionToken = Date.now() + '.' + usernameInput + '.' + Math.random().toString(36).substring(2, 10);
                 localStorage.setItem('admin_session', sessionToken);
+                
                 document.getElementById('login-card').style.display = 'none';
-                document.getElementById('admin-card').style.display = 'block';
+                document.getElementById('admin-card').style.display = 'flex';
                 initAdmin();
             } else {
-                document.getElementById('login-err').innerHTML = '<i class="fas fa-exclamation-circle"></i> Noto\'g\'ri kod!';
+                document.getElementById('login-err').innerHTML = '<i class="fas fa-exclamation-circle"></i> Kod noto\'g\'ri!';
                 document.getElementById('login-err').classList.add('show');
             }
         }
 
-        // --- STATISTIKA (Analytics) funksiyasi ---
-        function loadStats() {
-            if (!db) return;
-            const now = new Date();
-            const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-            const statsRef = db.ref('statistics');
+        function doLogout() {
+            localStorage.removeItem('admin_session');
+            location.reload();
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
             
-            statsRef.on('value', snapshot => {
-                const elTotal = document.getElementById('stat-total');
-                const elToday = document.getElementById('stat-today');
-                if (snapshot.exists()) {
-                    const data = snapshot.val() || {};
-                    const total = data.total_visits || 0;
-                    const todays = (data.daily_visits && data.daily_visits[today]) ? data.daily_visits[today] : 0;
-                    
-                    if (elTotal) elTotal.textContent = total.toLocaleString('ru-RU').replace(/,/g, ' ');
-                    if (elToday) elToday.textContent = todays.toLocaleString('ru-RU').replace(/,/g, ' ');
-                } else {
-                    if (elTotal) elTotal.textContent = '0';
-                    if (elToday) elToday.textContent = '0';
+            document.querySelectorAll('.sidebar-item').forEach(c => c.classList.remove('active'));
+            if(el) el.classList.add('active');
+        }
+
+        function initAdmin() {
+            if (currentAdminUser === 'azizbek') {
+                document.getElementById('menu-admins').classList.remove('hidden');
+                loadAdmins();
+            }
+
+            if (!fbReady) {
+                const warn = document.getElementById('admin-fb-status');
+                if (warn) {
+                    warn.innerHTML = "Firebase bazasi yuklanmadi. Iltimos, sahifani yangilang.";
+                    warn.style.display = 'block';
                 }
+                return;
+            }
+            
+            loadList('news');
+            loadList('team');
+            loadList('sponsors');
+            loadGallery();
+            loadDuas();
+            loadSubscriptions();
+            loadCharity();
+            loadPrayers();
+            updateStats();
+        }
+
+        // --- ADMINS MANAGEMENT ---
+        function loadAdmins() {
+            if (!fbReady || currentAdminUser !== 'azizbek') return;
+            db.ref('admin_users').on('value', snap => {
+                const data = snap.val() || {};
+                const tbody = document.getElementById('admins-tbody');
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                
+                const allA = { ..._au, ...data };
+                let html = '';
+                for (let key in allA) {
+                    const isHardcoded = Object.keys(_au).includes(key);
+                    html += `
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="p-3 font-semibold text-gray-800">${key} ${isHardcoded ? '<span class="text-[10px] bg-brand-gold text-white px-2 rounded-full">Asosiy</span>' : ''}</td>
+                            <td class="p-3 text-gray-600">${allA[key]}</td>
+                            <td class="p-3 text-center">
+                                ${!isHardcoded ? `
+                                    <button class="text-red-500 hover:text-red-700 mx-1 p-2 bg-red-50 rounded-lg" onclick="deleteAdmin('${key}')"><i class="fas fa-trash"></i></button>
+                                ` : '<span class="text-xs text-gray-400">O\'chirish mumkin emas</span>'}
+                            </td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
             });
         }
 
-        function doLogout() { 
-            localStorage.removeItem('admin_session');
-            location.reload(); 
-        }
-
-        function switchTab(id, tabEl) {
-            document.querySelectorAll('.tab').forEach(e => e.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
-            
-            if (tabEl && tabEl.classList) {
-                tabEl.classList.add('active');
-            } else {
-                const targetBtn = document.querySelector(`.tab[data-tab="${id}"]`);
-                if (targetBtn) targetBtn.classList.add('active');
+        function addAdmin() {
+            const user = document.getElementById('new-admin-username').value.trim();
+            const chatId = document.getElementById('new-admin-chatid').value.trim();
+            const msg = document.getElementById('admin-add-ok');
+            if (!user || !chatId) {
+                msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Maydonlarni to\'ldiring';
+                msg.className = "msg error show";
+                return;
             }
-            
-            const contentEl = document.getElementById(id);
-            if (contentEl) contentEl.classList.add('active');
+            if (Object.keys(ADMIN_USERS).includes(user)) {
+                msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Bu username band!';
+                msg.className = "msg error show";
+                return;
+            }
+            if (fbReady) {
+                db.ref('admin_users/' + user).set(chatId).then(() => {
+                    msg.innerHTML = '<i class="fas fa-check-circle"></i> Admin qo\'shildi!';
+                    msg.className = "msg success show";
+                    document.getElementById('new-admin-username').value = '';
+                    document.getElementById('new-admin-chatid').value = '';
+                    setTimeout(() => { msg.classList.remove('show'); }, 3000);
+                });
+            }
         }
 
-        // ================= PRAYER TIMES =================
+        function deleteAdmin(username) {
+            if (confirm(`Rostdan ham '${username}' adminini o'chirmoqchimisiz?`)) {
+                db.ref('admin_users/' + username).remove();
+            }
+        }
+
+// ================= PRAYER TIMES =================
         function adjustTime(key, min) {
             const el = document.getElementById('t-' + key);
             let [h, m] = (el.value || "00:00").split(':').map(Number);
