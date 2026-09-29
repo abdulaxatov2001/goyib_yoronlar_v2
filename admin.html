@@ -704,6 +704,10 @@
         }
 
         function addAdmin() {
+            if (currentAdminUser !== 'azizbek') {
+                alert("Faqat 'azizbek' administratori admin qo'sha oladi!");
+                return;
+            }
             const user = document.getElementById('new-admin-username').value.trim();
             const chatId = document.getElementById('new-admin-chatid').value.trim();
             const msg = document.getElementById('admin-add-ok');
@@ -729,6 +733,10 @@
         }
 
         function deleteAdmin(username) {
+            if (currentAdminUser !== 'azizbek') {
+                alert("Faqat 'azizbek' administratori adminlarni o'chira oladi!");
+                return;
+            }
             if (confirm(`Rostdan ham '${username}' adminini o'chirmoqchimisiz?`)) {
                 db.ref('admin_users/' + username).remove();
             }
