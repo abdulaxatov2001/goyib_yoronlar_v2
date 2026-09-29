@@ -678,18 +678,20 @@
                 if (!tbody) return;
                 tbody.innerHTML = '';
                 
-                const allA = { ..._au, ...data };
                 let html = '';
-                for (let key in allA) {
-                    const isHardcoded = Object.keys(_au).includes(key);
+                for (let key in data) {
+                    const isAsosiy = (key === 'azizbek');
                     html += `
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="p-3 font-semibold text-gray-800">${key} ${isHardcoded ? '<span class="text-[10px] bg-brand-gold text-white px-2 rounded-full">Asosiy</span>' : ''}</td>
-                            <td class="p-3 text-gray-600">${allA[key]}</td>
-                            <td class="p-3 text-center">
-                                ${!isHardcoded ? `
-                                    <button class="text-red-500 hover:text-red-700 mx-1 p-2 bg-red-50 rounded-lg" onclick="deleteAdmin('${key}')"><i class="fas fa-trash"></i></button>
-                                ` : '<span class="text-xs text-gray-400">O\'chirish mumkin emas</span>'}
+                        <tr class="hover:bg-gray-50 transition-colors border-b border-gray-100">
+                            <td class="p-3 font-semibold text-gray-800">${key} ${isAsosiy ? '<span class="text-[10px] bg-brand-gold text-white px-2 rounded-full ml-1">Asosiy</span>' : ''}</td>
+                            <td class="p-3 text-gray-600">${data[key]}</td>
+                            <td class="p-3">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button class="text-blue-500 hover:text-blue-700 p-2 bg-blue-50 rounded-lg transition-colors" onclick="editAdmin(&quot;${key}&quot;, &quot;${data[key]}&quot;)" title="Tahrirlash"><i class="fas fa-edit"></i></button>
+                                    ${!isAsosiy ? `
+                                        <button class="text-red-500 hover:text-red-700 p-2 bg-red-50 rounded-lg transition-colors" onclick="deleteAdmin(&quot;${key}&quot;)" title="O'chirish"><i class="fas fa-trash"></i></button>
+                                    ` : '<span class="text-xs text-gray-400">O\'chirish mumkin emas</span>'}
+                                </div>
                             </td>
                         </tr>
                     `;
