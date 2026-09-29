@@ -1597,7 +1597,7 @@ function loadCharity() {
 // ============ GALLERY WITH BENTO/PAGINATION (STITCH DESIGN) ============
 let allGallery = [];
 let galleryCurrentPage = 1;
-const galleryItemsPerPage = 8;
+const galleryItemsPerPage = 4;
 let lightboxIdx = 0;
 
 function renderGallery() {
