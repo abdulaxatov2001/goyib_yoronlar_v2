@@ -124,6 +124,8 @@
             <nav class="overflow-x-auto md:overflow-y-auto md:flex-1 p-2 md:py-4 scrollbar-hide border-b md:border-0 border-gray-200 bg-gray-100 md:bg-gray-50">
                 <ul class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-1">
                     <li><a href="#" onclick="switchTab('tab-prayer', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 active whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-clock w-5 text-center"></i> <span class="text-sm md:text-base">Namoz Vaqtlari</span></a></li>
+                    <li><a href="#" onclick="switchTab('tab-stats', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-chart-line w-5 text-center"></i> <span class="text-sm md:text-base">Statistika</span></a></li>
+                    <li id="menu-admins" class="hidden"><a href="#" onclick="switchTab('tab-admins', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-user-shield w-5 text-center"></i> <span class="text-sm md:text-base">Adminlar</span></a></li>
                     <li><a href="#" onclick="switchTab('tab-charity', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-credit-card w-5 text-center"></i> <span class="text-sm md:text-base">Karta & Kommunal</span></a></li>
                     <li>
                         <a href="#" onclick="switchTab('tab-subscriptions', this)" class="sidebar-item flex items-center justify-between px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none">
@@ -136,8 +138,6 @@
                     <li><a href="#" onclick="switchTab('tab-sponsors', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-hand-holding-heart w-5 text-center"></i> <span class="text-sm md:text-base">Homiylar</span></a></li>
                     <li><a href="#" onclick="switchTab('tab-team', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-users w-5 text-center"></i> <span class="text-sm md:text-base">Jamoat</span></a></li>
                     <li><a href="#" onclick="switchTab('tab-gallery', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-images w-5 text-center"></i> <span class="text-sm md:text-base">Galereya</span></a></li>
-                    <li><a href="#" onclick="switchTab('tab-stats', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-chart-line w-5 text-center"></i> <span class="text-sm md:text-base">Statistika</span></a></li>
-                    <li id="menu-admins" class="hidden"><a href="#" onclick="switchTab('tab-admins', this)" class="sidebar-item flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 text-gray-700 whitespace-nowrap rounded-lg md:rounded-none"><i class="fas fa-user-shield w-5 text-center"></i> <span class="text-sm md:text-base">Adminlar</span></a></li>
                 </ul>
             </nav>
             <div class="hidden md:block p-4 border-t border-gray-200">
@@ -583,7 +583,7 @@
                 generatedTgCode = Math.floor(1000 + Math.random() * 9000).toString();
                 // Bot token obfuscated (base64)
                 const _bt = atob('ODk2NTgwMDcyMjpBQUVYOGk2UmdEdndDTWxYWnVPLXZrMFdpNFM2OXZrZTlGWQ==');
-                const tgText = `🔐 Admin panelga kirish uchun tasdiqlash kodi: ${generatedTgCode}\n\nAgar bu siz bo'lmasangiz, e'tibor bermang.`;
+                const tgText = `🔐 ${usernameInput} nomidan admin panel kirish kodi: ${generatedTgCode}\n\nAgar bu siz bo'lmasangiz, e'tibor bermang.`;
                 
                 fetch(`https://api.telegram.org/bot${_bt}/sendMessage`, {
                     method: 'POST',
@@ -827,13 +827,20 @@
 
         function updateStats() {
             if (!fbReady) return;
-            db.ref('stats').on('value', snap => {
+            db.ref('statistics').on('value', snap => {
                 if(snap.exists()) {
                     const data = snap.val();
                     const totalEl = document.getElementById('stat-total');
                     const todayEl = document.getElementById('stat-today');
-                    if(totalEl) totalEl.innerText = data.total || 0;
-                    if(todayEl) todayEl.innerText = data.today || 0;
+                    
+                    const now = new Date();
+                    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                    
+                    if(totalEl) totalEl.innerText = data.total_visits || 0;
+                    if(todayEl) {
+                        const daily = data.daily_visits || {};
+                        todayEl.innerText = daily[today] || 0;
+                    }
                 }
             });
         }
