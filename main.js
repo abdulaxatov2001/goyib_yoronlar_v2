@@ -986,7 +986,7 @@ initFirebaseClient();
 // ============ PRAYER TIMES STATE & LOGIC ============
 let prayerTimes = {
   bomdod: '04:10',
-  quyosh: '05:17',
+  quyosh: '--:--',
   peshin: '13:00',
   asr: '17:30',
   shom: '19:30',
@@ -994,7 +994,7 @@ let prayerTimes = {
 };
 let apiTimes = {
   bomdod: '03:40',
-  quyosh: '05:17',
+  quyosh: '--:--',
   peshin: '12:21',
   asr: '17:15',
   shom: '19:16',
@@ -1085,7 +1085,7 @@ async function loadAladhanApiTimes() {
       });
 
       const quyoshEl = document.getElementById('time-quyosh');
-      if (quyoshEl && (!prayerTimes.quyosh || prayerTimes.quyosh === '--:--')) {
+      if (quyoshEl) {
         quyoshEl.textContent = t.Sunrise;
         prayerTimes.quyosh = t.Sunrise;
       }
