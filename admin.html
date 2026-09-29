@@ -532,7 +532,7 @@
         // --- FIREBASE INIT BEFORE DOM ---
         if (typeof firebase !== 'undefined' && firebase.apps) {
             if (!firebase.apps.length) {
-                firebase.initializeApp(cfg);
+                firebase.initializeApp(firebaseConfig);
             }
             db = firebase.database();
             fbReady = true;
