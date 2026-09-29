@@ -444,6 +444,9 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <input type="text" id="team-name" placeholder="Ism familiya...">
                         <input type="text" id="team-role" placeholder="Lavozimi...">
+                        <input type="text" id="team-phone" placeholder="Telefon (ixtiyoriy)...">
+                        <input type="text" id="team-tg" placeholder="Telegram @username (ixtiyoriy)...">
+                        <textarea id="team-desc" placeholder="Qisqacha ma'lumot (ixtiyoriy)..." rows="2" class="sm:col-span-2"></textarea>
                         <div class="sm:col-span-2 flex flex-col sm:flex-row gap-3">
                             <input type="file" id="team-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'team-preview')">
                             <input type="text" id="team-url" placeholder="yoki rasm URL'si..." class="flex-1">
@@ -739,6 +742,54 @@
             if (tot < 0) tot += 24 * 60;
             tot %= 24 * 60;
             el.value = String(Math.floor(tot / 60)).padStart(2, '0') + ':' + String(tot % 60).padStart(2, '0');
+        }
+
+        function loadCharity() {
+            if (!fbReady) return;
+            db.ref('charity_info').on('value', snap => {
+                if (snap.exists()) {
+                    const data = snap.val();
+                    document.getElementById('charity-card').value = data.general_card || '';
+                    document.getElementById('charity-owner').value = data.general_owner || '';
+                    document.getElementById('charity-phone').value = data.general_phone || '';
+                    document.getElementById('charity-elec').value = data.util_elec || '';
+                    document.getElementById('charity-water').value = data.util_water || '';
+                    document.getElementById('charity-gas').value = data.util_gas || '';
+                    document.getElementById('charity-trash').value = data.util_trash || '';
+                    document.getElementById('charity-wifi').value = data.util_wifi || '';
+                    if(document.getElementById('toggle-utilities')) document.getElementById('toggle-utilities').checked = data.show_utilities !== false;
+                }
+            });
+        }
+
+        async function saveCharity() {
+            const btn = document.getElementById('btn-save-charity');
+            btn.innerHTML = `<span class="spinner"></span> Saqlanmoqda...`;
+            btn.disabled = true;
+
+            const charityData = {
+                general_card: document.getElementById('charity-card').value.trim(),
+                general_owner: document.getElementById('charity-owner').value.trim(),
+                general_phone: document.getElementById('charity-phone').value.trim(),
+                util_elec: document.getElementById('charity-elec').value.trim(),
+                util_water: document.getElementById('charity-water').value.trim(),
+                util_gas: document.getElementById('charity-gas').value.trim(),
+                util_trash: document.getElementById('charity-trash').value.trim(),
+                util_wifi: document.getElementById('charity-wifi').value.trim(),
+                show_utilities: document.getElementById('toggle-utilities') ? document.getElementById('toggle-utilities').checked : true,
+            };
+
+            try {
+                await db.ref('charity_info').set(charityData);
+                const msg = document.getElementById('charity-ok');
+                msg.classList.add('show');
+                setTimeout(() => msg.classList.remove('show'), 3000);
+            } catch(e) {
+                console.error(e);
+                alert("Xatolik!");
+            }
+            btn.innerHTML = `<i class="fas fa-save" style="margin-right:8px"></i>Saqlash`;
+            btn.disabled = false;
         }
 
         function loadPrayers() {
