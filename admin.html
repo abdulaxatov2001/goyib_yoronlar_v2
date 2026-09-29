@@ -519,13 +519,7 @@
             return `${day}.${month}.${year}`;
         }
 
-        const _au = {
-            [atob('YXppemJlaw==')]: atob('ODIyMDMzOTY1'),
-            [atob('cmFzdWxqb24=')]: atob('MjkwODAzMzAw'),
-            [atob('bydsb3RraXJqb24=')]: atob('ODI0NjM4NDk0Ng==')
-        };
-        
-        let ADMIN_USERS = { ..._au };
+        let ADMIN_USERS = {};
         let currentAdminUser = '';
         let generatedTgCode = null;
         let tgCodeTimeout = null;
@@ -543,7 +537,7 @@
             // Load dynamic admins early
             db.ref('admin_users').once('value').then(snap => {
                 if (snap.exists()) {
-                    ADMIN_USERS = { ..._au, ...snap.val() };
+                    ADMIN_USERS = snap.val();
                 }
             }).catch(e => console.error("Adminlarni yuklashda xato:", e));
         }
@@ -652,6 +646,7 @@
             if (currentAdminUser === 'azizbek') {
                 document.getElementById('menu-admins').classList.remove('hidden');
                 loadAdmins();
+            loadVisibility();
             }
 
             if (!fbReady) {
@@ -730,6 +725,61 @@
                     setTimeout(() => { msg.classList.remove('show'); }, 3000);
                 });
             }
+        }
+
+        
+        function editAdmin(username, chatid) {
+            if (currentAdminUser !== 'azizbek') {
+                alert("Faqat 'azizbek' administratori adminlarni tahrirlay oladi!");
+                return;
+            }
+            document.getElementById('edit-admin-username').value = username;
+            document.getElementById('edit-admin-username-display').value = username;
+            document.getElementById('edit-admin-chatid').value = chatid;
+            document.getElementById('modal-edit-admin').classList.remove('hidden');
+            document.getElementById('modal-edit-admin').classList.add('flex');
+        }
+
+        function closeEditAdminModal() {
+            document.getElementById('modal-edit-admin').classList.add('hidden');
+            document.getElementById('modal-edit-admin').classList.remove('flex');
+        }
+
+        function saveEditAdmin() {
+            const username = document.getElementById('edit-admin-username').value;
+            const chatid = document.getElementById('edit-admin-chatid').value.trim();
+            if(!chatid) return;
+            
+            db.ref('admin_users/' + username).set(chatid).then(() => {
+                closeEditAdminModal();
+            });
+        }
+        
+        function saveVisibility() {
+            if(!fbReady) return;
+            db.ref('visibility').update({
+                subscriptions: document.getElementById('toggle-subscriptions').checked,
+                dua: document.getElementById('toggle-dua').checked,
+                news: document.getElementById('toggle-news').checked,
+                sponsors: document.getElementById('toggle-sponsors').checked,
+                team: document.getElementById('toggle-team').checked,
+                gallery: document.getElementById('toggle-gallery').checked
+            });
+        }
+        
+        function loadVisibility() {
+            if(!fbReady) return;
+            db.ref('visibility').on('value', snap => {
+                if(snap.exists()) {
+                    const v = snap.val();
+                    if(document.getElementById('toggle-subscriptions')) document.getElementById('toggle-subscriptions').checked = !!v.subscriptions;
+                    if(document.getElementById('toggle-dua')) document.getElementById('toggle-dua').checked = !!v.dua;
+                    if(document.getElementById('toggle-news')) document.getElementById('toggle-news').checked = !!v.news;
+                    if(document.getElementById('toggle-sponsors')) document.getElementById('toggle-sponsors').checked = !!v.sponsors;
+                    if(document.getElementById('toggle-team')) document.getElementById('toggle-team').checked = !!v.team;
+                    if(document.getElementById('toggle-gallery')) document.getElementById('toggle-gallery').checked = !!v.gallery;
+                }
+            });
         }
 
         function deleteAdmin(username) {
@@ -1591,4 +1641,34 @@
     </script>
 </body>
 
-</html></script></body></html>
+</html></script>
+    <!-- Edit Admin Modal -->
+    <div id="modal-edit-admin" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative">
+            <div class="p-4 md:p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-gray-800 text-lg">Adminni Tahrirlash</h3>
+                <button onclick="closeEditAdminModal()" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-4 md:p-6 space-y-4">
+                <input type="hidden" id="edit-admin-username">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Username (O'zgartirib bo'lmaydi)</label>
+                    <input type="text" id="edit-admin-username-display" class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 text-gray-700" disabled>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Yangi Telegram Chat ID</label>
+                    <input type="text" id="edit-admin-chatid" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-green focus:ring-1 focus:ring-brand-green rounded-lg px-4 py-2 transition-all">
+                </div>
+            </div>
+            <div class="p-4 md:p-6 bg-gray-50 border-t border-gray-100 flex justify-end gap-2">
+                <button onclick="closeEditAdminModal()" class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">Bekor qilish</button>
+                <button onclick="saveEditAdmin()" class="px-4 py-2 text-sm font-medium text-white bg-brand-green rounded-lg shadow-md hover:bg-green-700 transition-colors flex items-center gap-2">
+                    <i class="fas fa-save"></i> Saqlash
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body></html>
