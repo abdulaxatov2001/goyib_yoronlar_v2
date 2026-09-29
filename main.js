@@ -1006,6 +1006,15 @@ function renderMasjidTimes(data) {
   if (!data) return;
   prayerTimes = { ...prayerTimes, ...data };
 
+  const prayersSection = document.getElementById('prayers');
+  if (prayersSection) {
+    if (data.show_prayers === false) {
+      prayersSection.style.display = 'none';
+    } else {
+      prayersSection.style.display = 'block';
+    }
+  }
+
   const prayers = ['bomdod', 'quyosh', 'peshin', 'asr', 'shom', 'xufton'];
   prayers.forEach(p => {
     const el = document.getElementById(`time-${p}`);
@@ -1485,7 +1494,7 @@ function renderCharity(data) {
     </div>
 
     <!-- Kommunal to'lovlar -->
-    <div class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
+    <div style="${data.show_utilities === false ? 'display: none;' : ''}" class="bg-surface-container-lowest border-t-4 border-emerald-deep rounded-2xl shadow-sm border-x border-b border-surface-container-high p-5 flex flex-col justify-between">
       <div>
         <h3 class="font-headline-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
           <span class="material-symbols-outlined text-emerald-deep text-[22px]">receipt_long</span>

@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin Panel | G'oyib Yoronlar Masjidi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#071410',
+                            green: '#064e3b',
+                            gold: '#d4a017',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -16,840 +36,458 @@
     <script src="firebase-config.js"></script>
 
     <style>
-        :root {
-            --green: #064e3b;
-            --gold: #d4a017;
-            --gold-light: #fef08a;
-            --bg: #071410;
-            --glass: rgba(6, 78, 59, 0.35);
-            --border: rgba(212, 160, 23, 0.3);
-            --text: #f8fafc;
-            --muted: rgba(241, 245, 249, 0.65);
+        body { background-color: #f3f4f6; color: #1f2937; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .sidebar-item { transition: all 0.2s; }
+        .sidebar-item.active { background-color: #064e3b; color: #d4a017; font-weight: 600; border-left: 4px solid #d4a017; }
+        .sidebar-item:hover:not(.active) { background-color: #e5e7eb; }
+        
+        .msg { display: none; padding: 12px; border-radius: 8px; margin-top: 12px; font-weight: 500; }
+        .msg.show { display: flex; align-items: center; gap: 8px; }
+        .msg.success { background-color: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+        .msg.error { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+        
+        /* Spinner */
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Custom Inputs */
+        input[type="text"], input[type="number"], input[type="password"], input[type="time"], textarea, select {
+            width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; transition: 0.2s; background: white;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            background-image: radial-gradient(ellipse at 20% 30%, rgba(6, 78, 59, 0.5) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(212, 160, 23, 0.12) 0%, transparent 50%);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 36px;
-            width: 100%;
-            max-width: 600px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
-            margin-top: 24px;
-            margin-bottom: 40px;
-        }
-        #admin-card {
-            max-width: 980px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .logo i {
-            font-size: 2.5rem;
-            color: var(--gold);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .logo h1 {
-            font-size: 1.4rem;
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .logo p {
-            font-size: 0.82rem;
-            color: var(--muted);
-            margin-top: 4px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            color: var(--muted);
-            margin-bottom: 6px;
-            margin-top: 18px;
-        }
-
-        input,
-        textarea,
-        select {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
-            padding: 13px 16px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--gold);
-            background: rgba(212, 160, 23, 0.08);
-            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: #ddd;
-            font-weight: 600;
-        }
-
-        .btn {
-            width: 100%;
-            margin-top: 20px;
-            background: var(--gold);
-            color: #071410;
-            border: none;
-            border-radius: 12px;
-            padding: 14px 18px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-
-        /* ─── Xabarlar ─── */
-        .msg {
-            border-radius: 12px;
-            padding: 14px 18px;
-            font-size: 0.9rem;
-            margin-top: 18px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .msg.success {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.4);
-            color: #86efac;
-        }
-
-        .msg.error {
-            background: rgba(248, 113, 113, 0.15);
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            color: #fca5a5;
-        }
-
-        .msg.show {
-            display: flex;
-        }
-
-        /* ─── Modern Tabs Bar ─── */
-        .tabs-nav-container {
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 8px;
-            margin-bottom: 24px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border) transparent;
-            padding-bottom: 4px;
-        }
-
-        .tabs::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .tabs::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-
-        .tab {
-            padding: 10px 14px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            flex-shrink: 0;
-            outline: none;
-        }
-
-        .tab i {
-            font-size: 0.9rem;
-            color: var(--gold);
-            transition: color 0.2s;
-        }
-
-        .tab:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
-            border-color: rgba(212, 160, 23, 0.3);
-        }
-
-        .tab.active {
-            background: var(--gold);
-            color: #071410;
-            border-color: var(--gold);
-            box-shadow: 0 4px 14px rgba(212, 160, 23, 0.35);
-            font-weight: 700;
-        }
-
-        .tab.active i {
-            color: #071410;
-        }
-
-        .badge-count {
-            background: #ef4444;
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 7px;
-            border-radius: 10px;
-            margin-left: 2px;
-            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Namoz seti */
-        .prayer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0 24px;
-        }
-
-        .time-input-group {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        input[type="time"] {
-            font-size: 1.25rem;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            background: transparent;
-            color: var(--gold);
-            padding: 10px 5px;
-            outline: none;
-        }
-
-        .time-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            color: var(--muted);
-            padding: 0 16px;
-            height: 100%;
-            min-height: 48px;
-            cursor: pointer;
-        }
-
-        .time-btn:hover {
-            color: var(--gold);
-            background: rgba(212, 160, 23, 0.15);
-        }
-
-        .prayer-field label {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        /* Ro'yxat (Yangiliklar, Jamoa) */
-        .list-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .list-item-info h4 {
-            color: var(--gold);
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .list-item-info p {
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        .list-item-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .list-item-actions button {
-            background: transparent;
-            border: none;
-            color: var(--muted);
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 6px;
-        }
-
-        .list-item-actions button.btn-edit:hover {
-            color: var(--gold);
-        }
-        .list-item-actions button.btn-del:hover {
-            color: #fca5a5;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .top-bar a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            transition: 0.2s;
-        }
-
-        .top-bar a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .fb-warn {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 14px 18px;
-            font-size: 0.85rem;
-            color: #fde68a;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            display: none;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin-right: 6px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ─── Mobil moslashuvchanlik ─── */
-        @media (max-width: 768px) {
-            body {
-                padding: 8px;
-            }
-            .card {
-                padding: 20px 14px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                border-radius: 18px;
-            }
-            .prayer-grid {
-                grid-template-columns: 1fr;
-            }
-            #gallery-list {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            .tabs-nav-container {
-                padding: 6px;
-            }
-            .tabs {
-                gap: 5px;
-            }
-            .tab {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-        }
-</style>
+        input:focus, textarea:focus { border-color: #064e3b; box-shadow: 0 0 0 3px rgba(6,78,59,0.1); }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: #064e3b; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #064e3b; }
+    </style>
 </head>
+<body class="antialiased min-h-screen flex items-center justify-center p-4">
 
-<body>
-
-    <!-- Login -->
-    <div class="card" id="login-card">
-        <div class="logo">
-            <i class="fas fa-mosque"></i>
-            <h1>Admin Panel</h1>
-            <p>G'oyib Yoronlar Jome Masjidi</p>
+    <!-- LOGIN SECTION -->
+    <div id="login-card" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-brand-green p-6 text-center">
+            <i class="fas fa-mosque text-brand-gold text-4xl mb-3"></i>
+            <h1 class="text-white text-xl font-bold">Admin Panel</h1>
+            <p class="text-brand-gold text-sm opacity-80 mt-1">G'oyib Yoronlar Masjidi</p>
         </div>
-        <div class="fb-warn" id="fb-status"></div>
-        <div id="step1">
-            <label><i class="fas fa-user" style="margin-right:5px"></i>Username</label>
-            <input type="text" id="username" placeholder="Admin username..."
-                onkeydown="if(event.key==='Enter') doLogin()">
-            <button class="btn" id="login-btn" onclick="doLogin()"><i class="fas fa-sign-in-alt"
-                    style="margin-right:8px"></i>Davom etish</button>
-        </div>
+        <div class="p-6">
+            <div id="fb-status" class="mb-4 text-sm text-red-600 font-medium hidden"></div>
+            
+            <div id="step1">
+                <div class="mb-4">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Username</label>
+                    <input type="text" id="username" placeholder="Admin username...">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Parol</label>
+                    <input type="password" id="password" placeholder="••••••••">
+                </div>
+                <button id="login-btn" onclick="doLogin()" class="w-full bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-sign-in-alt"></i> Kirish
+                </button>
+            </div>
 
-        <div id="step2" style="display:none">
-            <label><i class="fas fa-shield-alt" style="margin-right:5px"></i>Tasdiqlash kodi</label>
-            <p style="font-size:0.8rem;color:var(--muted);margin-top:-5px;margin-bottom:10px;">Telegram botga yuborilgan 4 xonali kodni kiriting. (2 daqiqa amal qiladi)</p>
-            <input type="number" id="tgcode" placeholder="Masalan: 1234"
-                onkeydown="if(event.key==='Enter') verifyCode()">
-            <button class="btn" onclick="verifyCode()"><i class="fas fa-check"
-                    style="margin-right:8px"></i>Tasdiqlash va Kirish</button>
+            <div id="step2" style="display:none">
+                <div class="mb-6 text-center">
+                    <p class="text-gray-600 text-sm mb-4">Telegram bot orqali yuborilgan 4 xonali kodni kiriting.</p>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 text-left">Tasdiqlash kodi</label>
+                    <input type="number" id="tgcode" placeholder="Masalan: 1234">
+                </div>
+                <button id="verify-btn" onclick="verifyCode()" class="w-full bg-brand-green hover:bg-green-900 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-check"></i> Tasdiqlash
+                </button>
+            </div>
+            
+            <div id="login-err" class="msg error"><i class="fas fa-exclamation-circle"></i> Noto'g'ri username yoki kod!</div>
         </div>
-
-        <div class="msg error" id="login-err"><i class="fas fa-exclamation-circle"></i> Noto'g'ri username yoki kod!</div>
-        <div style="text-align:center;margin-top:20px"><a href="index.html"
-                style="color:var(--muted);font-size:0.82rem;text-decoration:none">← Saytga qaytish</a></div>
     </div>
 
-    <!-- Admin Panel -->
-    <div class="card" id="admin-card" style="display:none">
-        <div class="top-bar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg, var(--green), #04382a); border:1px solid var(--gold); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.25rem; box-shadow:0 4px 12px rgba(0,0,0,0.3); flex-shrink:0;">
-                    <i class="fas fa-mosque"></i>
-                </div>
-                <div>
-                    <h1 style="font-size:1.15rem; font-weight:700; color:var(--text); line-height:1.2; margin:0;">G'oyib Yoronlar Masjidi</h1>
-                    <p style="font-size:0.75rem; color:var(--gold); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin:2px 0 0 0;">Boshqaruv Paneli</p>
-                </div>
+    <!-- ADMIN SECTION -->
+    <div id="admin-card" class="w-full h-[95vh] max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden hidden flex-col md:flex-row">
+        
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
+            <div class="p-5 border-b border-gray-200 text-center bg-white">
+                <i class="fas fa-mosque text-brand-gold text-3xl mb-2"></i>
+                <h2 class="text-brand-green font-bold text-lg">Boshqaruv</h2>
             </div>
-            <div style="display:flex; gap:8px;">
-                <a href="index.html" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; color:var(--text); text-decoration:none; font-size:0.85rem; font-weight:600; transition:all 0.2s;">
-                    <i class="fas fa-arrow-left"></i> Saytga qaytish
-                </a>
-                <a href="#" onclick="doLogout()" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); border-radius:10px; color:#fca5a5; text-decoration:none; font-size:0.85rem; font-weight:600; transition:all 0.2s;">
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1">
+                    <li><a href="#" onclick="switchTab('tab-prayer', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700 active"><i class="fas fa-clock w-5 text-center"></i> Namoz Vaqtlari</a></li>
+                    <li><a href="#" onclick="switchTab('tab-charity', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-credit-card w-5 text-center"></i> Karta & Kommunal</a></li>
+                    <li>
+                        <a href="#" onclick="switchTab('tab-subscriptions', this)" class="sidebar-item flex items-center justify-between px-6 py-3 text-gray-700">
+                            <span class="flex items-center gap-3"><i class="fas fa-book-open w-5 text-center"></i> Obunalar</span>
+                            <span id="sub-badge" class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                        </a>
+                    </li>
+                    <li><a href="#" onclick="switchTab('tab-dua', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-hands-praying w-5 text-center"></i> Duo So'rovlari</a></li>
+                    <li><a href="#" onclick="switchTab('tab-news', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-newspaper w-5 text-center"></i> Yangiliklar</a></li>
+                    <li><a href="#" onclick="switchTab('tab-sponsors', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-hand-holding-heart w-5 text-center"></i> Homiylar</a></li>
+                    <li><a href="#" onclick="switchTab('tab-team', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-users w-5 text-center"></i> Jamoat</a></li>
+                    <li><a href="#" onclick="switchTab('tab-gallery', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-images w-5 text-center"></i> Galereya</a></li>
+                    <li><a href="#" onclick="switchTab('tab-stats', this)" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-chart-line w-5 text-center"></i> Statistika</a></li>
+                </ul>
+            </nav>
+            <div class="p-4 border-t border-gray-200">
+                <button onclick="doLogout()" class="w-full flex items-center justify-center gap-2 text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors font-medium">
                     <i class="fas fa-sign-out-alt"></i> Chiqish
-                </a>
-            </div>
-        </div>
-        <div class="fb-warn" id="admin-fb-status"></div>
-
-        <!-- Distinct 9-Tab Grid Bar -->
-        <div class="tabs-nav-container">
-            <div class="tabs-grid">
-                <button type="button" class="tab active" data-tab="tab-stats" onclick="switchTab('tab-stats', this)">
-                    <i class="fas fa-chart-line"></i> <span>Statistika</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-prayer" onclick="switchTab('tab-prayer', this)">
-                    <i class="fas fa-clock"></i> <span>Vaqtlar</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-news" onclick="switchTab('tab-news', this)">
-                    <i class="fas fa-newspaper"></i> <span>Yangiliklar</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-sponsors" onclick="switchTab('tab-sponsors', this)">
-                    <i class="fas fa-star"></i> <span>Faxriylar</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-team" onclick="switchTab('tab-team', this)">
-                    <i class="fas fa-users"></i> <span>Jamoa</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-gallery" onclick="switchTab('tab-gallery', this)">
-                    <i class="fas fa-images"></i> <span>Galereya</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-dua" onclick="switchTab('tab-dua', this)">
-                    <i class="fas fa-hands-praying"></i> <span>Duo So'rovlari</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-charity" onclick="switchTab('tab-charity', this)">
-                    <i class="fas fa-hand-holding-heart"></i> <span>Xayriya</span>
-                </button>
-                <button type="button" class="tab" data-tab="tab-subscriptions" onclick="switchTab('tab-subscriptions', this)">
-                    <i class="fas fa-book-open"></i> <span>Obunalar</span>
-                    <span id="sub-badge" class="badge-count" style="display:none;">0</span>
                 </button>
             </div>
-        </div>
+        </aside>
 
-        <!-- STATISTIKA -->
-        <div id="tab-stats" class="tab-content active">
-            <div style="display:flex; gap:16px; margin-bottom:20px; flex-wrap:wrap;">
-                <div style="flex:1; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
-                    <i class="fas fa-eye" style="font-size:2rem; color:var(--gold); margin-bottom:10px;"></i>
-                    <h3 style="color:var(--text); font-size:1.1rem; margin-bottom:5px;">Umumiy tashriflar</h3>
-                    <p id="stat-total" style="font-size:1.8rem; font-weight:bold; color:var(--gold);">0</p>
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-white p-6 relative">
+            <div id="admin-fb-status" class="mb-4 text-sm text-red-600 font-medium hidden"></div>
+
+            <!-- TAB: PRAYER TIMES -->
+            <div id="tab-prayer" class="tab-content active max-w-3xl">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Namoz Vaqtlari</h2>
+                        <p class="text-gray-500 text-sm mt-1">Masjiddagi jamoat namozlari vaqtini boshqarish.</p>
+                    </div>
+                    <!-- Toggle Prayer Visibility -->
+                    <div class="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                        <span class="text-sm font-semibold text-gray-700">Saytda ko'rsatish:</span>
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="toggle-prayers" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="toggle-prayers" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
                 </div>
-                <div style="flex:1; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
-                    <i class="fas fa-calendar-day" style="font-size:2rem; color:#34d399; margin-bottom:10px;"></i>
-                    <h3 style="color:var(--text); font-size:1.1rem; margin-bottom:5px;">Bugungi tashriflar</h3>
-                    <p id="stat-today" style="font-size:1.8rem; font-weight:bold; color:#34d399;">0</p>
-                </div>
-            </div>
-            <div style="text-align:center;">
-                <button class="btn" style="width:auto; padding:10px 20px; font-size:0.9rem;" onclick="loadStats()"><i class="fas fa-sync"></i> Yangilash</button>
-            </div>
-        </div>
 
-        <!-- NAMOZ VAQTLARI -->
-        <div id="tab-prayer" class="tab-content">
-            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:15px">Masjidda amalda o'qiladigan vaqtlarni
-                kiriting:</p>
-            <div class="prayer-grid">
-                <div class="prayer-field">
-                    <label><i class="fas fa-sun" style="color:#fbbf24"></i> Bomdod</label>
-                    <div class="time-input-group">
-                        <button class="time-btn" onclick="adjustTime('bomdod', -1)"><i
-                                class="fas fa-minus"></i></button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Bomdod -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 bg-brand-gold text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Bomdod</label>
                         <input type="time" id="t-bomdod">
-                        <button class="time-btn" onclick="adjustTime('bomdod', 1)"><i class="fas fa-plus"></i></button>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="adjustTime('bomdod', -1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">-1</button>
+                            <button onclick="adjustTime('bomdod', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
+                        </div>
                     </div>
-                </div>
-                <div class="prayer-field">
-                    <label><i class="fas fa-sun" style="color:#f97316"></i> Peshin</label>
-                    <div class="time-input-group">
-                        <button class="time-btn" onclick="adjustTime('peshin', -1)"><i
-                                class="fas fa-minus"></i></button>
+                    
+                    <!-- Peshin -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Peshin</label>
                         <input type="time" id="t-peshin">
-                        <button class="time-btn" onclick="adjustTime('peshin', 1)"><i class="fas fa-plus"></i></button>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="adjustTime('peshin', -1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">-1</button>
+                            <button onclick="adjustTime('peshin', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
+                        </div>
                     </div>
-                </div>
-                <div class="prayer-field">
-                    <label><i class="fas fa-cloud-sun" style="color:#fb923c"></i> Asr</label>
-                    <div class="time-input-group">
-                        <button class="time-btn" onclick="adjustTime('asr', -1)"><i class="fas fa-minus"></i></button>
+
+                    <!-- Asr -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-orange-400 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-sun"></i></div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Asr</label>
                         <input type="time" id="t-asr">
-                        <button class="time-btn" onclick="adjustTime('asr', 1)"><i class="fas fa-plus"></i></button>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="adjustTime('asr', -1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">-1</button>
+                            <button onclick="adjustTime('asr', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
+                        </div>
                     </div>
-                </div>
-                <div class="prayer-field">
-                    <label><i class="fas fa-moon" style="color:#a5b4fc"></i> Shom</label>
-                    <div class="time-input-group">
-                        <button class="time-btn" onclick="adjustTime('shom', -1)"><i class="fas fa-minus"></i></button>
+
+                    <!-- Shom -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-moon"></i></div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Shom</label>
                         <input type="time" id="t-shom">
-                        <button class="time-btn" onclick="adjustTime('shom', 1)"><i class="fas fa-plus"></i></button>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="adjustTime('shom', -1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">-1</button>
+                            <button onclick="adjustTime('shom', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
+                        </div>
                     </div>
-                </div>
-                <div class="prayer-field">
-                    <label><i class="fas fa-star" style="color:#818cf8"></i> Xufton</label>
-                    <div class="time-input-group">
-                        <button class="time-btn" onclick="adjustTime('xufton', -1)"><i
-                                class="fas fa-minus"></i></button>
+
+                    <!-- Xufton -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-indigo-900 text-white text-xs px-2 py-1 rounded-bl-lg font-bold"><i class="fas fa-star"></i></div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Xufton</label>
                         <input type="time" id="t-xufton">
-                        <button class="time-btn" onclick="adjustTime('xufton', 1)"><i class="fas fa-plus"></i></button>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="adjustTime('xufton', -1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">-1</button>
+                            <button onclick="adjustTime('xufton', 1)" class="flex-1 bg-white border border-gray-300 rounded hover:bg-gray-100 py-1">+1</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center gap-2" id="btn-save-prayer" onclick="savePrayers()">
+                        <i class="fas fa-save"></i> Saqlash
+                    </button>
+                    <div class="msg success" id="prayer-ok"><i class="fas fa-check-circle"></i> Muvaffaqiyatli saqlandi!</div>
+                </div>
+            </div>
+
+            <!-- TAB: CHARITY & UTILITIES -->
+            <div id="tab-charity" class="tab-content max-w-3xl">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Xayriya va Kommunal To'lovlar</h2>
+                    <p class="text-gray-500 text-sm mt-1">Masjidning asosiy ehson kartasi va kommunal to'lov rekvizitlarini boshqarish.</p>
+                </div>
+
+                <!-- Card -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                    <h3 class="text-lg font-bold text-brand-green mb-4 flex items-center gap-2"><i class="fas fa-credit-card text-brand-gold"></i> Asosiy Ehson Kartasi</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Karta Raqami</label>
+                            <input type="text" id="charity-card" placeholder="Masalan: 8600 0000 0000 0000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Karta Egasi</label>
+                            <input type="text" id="charity-owner" placeholder="Masalan: G'oyib Yoronlar Jome Masjidi">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Telefon Raqam</label>
+                            <input type="text" id="charity-phone" placeholder="Masalan: +998 90 123 45 67">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utilities -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6 relative">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                        <h3 class="text-lg font-bold text-brand-green flex items-center gap-2"><i class="fas fa-bolt text-brand-gold"></i> Kommunal To'lovlar (Yuridik)</h3>
+                        <!-- Toggle Utilities Visibility -->
+                        <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+                            <span class="text-sm font-semibold text-gray-700">Saytda ko'rsatish:</span>
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" name="toggle" id="toggle-utilities" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                                <label for="toggle-utilities" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Elektr energiyasi (Hisob raqam)</label>
+                            <input type="text" id="charity-elec">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Suv (Hisob raqam)</label>
+                            <input type="text" id="charity-water">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Gaz (Hisob raqam)</label>
+                            <input type="text" id="charity-gas">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Chiqindi (Hisob raqam)</label>
+                            <input type="text" id="charity-trash">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Wi-Fi (Hisob raqam)</label>
+                            <input type="text" id="charity-wifi">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-3 px-8 rounded-lg shadow-md transition flex items-center gap-2" id="btn-save-charity" onclick="saveCharity()">
+                        <i class="fas fa-save"></i> Saqlash
+                    </button>
+                    <div class="msg success" id="charity-ok"><i class="fas fa-check-circle"></i> Muvaffaqiyatli saqlandi!</div>
+                </div>
+            </div>
+
+            <!-- TAB: SUBSCRIPTIONS -->
+            <div id="tab-subscriptions" class="tab-content">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Obunalar (Diniy Matbuot)</h2>
+                        <p class="text-gray-500 text-sm mt-1">«Hidayat», «Mo'minalar» jurnallari va «Islom nuri» gazetasi arizalari.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="printSubscriptions()" class="bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm transition">
+                            <i class="fas fa-print"></i> Chop etish
+                        </button>
+                        <button onclick="loadSubscriptions()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition">
+                            <i class="fas fa-sync-alt"></i> Yangilash
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stats row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white border border-gray-200 p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-xs text-gray-500 uppercase font-bold">Jami Arizalar</p>
+                        <p id="sub-stat-total" class="text-2xl font-bold text-brand-gold mt-1">0 ta</p>
+                    </div>
+                    <div class="bg-white border border-orange-200 p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-xs text-gray-500 uppercase font-bold">Kutilmoqda</p>
+                        <p id="sub-stat-pending" class="text-2xl font-bold text-orange-500 mt-1">0 ta</p>
+                    </div>
+                    <div class="bg-white border border-green-200 p-4 rounded-xl shadow-sm text-center">
+                        <p class="text-xs text-gray-500 uppercase font-bold">Tasdiqlandi</p>
+                        <p id="sub-stat-confirmed" class="text-2xl font-bold text-green-500 mt-1">0 ta</p>
+                    </div>
+                    <div class="bg-brand-green p-4 rounded-xl shadow-sm text-center text-white">
+                        <p class="text-xs text-green-200 uppercase font-bold">Jami Summa</p>
+                        <p id="sub-stat-sum" class="text-2xl font-bold mt-1">0 so'm</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-sm">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200 text-gray-700">
+                                <th class="p-4 text-center w-10">№</th>
+                                <th class="p-4">Sana</th>
+                                <th class="p-4">Obunachi</th>
+                                <th class="p-4">Telefon</th>
+                                <th class="p-4">Nashrlar</th>
+                                <th class="p-4">Summa</th>
+                                <th class="p-4">Manzil</th>
+                                <th class="p-4 text-center">Holati</th>
+                                <th class="p-4 text-center">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscriptions-tbody" class="divide-y divide-gray-200">
+                            <tr><td colspan="9" class="p-8 text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i> Yuklanmoqda...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: DUA REQUESTS -->
+            <div id="tab-dua" class="tab-content">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Jamoat Duo So'rovlari</h2>
+                        <p class="text-gray-500 text-sm mt-1">Juma namozida o'qib beriladigan haftalik duo so'rovlari.</p>
+                    </div>
+                    <button onclick="printWeeklyDuas()" class="bg-brand-gold hover:bg-yellow-500 text-brand-dark font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm transition">
+                        <i class="fas fa-print"></i> Chop etish (Juma)
+                    </button>
+                </div>
+                <div id="dua-admin-list" class="space-y-6">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- TAB: NEWS -->
+            <div id="tab-news" class="tab-content max-w-4xl">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Yangiliklar</h2>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                    <h3 class="font-bold text-brand-green mb-4">Yangi qo'shish</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="news-title" placeholder="Yangilik sarlavhasi...">
+                        <textarea id="news-desc" placeholder="Batafsil ma'lumot..." rows="4"></textarea>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="file" id="news-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'news-preview')">
+                            <input type="text" id="news-url" placeholder="yoki rasm URL'si..." class="flex-1">
+                        </div>
+                        <div id="news-preview" class="hidden mt-2 text-center"></div>
+                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-news" onclick="addNews()">
+                            <i class="fas fa-plus"></i> Qo'shish
+                        </button>
+                        <div class="msg success" id="news-ok"></div>
+                    </div>
+                </div>
+                <div id="news-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- TAB: SPONSORS -->
+            <div id="tab-sponsors" class="tab-content max-w-4xl">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Homiylar</h2>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                    <h3 class="font-bold text-brand-green mb-4">Homiy qo'shish</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="sponsor-name" placeholder="Homiy nomi / Tashkilot...">
+                        <textarea id="sponsor-desc" placeholder="Batafsil ma'lumot..." rows="3"></textarea>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="file" id="sponsor-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'sponsor-preview')">
+                            <input type="text" id="sponsor-url" placeholder="yoki logotip URL'si..." class="flex-1">
+                        </div>
+                        <div id="sponsor-preview" class="hidden mt-2 text-center"></div>
+                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-sponsor" onclick="addSponsor()">
+                            <i class="fas fa-plus"></i> Qo'shish
+                        </button>
+                        <div class="msg success" id="sponsor-ok"></div>
+                    </div>
+                </div>
+                <div id="sponsors-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- TAB: TEAM -->
+            <div id="tab-team" class="tab-content max-w-4xl">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Jamoat</h2>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                    <h3 class="font-bold text-brand-green mb-4">A'zo qo'shish</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" id="team-name" placeholder="Ism familiya...">
+                        <input type="text" id="team-role" placeholder="Lavozimi (Masalan: Imom xatib)...">
+                        <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4">
+                            <input type="file" id="team-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'team-preview')">
+                            <input type="text" id="team-url" placeholder="yoki rasm URL'si..." class="flex-1">
+                        </div>
+                    </div>
+                    <div id="team-preview" class="hidden mt-2 text-center"></div>
+                    <button class="mt-4 bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-team" onclick="addTeam()">
+                        <i class="fas fa-plus"></i> Qo'shish
+                    </button>
+                    <div class="msg success" id="team-ok"></div>
+                </div>
+                <div id="team-list" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            </div>
+
+            <!-- TAB: GALLERY -->
+            <div id="tab-gallery" class="tab-content max-w-5xl">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Galereya</h2>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                    <h3 class="font-bold text-brand-green mb-4">Rasm yoki Video qo'shish</h3>
+                    <div class="space-y-4">
+                        <select id="gallery-type" onchange="document.getElementById('video-input').style.display = this.value === 'video' ? 'block' : 'none'; document.getElementById('image-input').style.display = this.value === 'image' ? 'block' : 'none';">
+                            <option value="image">Rasm qo'shish</option>
+                            <option value="video">Video (YouTube URL) qo'shish</option>
+                        </select>
+                        <div id="image-input" class="flex flex-col sm:flex-row gap-4">
+                            <input type="file" id="gallery-img" accept="image/*" class="flex-1 bg-white" onchange="previewImage(this, 'gallery-preview')">
+                            <input type="text" id="gallery-url" placeholder="yoki rasm URL'si..." class="flex-1">
+                        </div>
+                        <div id="video-input" style="display:none;">
+                            <input type="text" id="gallery-video-url" placeholder="YouTube video URL'si...">
+                        </div>
+                        <input type="text" id="gallery-title" placeholder="Qisqacha ta'rif (ixtiyoriy)...">
+                        
+                        <div id="gallery-preview" class="hidden mt-2 text-center"></div>
+                        <button class="bg-brand-green hover:bg-green-900 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2" id="btn-save-gallery" onclick="addGallery()">
+                            <i class="fas fa-plus"></i> Qo'shish
+                        </button>
+                        <div class="msg success" id="gallery-ok"></div>
+                    </div>
+                </div>
+                <div id="gallery-list" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            </div>
+
+            <!-- TAB: STATS -->
+            <div id="tab-stats" class="tab-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Sayt Statistikasi</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-center shadow-sm">
+                        <i class="fas fa-users text-4xl text-brand-gold mb-3"></i>
+                        <h3 class="text-gray-500 font-bold uppercase text-sm mb-1">Umumiy Tashriflar</h3>
+                        <p id="stat-total" class="text-4xl font-bold text-brand-green">0</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-center shadow-sm">
+                        <i class="fas fa-calendar-day text-4xl text-blue-500 mb-3"></i>
+                        <h3 class="text-gray-500 font-bold uppercase text-sm mb-1">Bugungi Tashriflar</h3>
+                        <p id="stat-today" class="text-4xl font-bold text-blue-600">0</p>
                     </div>
                 </div>
             </div>
-            <button class="btn" onclick="savePrayers()"><i class="fas fa-save" style="margin-right:8px"></i>Vaqtlarni
-                Saqlash</button>
-            <div class="msg success" id="prayer-ok"><i class="fas fa-check-circle"></i> Saqlandi!</div>
-        </div>
 
-        <!-- YANGILIKLAR -->
-        <div id="tab-news" class="tab-content">
-            <label>Sarlavha</label>
-            <input type="text" id="news-title" placeholder="Yangilik sarlavhasi...">
-            <label>Matn</label>
-            <textarea id="news-desc" placeholder="Batafsil ma'lumot..."></textarea>
-            <label>Rasm yuklash yoki havola (URL)</label>
-            <input type="file" id="news-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'news-preview')">
-            <input type="text" id="news-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
-            <div id="news-preview" style="display:none;margin-top:10px;text-align:center;"></div>
-            <button class="btn" id="btn-save-news" onclick="addNews()"><i class="fas fa-plus"
-                    style="margin-right:8px"></i>Yangilik Qo'shish</button>
-            <div class="msg success" id="news-ok"></div>
-            <div id="news-list"></div>
-        </div>
-
-        <!-- FAXRIYLAR / HOMIYLAR -->
-        <div id="tab-sponsors" class="tab-content">
-            <label>Ism-sharifi</label>
-            <input type="text" id="sponsor-name" placeholder="Masalan: G'oyib yoronlar...">
-            <label>Ta'rifi / Hissasi</label>
-            <textarea id="sponsor-desc" placeholder="Batafsil ma'lumot..."></textarea>
-            <label>Rasm yuklash yoki havola (URL)</label>
-            <input type="file" id="sponsor-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'sponsor-preview')">
-            <input type="text" id="sponsor-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
-            <div id="sponsor-preview" style="display:none;margin-top:10px;text-align:center;"></div>
-            <button class="btn" id="btn-save-sponsor" onclick="addSponsor()"><i class="fas fa-plus"
-                    style="margin-right:8px"></i>Faxriy Qo'shish</button>
-            <div class="msg success" id="sponsor-ok"></div>
-            <div id="sponsors-list"></div>
-        </div>
-
-        <!-- JAMOA -->
-        <div id="tab-team" class="tab-content">
-            <label>Ism-Sharif</label>
-            <input type="text" id="team-name" placeholder="Masalan: Mardonbek domla...">
-            <label>Vazifasi</label>
-            <input type="text" id="team-role" placeholder="Masalan: Imom Xatib...">
-            <label>Telefon raqam (Ixtiyoriy)</label>
-            <input type="text" id="team-phone" placeholder="Masalan: +998901234567">
-            <label>Telegram Username (Ixtiyoriy)</label>
-            <input type="text" id="team-tg" placeholder="Masalan: abdulloh">
-            <label>Ta'rifi</label>
-            <textarea id="team-desc" placeholder="Xodim haqida qisqacha ma'lumot..."></textarea>
-            <label>Rasm yuklash yoki havola (URL)</label>
-            <input type="file" id="team-img" accept="image/*" style="padding:10px" onchange="previewImage(this, 'team-preview')">
-            <input type="text" id="team-url" placeholder="yoki rasm havolasi (URL)..." style="margin-top:8px">
-            <div id="team-preview" style="display:none;margin-top:10px;text-align:center;"></div>
-            <button class="btn" id="btn-save-team" onclick="addTeam()"><i class="fas fa-plus"
-                    style="margin-right:8px"></i>Xodim Qo'shish</button>
-            <div class="msg success" id="team-ok"></div>
-            <div id="team-list"></div>
-        </div>
-
-        <!-- GALEREYA -->
-        <div id="tab-gallery" class="tab-content">
-            <label>Yangi rasm yuklash yoki havola (URL)</label>
-            <input type="file" id="gallery-img" accept="image/*" style="padding:10px" multiple onchange="previewImage(this, 'gallery-preview')">
-            <input type="text" id="gallery-url" placeholder="yoki bitta rasm havolasi (URL)..." style="margin-top:8px">
-            <div id="gallery-preview" style="display:none;margin-top:10px;text-align:center;"></div>
-            <button class="btn" id="btn-save-gallery" onclick="addGallery()"><i class="fas fa-upload"
-                    style="margin-right:8px"></i>Rasmlarni Yuklash</button>
-            <div class="msg success" id="gallery-ok"></div>
-            <div id="gallery-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;"></div>
-        </div>
-
-        <!-- Duo So'rovlari Tab -->
-        <div id="tab-dua" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-                <div>
-                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Jamoat Duo So'rovlari</h2>
-                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">Juma namozida o'qib beriladigan haftalik duo so'rovlari ro'yxati.</p>
-                </div>
-                <div style="display:flex; gap:10px;">
-                    <button onclick="printWeeklyDuas()" style="background:var(--gold); color:#000; font-weight:700; border:none; padding:10px 18px; border-radius:8px; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; gap:8px; box-shadow:0 2px 8px rgba(212,160,23,0.3);">
-                        <i class="fas fa-print"></i> Duolarni chop etish (Juma uchun)
-                    </button>
-                </div>
-            </div>
-            <div id="dua-admin-list">
-                <!-- Javascript will populate this with grouped weeks -->
-            </div>
-        </div>
-
-        <!-- Charity Tab -->
-        <div id="tab-charity" class="tab-content">
-            <div style="margin-bottom:20px;">
-                <h2 style="color:var(--text); font-size:1.4rem; font-weight:700;">Xayriya va Ehson ma'lumotlari</h2>
-                <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">Masjidning asosiy ehson kartasi va kommunal to'lov rekvizitlarini boshqarish.</p>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.04); padding: 22px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: var(--gold); font-size: 1.1rem; display:flex; align-items:center; gap:8px;">
-                    <i class="fas fa-credit-card"></i> Asosiy Ehson Kartasi
-                </h3>
-                <div class="form-group">
-                    <label>Karta Raqami</label>
-                    <input type="text" id="charity-card" placeholder="Masalan: 8600 0000 0000 0000">
-                </div>
-                <div class="form-group">
-                    <label>Karta Egasi</label>
-                    <input type="text" id="charity-owner" placeholder="Masalan: G'oyib Yoronlar Jome Masjidi">
-                </div>
-                <div class="form-group">
-                    <label>Telefon Raqam</label>
-                    <input type="text" id="charity-phone" placeholder="Masalan: +998 90 123 45 67">
-                </div>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.04); padding: 22px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: var(--gold); font-size: 1.1rem; display:flex; align-items:center; gap:8px;">
-                    <i class="fas fa-bolt"></i> Kommunal To'lovlar (Yuridik hisob raqamlar)
-                </h3>
-                <div class="form-group">
-                    <label>Elektr energiyasi (Hisob raqam)</label>
-                    <input type="text" id="charity-elec">
-                </div>
-                <div class="form-group">
-                    <label>Suv (Hisob raqam)</label>
-                    <input type="text" id="charity-water">
-                </div>
-                <div class="form-group">
-                    <label>Gaz (Hisob raqam)</label>
-                    <input type="text" id="charity-gas">
-                </div>
-                <div class="form-group">
-                    <label>Chiqindi (Hisob raqam)</label>
-                    <input type="text" id="charity-trash">
-                </div>
-                <div class="form-group">
-                    <label>Wi-Fi (Hisob raqam)</label>
-                    <input type="text" id="charity-wifi">
-                </div>
-            </div>
-            <button class="btn" id="btn-save-charity" onclick="saveCharity()"><i class="fas fa-save" style="margin-right:8px"></i>Saqlash</button>
-            <div class="msg success" id="charity-ok">Muvaqqiyatli saqlandi!</div>
-        </div>
-
-        <!-- OBUNALAR TAB (DINIY MATBUOTGA ARIZALAR) -->
-        <div id="tab-subscriptions" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
-                <div>
-                    <h2 style="color:var(--text); font-size:1.4rem; font-weight:700; display:flex; align-items:center; gap:8px;">
-                        <i class="fas fa-book-open" style="color:var(--gold);"></i> Diniy Matbuotga Obunalar (2026-yil)
-                    </h2>
-                    <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">«Ҳидоят», «Мўминалар» журналлари ва «Ислом нури» газетасига онлайн келиб тушган аризалар.</p>
-                </div>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button type="button" onclick="printSubscriptions()" style="background:var(--gold); color:#000; font-weight:700; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; font-size:0.85rem; display:inline-flex; align-items:center; gap:8px; box-shadow:0 2px 8px rgba(212,160,23,0.3); transition:all 0.2s;">
-                        <i class="fas fa-print"></i> Ro'yxatni chop etish
-                    </button>
-                    <button type="button" onclick="loadSubscriptions()" style="background:rgba(255,255,255,0.08); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer; font-size:0.85rem; display:inline-flex; align-items:center; gap:6px;">
-                        <i class="fas fa-sync-alt"></i> Yangilash
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stats Summary Bar for Subscriptions -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
-                <div style="background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center;">
-                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Jami arizalar</div>
-                    <div id="sub-stat-total" style="font-size:1.5rem; font-weight:700; color:var(--gold); margin-top:2px;">0 ta</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:14px; text-align:center;">
-                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Kutilmoqda</div>
-                    <div id="sub-stat-pending" style="font-size:1.5rem; font-weight:700; color:#f59e0b; margin-top:2px;">0 ta</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:14px; text-align:center;">
-                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Tasdiqlandi</div>
-                    <div id="sub-stat-confirmed" style="font-size:1.5rem; font-weight:700; color:#10b981; margin-top:2px;">0 ta</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(6,78,59,0.5); border-radius:12px; padding:14px; text-align:center;">
-                    <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600;">Jami summa</div>
-                    <div id="sub-stat-sum" style="font-size:1.5rem; font-weight:700; color:#34d399; margin-top:2px;">0 so'm</div>
-                </div>
-            </div>
-
-            <!-- Subscriptions Table -->
-            <div style="overflow-x:auto; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:14px; padding:4px;">
-                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem; color:var(--text); min-width:750px;">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--border); background:rgba(6,78,59,0.4); color:var(--gold);">
-                            <th style="padding:14px 12px; width:40px; text-align:center;">№</th>
-                            <th style="padding:14px 12px; width:100px;">Sana</th>
-                            <th style="padding:14px 12px;">Obunachi</th>
-                            <th style="padding:14px 12px;">Telefon</th>
-                            <th style="padding:14px 12px;">Nashrlar</th>
-                            <th style="padding:14px 12px;">Summa</th>
-                            <th style="padding:14px 12px;">Yetkazish & Manzil</th>
-                            <th style="padding:14px 12px; text-align:center;">Holati</th>
-                            <th style="padding:14px 12px; text-align:center;">Amallar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="subscriptions-tbody">
-                        <tr><td colspan="9" style="text-align:center; padding:35px; color:var(--muted);"><i class="fas fa-spinner fa-spin"></i> Arizalar yuklanmoqda...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+        </main>
     </div>
+<script>
     <script>
         function getFormattedDate() {
             const d = new Date();
@@ -965,6 +603,7 @@
                     document.getElementById('charity-gas').value = data.util_gas || '';
                     document.getElementById('charity-trash').value = data.util_trash || '';
                     document.getElementById('charity-wifi').value = data.util_wifi || '';
+                    if(document.getElementById('toggle-utilities')) document.getElementById('toggle-utilities').checked = data.show_utilities !== false;
                 }
             });
         }
@@ -983,6 +622,7 @@
                 util_gas: document.getElementById('charity-gas').value.trim(),
                 util_trash: document.getElementById('charity-trash').value.trim(),
                 util_wifi: document.getElementById('charity-wifi').value.trim(),
+                show_utilities: document.getElementById('toggle-utilities') ? document.getElementById('toggle-utilities').checked : true,
             };
 
             try {
@@ -1130,6 +770,7 @@
                 ['bomdod', 'peshin', 'asr', 'shom', 'xufton'].forEach(k => {
                     if (d[k]) document.getElementById('t-' + k).value = d[k];
                 });
+                if(document.getElementById('toggle-prayers')) document.getElementById('toggle-prayers').checked = d.show_prayers !== false;
             });
         }
         function savePrayers() {
@@ -1138,6 +779,7 @@
             ['bomdod', 'peshin', 'asr', 'shom', 'xufton'].forEach(k => {
                 data[k] = document.getElementById('t-' + k).value;
             });
+            data.show_prayers = document.getElementById('toggle-prayers') ? document.getElementById('toggle-prayers').checked : true;
             data.last_update = new Date().toISOString();
             db.ref('prayer_times').set(data).then(() => {
                 const msg = document.getElementById('prayer-ok');
@@ -1892,4 +1534,4 @@
     </script>
 </body>
 
-</html>
+</html></script></body></html>
