@@ -817,6 +817,19 @@
             });
         }
 
+        function updateStats() {
+            if (!fbReady) return;
+            db.ref('stats').on('value', snap => {
+                if(snap.exists()) {
+                    const data = snap.val();
+                    const totalEl = document.getElementById('stat-total');
+                    const todayEl = document.getElementById('stat-today');
+                    if(totalEl) totalEl.innerText = data.total || 0;
+                    if(todayEl) todayEl.innerText = data.today || 0;
+                }
+            });
+        }
+
         // ================= UPLOAD UTILS (ImgBB) =================
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
