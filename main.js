@@ -1480,6 +1480,7 @@ function renderCharity(data) {
             <div class="font-label-caps text-[10px] text-on-surface-variant mb-1 font-bold">Uzcard / Humo</div>
             <div class="font-body-lg text-[17px] md:text-[18px] text-primary font-bold tracking-widest tabular-nums font-mono">${cardNum}</div>
             <div class="text-[12px] text-on-surface-variant mt-1 font-medium">${cardOwner}</div>
+            ${data.general_phone ? `<div class="text-[12px] text-gold-metallic mt-1 font-bold"><i class="fas fa-phone-alt mr-1"></i>${data.general_phone}</div>` : ''}
           </div>
           <button class="w-10 h-10 rounded-full bg-white dark:bg-surface-container border border-surface-variant flex items-center justify-center text-on-surface-variant hover:text-emerald-deep active:scale-90 transition-all copy-btn shadow-sm" data-copy="${cardNum}" title="Nusxa olish">
             <span class="material-symbols-outlined text-[18px]">content_copy</span>
